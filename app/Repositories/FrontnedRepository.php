@@ -42,7 +42,12 @@ class FrontendRepository {
 
     } 
    
-
+    public function getSearchResults( string $city)
+    {
+      
+        return  City::with(['vets'])->where('name',$city)->first() ?? false; 
+      
+    } 
     
   
 }

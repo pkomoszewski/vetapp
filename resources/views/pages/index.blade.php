@@ -12,7 +12,14 @@
       </div>
       <div class="container ">
       <div class="active-cyan-4 mb-4 mt-4 w-50  "  >
-        <input class="form-control autocomplete" type="text" placeholder="wyszukaj" aria-label="wyszkukaj">
+
+      <form method="POST" action="{{ route('vetSearch') }}" class="form-inline">
+
+        <input name="city" class="form-control autocomplete" type="text" placeholder="wyszukaj" aria-label="wyszkukaj">
+      <button type="submit" class="btn btn-warning">Search</button>
+                 @csrf   
+      </form>
+      {{$data->noroom}}
       </div>
     </div>
     </div>

@@ -21,4 +21,20 @@ class FrontendController extends Controller
 
         return response()->json($results);
     }
+
+
+    public function vetsearch(Request $request)
+    {
+    
+        if($Vets = $this->fG->getSearchResults($request))
+        {
+     
+            return view('frontend.resultsSearchVet',['Vets'=>$Vets]);
+        }
+        else
+        {
+            return redirect('/')->with('norooms', __('No offers were found matching the criteria'));
+        }
+        
+    }
 }

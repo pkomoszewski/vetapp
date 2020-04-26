@@ -36,3 +36,4 @@ Route::get('/{animal_id}/delete', 'AnimalController@delete');
 
 
 Route::get('/searchCities', 'FrontendController@searchCities');
+Route::post(trans('routes.vetsearch'),'FrontendController@vetsearch')->name('vetSearch');
