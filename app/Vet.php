@@ -24,8 +24,11 @@ class Vet extends Model
     }
 
 
-    public function user()
+    
+
+
+    public function comments()
     {
-        return $this->hasOne('App\User');
+        return $this->morphMany('App\Comment', 'comment');
     }
 }

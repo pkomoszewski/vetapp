@@ -9,6 +9,7 @@ use App\Article;
 use App\City;
 use App\User;
 use App\Vet;
+use App\Comment;
 
 class FrontendRepository {  
     
@@ -68,14 +69,12 @@ class FrontendRepository {
     {
 
         // moze byc do poprawy
-      $User= User::with('vet')->find($vet_id);
+      $Vet= Vet::with('comments.user','user')->find($vet_id);
 
-         return $User;   
+         return $Vet;   
             
             
     } 
-
-
 
 }
 

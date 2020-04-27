@@ -74,8 +74,5 @@ class User extends Authenticatable
     }
 
 
-    public function vet(){
-        return $this->hasOne('App\vet');
-
-    }
+    
 }

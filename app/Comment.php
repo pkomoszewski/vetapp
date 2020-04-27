@@ -10,4 +10,11 @@ class Comment extends Model
 
         return $this->belongsTo('App\User');
     }
+
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
+    
+  
 }
