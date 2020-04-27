@@ -37,3 +37,8 @@ Route::get('/{animal_id}/delete', 'AnimalController@delete');
 
 Route::get('/searchCities', 'FrontendController@searchCities');
 Route::post(trans('routes.vetsearch'),'FrontendController@vetsearch')->name('vetSearch');
+
+Route::get('/like/{like_id}/{type}', 'FrontendController@like')->name('like'); 
+Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlike');
+
+Route::get(trans('routes.vet').'/{id}','FrontendController@sitevet')->name('sitevet'); 

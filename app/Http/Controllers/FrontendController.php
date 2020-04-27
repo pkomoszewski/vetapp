@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Gateways\FrontendGateway;
+use App\Repositories\FrontendRepository;
+
 use SebastianBergmann\Environment\Console;
 
 class FrontendController extends Controller
 {
 
 
-    public function __construct(FrontendGateway $frontendGateway)
+    public function __construct(FrontendGateway $frontendGateway, FrontendRepository $frontendRepository)
     {
         $this->fG = $frontendGateway; 
+        $this->fR=$frontendRepository;
+
     }
 
     public function searchCities(Request $request)
@@ -37,4 +41,24 @@ class FrontendController extends Controller
         }
         
     }
+public function like($like_id, $type, Request $request)
+{
+    $this->fR->like($like_id, $type, $request);
+
+  return redirect()->back();
+}
+
+public function unlike($like_id, $type, Request $request)
+{
+    $this->fR->unlike($like_id, $type, $request);
+    return redirect()->back();
+}
+
+
+public function siteVet($id)
+{
+    $vet = $this->fR->getSiteVet($id);
+    
+ return view('pages.siteVet')->with('vet',$vet);
+}
 }

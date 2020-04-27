@@ -19,7 +19,7 @@
       <button type="submit" class="btn btn-warning">Search</button>
                  @csrf   
       </form>
-      {{$data->noroom}}
+  
       </div>
     </div>
     </div>
