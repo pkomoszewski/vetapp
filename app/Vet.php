@@ -22,4 +22,10 @@ class Vet extends Model
     {
         return $this->users()->where('user_id',Auth::user()->id)->exists();
     }
+
+
+    public function user()
+    {
+        return $this->hasOne('App\User');
+    }
 }

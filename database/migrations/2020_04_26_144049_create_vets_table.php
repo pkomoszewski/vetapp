@@ -18,6 +18,7 @@ class CreateVetsTable extends Migration
             $table->string('imie');
             $table->string('Nazwisko');
             $table->integer('city_id');
+            $table->integer('user_id');
 
 
             $table->timestamps();

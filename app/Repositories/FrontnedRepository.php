@@ -8,7 +8,7 @@ use App\Concert;
 use App\Article;
 use App\City;
 use App\User;
-
+use App\Vet;
 
 class FrontendRepository {  
     
@@ -68,9 +68,9 @@ class FrontendRepository {
     {
 
         // moze byc do poprawy
-      $vet= User::all()->find($vet_id);
+      $User= User::with('vet')->find($vet_id);
 
-         return $vet;   
+         return $User;   
             
             
     } 

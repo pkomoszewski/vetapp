@@ -36,14 +36,7 @@ zdjecie</div>
                 <div class="col-6 ml-2">
                    komentarze</div>
                 </div>
-@auth
-                <div class="col-6 ml-2">
-                    @if($vet->isLiked())
-                    <a href="{{ route('unlike',['like_id'=>$vet->id,'type'=>'App\Vet']) }}" class="btn btn-primary btn-xs top-buffer">Unlike this object</a>
-                    @else
-                    <a href="{{ route('like',['like_id'=>$vet->id,'type'=>'App\Vet']) }}" class="btn btn-primary btn-xs top-buffer">Like this object</a>
-                    @endif
-@endauth
+
                 </div>
                  </div>
 

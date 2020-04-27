@@ -57,8 +57,8 @@ public function unlike($like_id, $type, Request $request)
 
 public function siteVet($id)
 {
-    $vet = $this->fR->getSiteVet($id);
+    $User = $this->fR->getSiteVet($id);
     
- return view('pages.siteVet')->with('vet',$vet);
+ return view('pages.siteVet')->with('User',$User);
 }
 }
