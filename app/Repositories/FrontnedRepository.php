@@ -30,7 +30,7 @@ class FrontendRepository {
     
     public function getProfile($user_id)
     {
-      $user= User::with(['animals'])->find($user_id);
+      $user= User::with(['animals','comments.commentable'])->where('id',$user_id)->first()??false;
          return $user;   
             
             
@@ -69,13 +69,15 @@ class FrontendRepository {
     {
 
         // moze byc do poprawy
-      $Vet= Vet::with('comments.user','user')->find($vet_id);
+      $Vet= Vet::with('comments.user')->find($vet_id);
 
          return $Vet;   
             
             
     } 
 
+
+    
 }
 
 

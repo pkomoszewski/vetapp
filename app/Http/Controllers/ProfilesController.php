@@ -21,8 +21,8 @@ public function index(User $user){
 
     $this->authorize('view', $user->profile);
 
-     $Profile= $this->fR->getProfile($user);
-    return view('profiles.profile',['user'=>$user]);
+     $Profile= $this->fR->getProfile($user->id);
+    return view('profiles.profile',['user'=>$Profile]);
     
 }
 

@@ -17,8 +17,8 @@ class CreateCommentsTable extends Migration
 
             $table->bigIncrements('id');
             $table->text('content');
-            $table->string('comment_type');
-            $table->bigInteger('comment_id'); //zmienic nazwe 
+            $table->string('commentable_type');
+            $table->bigInteger('commentable_id'); //zmienic nazwe komentowany obiekt
             $table->integer('rating'); 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 

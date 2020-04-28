@@ -5,8 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\City;
 use Illuminate\Support\Facades\Auth;
+
 class Vet extends Model
 {
+
+    use Presenters\VetPresenter; 
     public function cities(){
         return $this->hasOne(City::class);
 
@@ -29,6 +32,6 @@ class Vet extends Model
 
     public function comments()
     {
-        return $this->morphMany('App\Comment', 'comment');
+        return $this->morphMany('App\Comment', 'commentable');
     }
 }

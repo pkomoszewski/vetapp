@@ -12,16 +12,8 @@ use App\User;
 
 class BackendRepository {  
     
+    
 
-    public function getProfile($user_id)
-    {
-      $user= User::with(['animals'])->find($user_id);
-         return $user;   
-            
-            
-    } 
-    
-    
     public function getAnimal($id)
     {
     
