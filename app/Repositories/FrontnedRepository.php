@@ -69,7 +69,7 @@ class FrontendRepository {
     {
 
         // moze byc do poprawy
-      $Vet= Vet::with('comments.user')->find($vet_id);
+      $Vet= Vet::with('comments.user','photos')->find($vet_id);
 
          return $Vet;   
             

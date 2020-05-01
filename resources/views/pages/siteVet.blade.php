@@ -11,7 +11,7 @@
                     <div class="row">
 <div class="container m-5">
                         <div class="col-xs-12 col-sm-3">
-                            <img src="http://lorempixel.com/200/200/people/?x=<?= mt_rand(1, 9999999) ?>" alt="" class="img-circle img-responsive">
+                            <img src="{{$vet->photos->first()->path}}" alt="" class="img-circle img-responsive">
                         </div>
                         <div class="col-xs-12 col-sm-9 ">
                             <p>{{ $vet->imie }}</p>
