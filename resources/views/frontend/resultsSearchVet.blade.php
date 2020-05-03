@@ -16,16 +16,18 @@
 
             <div class="row">
 <div class="col-3">
-zdjecie</div>
+   
+        @if ($vet->photos->isEmpty())
+        @else
+        <img src="{{$vet->photos->first()->path}}" alt="" class="img-circle img-responsive" with='100px' height='100px'>
+        @endif
+    </div>
 <div class="col-9">
  <a href="{{ route('sitevet',['id'=>$vet->id]) }}">
-    <p> {{$vet->imie}}</p> 
-    <p> {{$vet->Nazwisko}}</p> 
+    <p> {{$vet->imie}} {{$vet->nazwisko}}</p> 
   </a> 
+  <p>{{$vet->adres}}</p> 
 
- 
-
-    <p>rating</p>
 
             
 </div>

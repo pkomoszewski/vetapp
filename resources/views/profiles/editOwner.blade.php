@@ -7,13 +7,13 @@
     <form method="POST" class="form-horizontal" enctype="multipart/form-data">
         <fieldset>
             <div class="form-group">
-                <label for="name" class="col-lg-2 control-label">Name *</label>
+                <label for="imie" class="col-lg-2 control-label">Imie</label>
                 <div class="col-lg-10">
                     <input name="name" type="text" required class="form-control" id="name" value="Name">
                 </div>
             </div>
             <div class="form-group">
-                <label for="surname" class="col-lg-2 control-label">Last name *</label>
+                <label for="nazwisko" class="col-lg-2 control-label">Nazwisko</label>
                 <div class="col-lg-10">
                     <input name="surname" type="text" required class="form-control" id="surname" value="Last name">
                 </div>
@@ -26,12 +26,12 @@
             </div>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Zapisz</button>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <label for="userPicture">Add your photo</label>
+                    <label for="userPicture">Dodaj swoje zdjecie</label>
                     <input name="userPicture" type="file" id="userPicture">
                 </div>
             </div>

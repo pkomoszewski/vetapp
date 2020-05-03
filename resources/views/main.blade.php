@@ -69,7 +69,7 @@
                                                document.getElementById('logout-form').submit();">
                                 Wyloguj się
                               </a>
-              <a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">Profil użytkownika</a>
+              <a class="dropdown-item" href="{{ route('profile.index',['user'=>Auth::user()->id ]) }}">Profil użytkownika</a>
               <a class="dropdown-item" href="/showorder/{{ Auth::user()->id }}">Twoje zamówienia</a>                             
 
                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -104,7 +104,7 @@
 
 
 
-
+@yield('javascript')
 
 </body>
 

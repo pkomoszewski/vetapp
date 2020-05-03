@@ -20,9 +20,11 @@ class AnimalPolicy
     }
 
     
-        public function Animal(User $user, Animal $animal){
+        public function OwnerAnimal(User $user, Animal $animal){
     return $user->id==$animal->user_id;
 
         }
+
+
     }
 

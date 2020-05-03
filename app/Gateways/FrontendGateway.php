@@ -43,17 +43,14 @@ class FrontendGateway {
             if($result)
             {
 
-                // to do: filter results based on check in and check out etc.
+              
 
 
 
                 if(count($result->vets)> 0)
-                return $result;  // filtered result
+                return $result;  
                 else return false;
 
-
-               // inputs for session for one request
- // filtered result
 
 
 

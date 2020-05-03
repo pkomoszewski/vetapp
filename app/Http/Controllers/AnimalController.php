@@ -21,7 +21,7 @@ class AnimalController extends Controller
     {
         $hasAnimal = $this->bR->getAnimal($animal_id); 
 
-        $this->authorize('Animal', $hasAnimal);
+        $this->authorize('OwnerAnimal', $hasAnimal);
 
         $this->bR->deleteAnimal($hasAnimal);
         return redirect()->back();

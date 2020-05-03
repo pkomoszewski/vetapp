@@ -13,7 +13,7 @@ use App\Comment;
 
 class FrontendRepository {  
     
-  
+    use \Illuminate\Foundation\Validation\ValidatesRequests;
     public function getObjectsConcerts()
     {
       
@@ -28,13 +28,7 @@ class FrontendRepository {
         return Article::all(); 
     } 
     
-    public function getProfile($user_id)
-    {
-      $user= User::with(['animals','comments.commentable'])->where('id',$user_id)->first()??false;
-         return $user;   
-            
-            
-    } 
+   
     
     public function getSearchCities( string $term)
     {
@@ -72,11 +66,48 @@ class FrontendRepository {
       $Vet= Vet::with('comments.user','photos')->find($vet_id);
 
          return $Vet;   
+                    
+    } 
+
+    public function getVet($vet_id)
+    {
+
+        // moze byc do poprawy
+      $Vet= Vet::with('comments.user','phone')->find($vet_id);
+
+         return $Vet;   
+                    
+    } 
+    public function getOwner($user_id)
+    {
+
+       
+      $user= User::with(['comments.commentable','owners'])->where('id',$user_id)->first()??false;
+         return $user;   
             
             
     } 
 
 
+    public function addComment($commentable_id, $type, $request)
+    {
+
+        $this->validate($request,[
+            'content'=>"required|string"
+        ]);
+        
+        $commentable = $type::find($commentable_id);
+        
+        $comment = new Comment;
+ 
+        $comment->content = $request->input('content');
+
+        $comment->rating = $type == 'App\Vet' ? $request->input('rating') : 0;
+
+        $comment->user_id = $request->user()->id;
+        
+        return $commentable->comments()->save($comment);
+    }
     
 }
 

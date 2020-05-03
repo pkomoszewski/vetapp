@@ -24,21 +24,55 @@ route::post('registervet','Auth\RegisterController@registerVet')->name('register
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/allConcert', 'ConcertController@index');
-Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
+
+
+// Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
+
+Route::post(trans('save.vetprofile').'/{id}','ProfilesController@edit')->name('profile.save');
+
+
+
+
+
+//Routing do profilu uzytkownika zaleznie czy jest Onwerem czy weterynarzem
+Route::get('/profile/{user}', 'FrontendController@index')->name('profile.index');
+// Edycja "Profilu przez uzytkownika"
+Route::match(['GET','POST'],trans('routes.profile').'/{user}','FrontendController@profileEdit')->name('profile');
+
+
+
+// do wyrzucenia 
 Route::get('/showorder/{id}','OrderController@index')->name('showOrders');
 Route::get('/order/{id}/{user}','OrderController@makeOrder')->name('makeOrder.edit');
-Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
+
+
+
+
+// Route dla artykułow
 Route::get('/articles', 'HomeController@articles')->name('articles.show');
 
-Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.update');
 
-Route::get('/{animal_id}/delete', 'AnimalController@delete');
-
-
+//podpowiedz dla wyszukiwania miast
 Route::get('/searchCities', 'FrontendController@searchCities');
+
 Route::post(trans('routes.vetsearch'),'FrontendController@vetsearch')->name('vetSearch');
 
+
+//polubienia uzytkowników
 Route::get('/like/{like_id}/{type}', 'FrontendController@like')->name('like'); 
 Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlike');
 
-Route::get(trans('routes.vet').'/{id}','FrontendController@sitevet')->name('sitevet'); 
+
+
+// dla weterynarza
+Route::get(trans('routesvet').'/{id}','FrontendController@sitevet')->name('sitevet'); 
+
+
+//Zwierzaki
+
+Route::get('/addAnimal','FrontendController@viewAddFormAnimal')->name('addAnimal');
+route::post(trans('addNewAnimal').'/{id}','BackendController@NewAnimal')->name('addNewAnimal');
+Route::get('/{animal_id}/delete', 'AnimalController@delete');
+
+// dodawanie komentarz
+Route::post('/addComment/{commentable_id}/{type}', 'FrontendController@addComment')->name('addComment'); 

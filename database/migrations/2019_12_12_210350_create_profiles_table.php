@@ -17,7 +17,6 @@ class CreateProfilesTable extends Migration
             $table->bigIncrements('id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->text('opis')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
 
 

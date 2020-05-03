@@ -13,7 +13,7 @@ trait VetPresenter {
     
     public function getTypeAttribute()
     {
-        return 'Weterynarz: '.$this->imie.' '.$this->Nazwisko;
+        return 'Weterynarz: '.$this->imie.' '.$this->nazwisko;
     }
     
 }

@@ -51,10 +51,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function profile(){
-        return $this->hasOne(Profile::class);
-
-    }
+   
 
     public function concerts()
     {
@@ -78,4 +75,25 @@ class User extends Authenticatable
         return $this->hasMany('App\Comment');
     }
     
+    public function hasRole($role){
+    if($this->roles()->where('typ',$role)->first()){
+
+        return true;
+    }
+        return false;
+    }
+
+    public function vets()
+    {
+        return $this->hasOne('App\Vet');
+    }
+
+
+    public function owners()
+    {
+        return $this->hasOne('App\Owner');
+    }
+   
+    
+
 }
