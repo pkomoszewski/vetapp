@@ -16,4 +16,14 @@ trait VetPresenter {
         return 'Weterynarz: '.$this->imie.' '.$this->nazwisko;
     }
     
+  
+
+
+    public function averageRating()
+    {
+       $result=  $this->comments()->avg('rating');
+        return round( $result);
+    }
+
+
 }

@@ -42,4 +42,9 @@ class Vet extends Model
     {
         return $this->morphOne('App\Phone', 'phoneable');
     }
+
+    public function reservations(){
+
+        return $this->belongsToMany('App\Reservation');
+     }
 }

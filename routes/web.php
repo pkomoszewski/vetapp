@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('pages.index');
 });
 
+Route::get('/calendar', function () {
+    return view('pages.calendar');
+});
 Auth::routes();
 
 route::get('/registervet','Auth\RegisterController@showRegistrationVetForm' )->name('registervet');
@@ -55,22 +58,34 @@ Route::get('/articles', 'HomeController@articles')->name('articles.show');
 //podpowiedz dla wyszukiwania miast
 Route::get('/searchCities', 'FrontendController@searchCities');
 
-Route::post(trans('routes.vetsearch'),'FrontendController@vetsearch')->name('vetSearch');
+Route::post(trans('search'),'FrontendController@vetsearch')->name('vetSearch');
 
 
 //polubienia uzytkowników
 Route::get('/like/{like_id}/{type}', 'FrontendController@like')->name('like'); 
 Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlike');
 
+///////////////////rezerwacje widoki rezerwacji u uzytkownika
+////////u uzytkownika
+Route::get('/reservations/{user_id}/', 'FrontendController@siteReservation')->name('reservations');
+////////u weterynarza
+Route::get('/calendarvisits/{user_id}', 'FrontendController@siteCalendarvisit')->name('calendarvisits');
 
+
+///////////////////
+Route::get('/reservationscalnedar/{vet_id}/{user_id}/', 'FrontendController@siteReservationCalendar')->name('reservationscalendar');
+Route::get(trans('ViewformReservation').'/{date}'.'/{ts}'.'/{vet_id}','FrontendController@ViewformReservation')->name('ViewformReservation');
+Route::post(trans('confirmReservation').'/{vet_id}','FrontendController@confirmReservation')->name('confirmReservation');
 
 // dla weterynarza
-Route::get(trans('routesvet').'/{id}','FrontendController@sitevet')->name('sitevet'); 
-
+Route::get(trans('vet').'/{id}','FrontendController@sitevet')->name('sitevet'); 
+//dla kliniki
+Route::get(trans('clinic').'/{id}','FrontendController@siteclinic')->name('siteclinic'); 
 
 //Zwierzaki
 
-Route::get('/addAnimal','FrontendController@viewAddFormAnimal')->name('addAnimal');
+Route::get('/addAnimal','FrontendController@viewAddFormAnimal')->name('addAnimal');// Zmienic nazwe route
+
 route::post(trans('addNewAnimal').'/{id}','BackendController@NewAnimal')->name('addNewAnimal');
 Route::get('/{animal_id}/delete', 'AnimalController@delete');
 

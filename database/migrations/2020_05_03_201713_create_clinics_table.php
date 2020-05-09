@@ -15,11 +15,12 @@ class CreateClinicsTable extends Migration
     {
         Schema::create('clinics', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nazwa');
             $table->string('email');
-            $table->string('Opis');
+            $table->string('opis');
             $table->integer('city_id');
             $table->integer('phone_id');
-            $table->integer('phone_id');
+            $table->integer('photo_id');
             $table->integer('vet_id');
             $table->integer('godzina_otwarcia');
             $table->integer('godzina_zamkniecia');

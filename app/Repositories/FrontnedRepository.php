@@ -10,16 +10,14 @@ use App\City;
 use App\User;
 use App\Vet;
 use App\Comment;
+use App\Clinic;
+use App\Reservation;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendRepository {  
     
     use \Illuminate\Foundation\Validation\ValidatesRequests;
-    public function getObjectsConcerts()
-    {
-      
-        return Concert::all(); 
-    } 
-     
+  
 
     
     public function getObjectsArticles()
@@ -34,13 +32,12 @@ class FrontendRepository {
     {
       return  City::where('name', 'LIKE', $term . '%')->get();
                       
-
     } 
    
     public function getSearchResults( string $city)
     {
-      
-        return  City::with(['vets'])->where('name',$city)->first() ?? false; 
+      $results =City::with(['vets.photos','vets.comments','clinics.photos'])->where('name',$city)->first() ?? false; 
+        return  $results;
       
     } 
     
@@ -69,6 +66,17 @@ class FrontendRepository {
                     
     } 
 
+    public function getSiteClinic($clinic_id)
+    {
+
+      $Clinic= Clinic::with('comments.user','photos')->find($clinic_id);
+
+         return $Clinic;   
+                    
+    } 
+
+
+
     public function getVet($vet_id)
     {
 
@@ -92,9 +100,7 @@ class FrontendRepository {
     public function addComment($commentable_id, $type, $request)
     {
 
-        $this->validate($request,[
-            'content'=>"required|string"
-        ]);
+     
         
         $commentable = $type::find($commentable_id);
         
@@ -102,13 +108,33 @@ class FrontendRepository {
  
         $comment->content = $request->input('content');
 
-        $comment->rating = $type == 'App\Vet' ? $request->input('rating') : 0;
+        $comment->rating = $type == 'App\Vet'||'App\Clinic' ? $request->input('rating') : 0;
 
         $comment->user_id = $request->user()->id;
         
         return $commentable->comments()->save($comment);
     }
     
+
+
+    public function getReservationsByVetId( $vet_id )
+    {
+        return  Reservation::where('vet_id',$vet_id)->get(); 
+    } 
+
+
+    public function saveReservation($request, $vet_id)
+    {
+        $date = $request->data;
+        $newDate = date('d-m-Y', strtotime($date ));
+        return Reservation::create([
+                'day'=>$request->data,
+                'hour'=>$request->godzina,
+                'status'=>0,
+                'user_id'=>Auth::user()->id,
+                'vet_id'=>$vet_id,
+                            ]);
+    }
 }
 
 

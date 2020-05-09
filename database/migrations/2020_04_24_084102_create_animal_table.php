@@ -15,7 +15,7 @@ class CreateAnimalTable extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('Imie');
+            $table->string('imie');
             $table->string('gatunek');
             $table->unsignedBigInteger('owner_id')->unsigned();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

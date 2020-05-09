@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Animal extends Model
 {
-    protected $fillable = ['Imie','gatunek','user_id'];
+    protected $fillable = ['imie','gatunek','owner_id'];
   
     
 
-    public function users(){
-        return $this->hasOne(User::class);
+    public function owners(){
+        return $this->hasOne('App\Owner');
 
     }
 }

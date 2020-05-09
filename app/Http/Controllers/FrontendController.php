@@ -6,19 +6,22 @@ use Illuminate\Http\Request;
 use App\Gateways\FrontendGateway;
 use App\Repositories\FrontendRepository;
 use App\Repositories\BackendRepository;
+use App\Validation\FormValidation;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\Environment\Console;
 use Illuminate\Support\Facades\Storage; 
 use App\User;
+use App\Vet;
 class FrontendController extends Controller
 {
 
 
-    public function __construct(FrontendGateway $frontendGateway, FrontendRepository $frontendRepository,BackendRepository $BackendRepository)
+    public function __construct(FrontendGateway $frontendGateway, FrontendRepository $frontendRepository,BackendRepository $BackendRepository,FormValidation $FormValidation)
     {
         $this->fG = $frontendGateway; 
         $this->fR=$frontendRepository;
         $this->bR=$BackendRepository;
+        $this->fV = $FormValidation;
     }
 
     public function searchCities(Request $request)
@@ -32,14 +35,16 @@ class FrontendController extends Controller
     public function vetsearch(Request $request)
     {
     
-        if($Vets = $this->fG->getSearchResults($request))
+        if($Result = $this->fG->getSearchResults($request))
         {
      
-            return view('frontend.resultsSearchVet',['Vets'=>$Vets]);
+            return view('frontend.resultsSearchVet')->with('results',$Result);
         }
         else
         {
-            return redirect('/')->with('norooms', __('No offers were found matching the criteria'));
+        
+            //do poprawy
+            return redirect('/')->with('noobject', __('No offers were found matching the criteria'));
         }
         
     }
@@ -57,6 +62,31 @@ public function unlike($like_id, $type, Request $request)
 }
 
 
+public function siteReservation($id)
+{
+  ///  $vet = $this->fR->getSiteVet($id);
+    // dla uzytkownika
+ return view('pages.reservation');
+}
+
+public function siteCalendarvisit($ )
+{
+    $vet=Vet::where('user_id',$user_id)->first();
+    $vet_id=$vet->id;
+   $resrtvationsToVet= $this->fR->getReservationsByVetId($vet_id);
+ return view('pages.calendarVisitToVet')->with(['reservations'=>$resrtvationsToVet]);
+}
+
+
+
+public function siteReservationCalendar($vet_id,$user_id)
+{
+    $reservations = $this->fR->getReservationsByVetId($vet_id);
+    
+ return view('pages.calendar')->with(['reservations'=>$reservations,'vet_id'=>$vet_id]);
+}
+
+
 
 public function siteVet($id)
 {
@@ -65,6 +95,13 @@ public function siteVet($id)
  return view('pages.siteVet')->with('vet',$vet);
 }
 
+
+public function siteClinic($id)
+{
+    $clinic = $this->fR->getSiteClinic($id);
+    
+ return view('pages.siteClinic')->with('clinic',$clinic);
+}
 
 
 public function  viewAddFormAnimal()
@@ -99,7 +136,8 @@ return view('profiles.profileOwner',['user'=>$Owner]);
 
 public function addComment($commentable_id, $type, Request $request)
     {
-        $this->fR->addComment($commentable_id, $type, $request);
+        $comment = $this->fV->vadlidationFormAddComment($commentable_id, $type,$request);
+     
         
       
         
@@ -176,7 +214,35 @@ public function profileEdit(Request $request )
     }
     
 }
- 
+
+
+
+
+public function ViewformReservation($data,$ts,$vet_id)
+{
+
+    return view('pages.fromReservation',[
+    
+    'data'=>$data,
+    'ts'=>$ts,
+    'vet_id'=>$vet_id
+    ]
+
+
+
+);
+    
+}
+
+public function confirmReservation(Request $request, $vet_id)
+{
+
+    $reservation = $this->fV->vadlidationFormConfirmReservation($request, $vet_id);
+            
+
+    return view('pages.index');
+    
+}
 
 
 }

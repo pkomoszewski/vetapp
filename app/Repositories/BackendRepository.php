@@ -11,7 +11,8 @@ use App\User;
 use App\Vet;
 use App\Photo;
 use App\Phone;
-
+use App\Owner;
+use Illuminate\Support\Facades\Auth;
 class BackendRepository {  
     
     use \Illuminate\Foundation\Validation\ValidatesRequests;
@@ -29,19 +30,19 @@ public function deleteAnimal(Animal $Animal)
    
 
 
-public function addNewAnimal($request, $id){
+public function addNewAnimal($request){
+
+    $user_id= Auth::user()->id;
+    $owner= Owner::where('user_id',$user_id)->first();
 
 
-    $this->validate($request,[
-        'imie'=>"required|min:3",
-        'gatunek'=>"required|min:3",
+    $animal = Animal::create([
+        'imie'=>$request->input('imie'),
+        'gatunek'=> $request->input('gatunek'),
+        'owner_id'=> $owner->id,
     ]);
-
-return Animal::create([
-    'Imie'=> $request->input('imie'),
-    'gatunek'=>$request->input('gatunek'),
-    'user_id' => $request->user()->id,
-]);
+    $animal->save();
+    return $animal;
 
 }
 
