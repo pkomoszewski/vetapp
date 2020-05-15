@@ -91,6 +91,10 @@ class User extends Authenticatable
         return $this->hasOne('App\Owner');
     }
    
+    public function reservation(){
+
+        return $this->hasOne('App\user');
+     }
     
 
 }

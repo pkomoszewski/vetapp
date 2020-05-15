@@ -69,7 +69,7 @@ public function siteReservation($id)
  return view('pages.reservation');
 }
 
-public function siteCalendarvisit($ )
+public function siteCalendarvisit($user_id)
 {
     $vet=Vet::where('user_id',$user_id)->first();
     $vet_id=$vet->id;

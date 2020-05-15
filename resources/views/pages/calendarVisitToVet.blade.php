@@ -6,7 +6,7 @@
 
     <section class="pricing py-5 ">
         <div class="container">
-            <div class="row p-5">
+            <div class="row d-block">
                 @csrf
 
                 wizyty u weterynarza
@@ -25,6 +25,7 @@
                             <h5 class="card-title text-muted text-uppercase text-center"></h5>
 
                             <h6 class="card-text text-center">{{$reservation->day}} </h6>
+                            <h6 class="card-text text-center">{{dd($reservation->owners)}} </h6>
                             <h6 class="card-text text-center">{{$reservation->hour}} </h6>
                             <h6 class="card-text text-center"> {{$reservation->status}}</h6>
 
@@ -34,8 +35,7 @@
 
                         </div>
                         <div class="card-footer">
-                            {{-- <small class="text-muted">dodano: {{$data ?? ''->created_at->format('d-m-Y')}}</small>
-                            --}}
+                            Potwierdzam
                         </div>
                     </div>
                 </div>
