@@ -21,6 +21,9 @@ class CreateVetsTable extends Migration
             $table->integer('cena_konsulatcji');
             $table->string('adres');
             $table->integer('city_id');
+            $table->string('address_address')->nullable();
+            $table->double('address_latitude')->nullable();
+            $table->double('address_longitude')->nullable();
             $table->bigInteger('user_id')->unsigned(); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 

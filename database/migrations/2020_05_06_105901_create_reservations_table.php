@@ -17,6 +17,7 @@ class CreateReservationsTable extends Migration
             $table->bigIncrements('id');
             $table->date('day');
             $table->date('hour'); 
+            $table->string('opis');
             $table->boolean('status'); 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 

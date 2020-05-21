@@ -11,4 +11,5 @@ class Owner extends Model
         return $this->hasMany('App\Animal');
     }
     
+
 }

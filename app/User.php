@@ -39,13 +39,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::created(function ($user) {
-            $user->profile()->create([
-                'opis' => $user->username,
-            ]);
-
-           
-        });
+      
     }
      
     protected $casts = [

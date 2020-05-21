@@ -20,17 +20,26 @@
 
                                 <p>{{$vet->imie}}</p>
                                 <p>{{$vet->nazwisko}}</p>
-                                <p>{{$vet->phone->numer}}</p>
-
-                                @if ($vet->opis=='')
-                                <p>Brak opisu. Proszę o wypełnienie</p>
+                                @if ($vet->phone==null)
+                                <p>Brak telefonu. Proszę o wypełnienie</p>
                                 @else
-                                <p>{{$vet->opis}}<p>
+                                <p>{{$vet->phone->numer}}<p>
                                         @endif
-                                        <p>{{$vet->adres}}</p>
-                                        <p>DO porawy pokazywanie miasta</p>
-                                        <p> Cena kosultacji: {{$vet->cena_konsulatcji}} zł<p>
-                                                <a href="{{ route('profile',['user'=>Auth::user()->id]) }}"> Edycja
+                                        @if ($vet->opis=='')
+                                        <p>Brak opisu. Proszę o wypełnienie</p>
+                                        @else
+                                        <p>{{$vet->opis}}<p>
+                                                @endif
+                                                <p>{{$vet->adres}}</p>
+                                                <p>Do porawy pokazywanie miasta</p>
+                                                <p> Cena kosultacji: {{$vet->cena_konsulatcji}} zł</p>
+                                                <p>Godziny przyjmowania od
+                                                    {{$vet->TimeStart}}
+                                                    do
+                                                    {{$vet->TimeEnd}}</p>
+
+                                                <a href="{{ route('profile',['user'=>Auth::user()->id]) }}">
+                                                    Edycja
                                                     profilu Weterynarza </a>
 
                             </div>

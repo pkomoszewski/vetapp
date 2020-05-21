@@ -22,6 +22,13 @@ class BackendRepository {
         return Animal::find($id);
     }
             
+
+
+    
+    public function getArticle($id)
+    {
+        return Article::find($id);
+    }
     
 public function deleteAnimal(Animal $Animal)
 {
@@ -48,11 +55,13 @@ public function addNewAnimal($request){
 
 public function saveVet($request)
 {
-    $vet = Vet::find($request->user()->id);
+    $vet = Vet::where('user_id',$request->user()->id)->first();
     $vet->imie = $request->input('imie');
     $vet->nazwisko = $request->input('nazwisko');
     $vet->opis = $request->input('opis');
-    $vet->cena_konsultacji = $request->input('cena');
+    $vet->cena_konsulatcji = $request->input('cena');
+    $vet->godzina_otwarcia = $request->input('godzina_otwarcia');
+    $vet->godzina_zamkniecia = $request->input('godzina_zamkniecia');
     $vet->adres = $request->input('adres');
     $vet->phone()->number =$request->input('numer');
     $vet->save();
@@ -68,6 +77,12 @@ public function createVetPhoto($vet,$path)
     $vet->photos()->save($photo);
 }
 
+public function createArticlePhoto($article,$path)
+{
+    $photo = new Photo;
+    $photo->path = $path;
+    $article->photos()->save($photo);
+}
 
 public function createPhone($vet,$numer)
 {
@@ -102,6 +117,22 @@ public function updateUserPhoto(Vet $vet,Photo $photo)
 {
     return $vet->photos()->save($photo);
 }
+
+public function addArticle($request)
+{
+
+    $article= new Article;
+    $article->title=$request->input('title');
+    $article->content=$request->input('content');
+    $article->save();
+    if ($request->hasFile('articlePicture')){
+
+        $path = $request->file('articlePicture')->store('article', 'public');
+        $this->createArticlePhoto($article,$path);
+    }
+    return  true;
+}
+
 }
   
 

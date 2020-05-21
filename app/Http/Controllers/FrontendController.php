@@ -44,10 +44,13 @@ class FrontendController extends Controller
         {
         
             //do poprawy
-            return redirect('/')->with('noobject', __('No offers were found matching the criteria'));
+          
         }
         
     }
+
+
+   
 public function like($like_id, $type, Request $request)
 {
     $this->fR->like($like_id, $type, $request);
@@ -62,11 +65,11 @@ public function unlike($like_id, $type, Request $request)
 }
 
 
-public function siteReservation($id)
+public function calendarVisitToUser($owner_id)
 {
-  ///  $vet = $this->fR->getSiteVet($id);
-    // dla uzytkownika
- return view('pages.reservation');
+    // wyswietla rezerwacje dla wetrynarza
+    $resrtvationsToOwner= $this->fR->getReservationByOwnerId($owner_id);
+ return view('pages.calendarVisitToUser')->with(['reservations'=>$resrtvationsToOwner]);
 }
 
 public function siteCalendarvisit($user_id)
@@ -74,7 +77,7 @@ public function siteCalendarvisit($user_id)
     $vet=Vet::where('user_id',$user_id)->first();
     $vet_id=$vet->id;
    $resrtvationsToVet= $this->fR->getReservationsByVetId($vet_id);
- return view('pages.calendarVisitToVet')->with(['reservations'=>$resrtvationsToVet]);
+ return view('pages.calendarVisitToVet')->with(['reservations'=>$resrtvationsToVet,'vet_id'=>$vet_id]);
 }
 
 
@@ -82,10 +85,15 @@ public function siteCalendarvisit($user_id)
 public function siteReservationCalendar($vet_id,$user_id)
 {
     $reservations = $this->fR->getReservationsByVetId($vet_id);
-    
- return view('pages.calendar')->with(['reservations'=>$reservations,'vet_id'=>$vet_id]);
+    $vet=Vet::find($vet_id);
+ return view('pages.calendar')->with(['reservations'=>$reservations,'vet_id'=>$vet_id,'vet'=>$vet],);
 }
 
+public function showListArticles()
+{
+    $Articles = $this->fR->getListArticles();
+ return view('frontend.viewListArticle')->with('results',$Articles);
+}
 
 
 public function siteVet($id)
@@ -236,14 +244,24 @@ public function ViewformReservation($data,$ts,$vet_id)
 
 public function confirmReservation(Request $request, $vet_id)
 {
+    $owner_id =Auth::user()->owners->id;
 
-    $reservation = $this->fV->vadlidationFormConfirmReservation($request, $vet_id);
+    $reservation = $this->fV->vadlidationFormConfirmReservation($request, $vet_id,$owner_id);
             
 
     return view('pages.index');
     
 }
-
+// potwierdzenie rezerwacji przez weterynarza
+public function confirmReservationVet($vet_id,$reservation_id)
+{
+//walidacja
+    
+    $confirmReservationVet = $this->fR->ConfirmReservationVet($reservation_id);
+            
+    return redirect()->back(); 
+    
+}
 
 }
 

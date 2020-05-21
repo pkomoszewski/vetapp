@@ -20,7 +20,7 @@ class FrontendRepository {
   
 
     
-    public function getObjectsArticles()
+    public function getListArticles()
     {
       
         return Article::all(); 
@@ -119,22 +119,73 @@ class FrontendRepository {
 
     public function getReservationsByVetId( $vet_id )
     {
-        return  Reservation::where('vet_id',$vet_id)->get(); 
+        return  Reservation::with('owner')->where('vet_id',$vet_id)->get(); 
     } 
 
 
-    public function saveReservation($request, $vet_id)
+    public function saveReservation($request, $vet_id,$owner_id)
     {
+   
+    
+
         $date = $request->data;
         $newDate = date('d-m-Y', strtotime($date ));
         return Reservation::create([
                 'day'=>$request->data,
                 'hour'=>$request->godzina,
                 'status'=>0,
-                'user_id'=>Auth::user()->id,
+                'opis'=>$request->opis,
+                'owner_id'=> $owner_id,
                 'vet_id'=>$vet_id,
                             ]);
     }
+
+    public function confirmReservationVet($reservation_id)
+    {
+   
+    
+
+    $confirmReservationId=Reservation::find($reservation_id);
+
+        if($confirmReservationId->staus==0){
+        $confirmReservationId->update([
+
+          'status' => 1,
+          
+
+        ]
+        
+        );
+        return true;
+        }
+        return false;
+       
+       }
+
+
+       public function getReservationByOwnerId($owner_id)
+       {
+         $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->get();
+            return $ownerReservation;   
+                       
+       } 
+       public function addFormRegisterVet($vet, $request)
+       {
+   
+        
+      
+           $vet->cena_konsulatcji	= $request->input('cena');
+           $vet->opis= $request->input('opis');
+           $vet->phone()->numer =$request->input('numer');
+           $vet->address_address= $request->input('address_address');
+           $vet->address_latitude= $request->input('address_latitude');
+           $vet->address_longitude= $request->input('address_longitude');
+           
+           $vet->save();
+           return $vet;
+       }
+
+       
 }
 
 

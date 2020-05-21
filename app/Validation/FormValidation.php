@@ -17,7 +17,7 @@ class FormValidation{
     
     
   
-    public function vadlidationFormConfirmReservation($request,$vet_id)
+    public function vadlidationFormConfirmReservation($request,$vet_id,$owner_id)
     {
         $this->validate($request,[
         'imie'=>"required|string",
@@ -32,7 +32,7 @@ class FormValidation{
         
         
         
-        return $this->fR->saveReservation($request,$vet_id);
+        return $this->fR->saveReservation($request,$vet_id,$owner_id);
     }
 
 
@@ -63,6 +63,48 @@ class FormValidation{
         
         return    $this->fR->addComment($commentable_id, $type, $request);
     }
+
+
+    public function vadlidationFormRegisterVet($vet, $request)
+    {
+        $this->validate($request,[
+            'imie'=>"required|string",
+            'nazwisko'=>"required|string",
+            'opis'=>"required|string",
+            'cena'=>"required|string",
+            'numer'=>"required|integer",
+         
+    
+
+        ]);
+        
+        
+        
+        return    $this->fR->addFormRegisterVet($vet, $request);
+    }
+
+
+    //walidacja formularza dodawanie artykulu
+    public function vadlidationFormAddArticle($request)
+    {
+        if (!$request->hasFile('articlePicture'))
+        {
+            $this->validate($request,[
+                'title'=>"required|string",
+                'content'=>"required|string",
+                     
+            ]);
+          
+        }
+        $this->validate($request,[
+            'articlePicture'=>"image|max:100",
+            'title'=>"required|string",
+            'content'=>"required|string",
+            ]);
+       
+        return    $this->bR->addArticle($request);
+    }
+
 
 
 }

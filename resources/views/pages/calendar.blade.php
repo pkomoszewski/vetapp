@@ -7,8 +7,8 @@ date_default_timezone_set('Europe/Warsaw');
 setlocale(LC_ALL, 'pl', 'pl_PL', 'pl_PL.ISO8859-2', 'Polish');
 $duration=50;
 $cleanup=0;
-$start ="09:00";
-$end ="15:00";
+$start =$vet->TimeStart;
+$end =$vet->TimeEnd;
 function timeslots($duration,$cleanup,$start,$end){
 $start =new DateTime($start);
 $end=new DateTime($end);

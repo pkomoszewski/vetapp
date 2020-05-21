@@ -21,7 +21,7 @@
                                 <p>{{ $vet->imie }} {{ $vet->nazwisko}}</p>
                                 <p>{{ $vet->opis}}</p>
                                 <p>{{ $vet->adres }}</p>
-                                <p> Cena kosultacji: {{$vet->cena_konsultacji}} zł<p>
+                                <p> Cena kosultacji: {{$vet->cena_konsulatcji}} zł<p>
 
 
 
@@ -57,7 +57,7 @@
                                                 @foreach( $vet->comments as $comment)
                                                 <!-- Lecture 22 -->
 
-                                                <p> {{$comment->user->owners->Imie}} </p>
+                                                <p> {{$comment->user->owners->imie}} </p>
 
                                                 {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
                                                 $comment->rating) !!}
@@ -76,16 +76,16 @@
                             </div>
                         </div>
                     </div>
-
+                    @if($vet->address_latitude)
                     <div class="row mt-5">
                         <div class="col-12">
                             <div style="width: 100%; height: 400px" id="address-map"></div>
-
-
-
                         </div>
                     </div>
                 </div>
+
+
+                @endif
 
                 @auth
                 <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample"
@@ -99,7 +99,6 @@
 
                 <div class="collapse" id="collapseExample">
                     <div class="well">
-
 
                         <form method="POST"
                             action="{{ route('addComment',['commentable_id'=>$vet->id, 'type'=>'App\Vet'])}}"
@@ -129,7 +128,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-10 col-lg-offset-2">
-                                        <button type="submit" class="btn btn-primary">Send</button>
+                                        <button type="submit" class="btn btn-primary">Dodaj</button>
                                     </div>
                                 </div>
                             </fieldset>

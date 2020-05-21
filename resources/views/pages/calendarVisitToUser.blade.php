@@ -25,7 +25,7 @@
                             <h5 class="card-title text-muted text-uppercase text-center"></h5>
 
                             <h6 class="card-text text-center">{{$reservation->day}} </h6>
-                            <h6 class="card-text text-center">{{$reservation->vet->imie}} </h6>
+                            <h6 class="card-text text-center">{{$reservation->vet->name}} </h6>
                             <h6 class="card-text text-center">{{$reservation->hour}} </h6>
                             <p class="card-text text-center">{{$reservation->opis}} </p>
                             </h6>
@@ -38,10 +38,9 @@
                         @auth
                         <div class="card-footer">
                             @if($reservation->status)
-                            <p>Potwierdzone</p>
+                            <p>Status: Potwierdzone</p>
                             @else
-                            <a href="{{ route('confirmReservationVet',['vet_id'=>$vet_id,'reservation_id'=>$reservation->id]) }}"
-                                class="btn btn-primary btn-xs top-buffer">Potwierdz</a>
+                            <p>Status: niepotwierdzone</p>
                             @endif
 
 

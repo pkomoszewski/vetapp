@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
 use Illuminate\Http\Request;
-use App\Repositories\FrontendRepository;
 
 class HomeController extends Controller
 {
@@ -13,12 +11,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(FrontendRepository $frontendRepository)
+    public function __construct()
     {
-        $this->fR=$frontendRepository;
         $this->middleware('auth');
     }
-    
 
     /**
      * Show the application dashboard.
@@ -27,15 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-    
         return view('home');
-    }
-
-
-    public function articles()
-    {
-        $Articles= $this->fR->getObjectsArticles();
-
-        return view('pages.articles')->with('data',$Articles);;
     }
 }

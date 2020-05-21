@@ -10,15 +10,15 @@
 
   <title>Vetapp</title>
 
-  <!-- Bootstrap core CSS -->
+
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
+
   <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
     rel="stylesheet">
 
-  <!-- Custom styles for this template -->
+
   <link href="/css/one-page-wonder.min.css" rel="stylesheet">
   <link href="/css/one-page-wonder.css" rel="stylesheet">
 
@@ -54,14 +54,18 @@
             </div>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('articles.show') }}">Kontakt</a>
-          </li>
 
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('ShowListArticles') }}">Artykuły</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Kontakt</a>
+          </li>
           @endguest
           @auth
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('articles.show') }}">Artykuły</a>
+            <a class="nav-link" href="{{ route('ShowListArticles') }}">Artykuły</a>
           </li>
           <li class="nav-item dropdown">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -77,7 +81,9 @@
               <a class="dropdown-item" href="{{ route('profile.index',['user'=>Auth::user()->id ]) }}">Profil
                 użytkownika</a>
               @if(Auth::user()->hasRole('Użytkownik'))
-              <a class="dropdown-item" href="{{ route('reservations',['user_id'=>Auth::user()->id ]) }}">Moje wizyty</a>
+              <a class="dropdown-item"
+                href="{{ route('calendarVisitToUser',['owner_id'=>Auth::user()->owners->id ]) }}">Moje
+                wizyty</a>
               @elseif(Auth::user()->hasRole('Weterynarz'))
               <a class="dropdown-item" href="{{ route('calendarvisits',['user_id'=>Auth::user()->id ]) }}">Kalendarz
                 wizyt</a>
@@ -109,7 +115,7 @@
   <!-- Bootstrap core JavaScript -->
 
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="{{ asset('js/app.js') }}"></script> <!-- Lecture 5 -->
+  <script src="{{ asset('js/app.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

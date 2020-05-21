@@ -25,13 +25,14 @@
                 <label for="imie" class="col-lg-2 control-label">Imie</label>
                 <div class="col-lg-10">
                     <input name="imie" type="text" required class="form-control" id="name"
-                        value="{{Auth::user()->owners->Imie}}">
+                        value="{{Auth::user()->owners->imie}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="nazwisko" class="col-lg-2 control-label">Nazwisko</label>
                 <div class="col-lg-10">
-                    <input name="nazwisko" type="text" required class="form-control" id="surname" value="">
+                    <input name="nazwisko" type="text" required class="form-control" id="surname"
+                        value="{{Auth::user()->owners->nazwisko}}">
                 </div>
             </div>
 

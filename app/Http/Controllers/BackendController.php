@@ -21,6 +21,26 @@ class BackendController extends Controller
         return redirect()->back(); /// musze cos zrobic z tym
     }
 
+
+    public function showformAddArticle(){
+  
+        return view('backend.admin.addArticle');
+    }
+
+
+    ////////////////
+    public function showArticle($id){
+
+        $article = $this->bR->getArticle($id);
+        return view('pages.article')->with('article',$article);
+    }
+////////////////////////////
+
+    public function NewArticle(Request $request){
+
+        $add = $this->fV->vadlidationFormAddArticle($request);
+        return view('backend.admin.addArticle');
+    }
    
     
 

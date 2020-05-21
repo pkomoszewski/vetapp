@@ -24,6 +24,9 @@ Auth::routes();
 
 route::get('/registervet','Auth\RegisterController@showRegistrationVetForm' )->name('registervet');
 route::post('registervet','Auth\RegisterController@registerVet')->name('registervetpost');
+Route::get('register-step2', 'Auth\RegisterStep2Controller@showForm')->name('register-step2');
+Route::post('register-step2', 'Auth\RegisterStep2Controller@postForm')
+  ->name('register-step2post');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/allConcert', 'ConcertController@index');
@@ -51,8 +54,7 @@ Route::get('/order/{id}/{user}','OrderController@makeOrder')->name('makeOrder.ed
 
 
 
-// Route dla artykułow
-Route::get('/articles', 'HomeController@articles')->name('articles.show');
+
 
 
 //podpowiedz dla wyszukiwania miast
@@ -67,10 +69,10 @@ Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlik
 
 ///////////////////rezerwacje widoki rezerwacji u uzytkownika
 ////////u uzytkownika
-Route::get('/reservations/{user_id}/', 'FrontendController@siteReservation')->name('reservations');
+Route::get('/reservations/{owner_id}/', 'FrontendController@calendarVisitToUser')->name('calendarVisitToUser');
 ////////u weterynarza
 Route::get('/calendarvisits/{user_id}', 'FrontendController@siteCalendarvisit')->name('calendarvisits');
-
+Route::get('/calendarvisits/{vet_id}'.'/{reservation_id}', 'FrontendController@confirmReservationVet')->name('confirmReservationVet');
 
 ///////////////////
 Route::get('/reservationscalnedar/{vet_id}/{user_id}/', 'FrontendController@siteReservationCalendar')->name('reservationscalendar');
@@ -86,8 +88,25 @@ Route::get(trans('clinic').'/{id}','FrontendController@siteclinic')->name('sitec
 
 Route::get('/addAnimal','FrontendController@viewAddFormAnimal')->name('addAnimal');// Zmienic nazwe route
 
-route::post(trans('addNewAnimal').'/{id}','BackendController@NewAnimal')->name('addNewAnimal');
+Route::post(trans('addNewAnimal').'/{id}','BackendController@NewAnimal')->name('addNewAnimal');
 Route::get('/{animal_id}/delete', 'AnimalController@delete');
 
 // dodawanie komentarz
 Route::post('/addComment/{commentable_id}/{type}', 'FrontendController@addComment')->name('addComment'); 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//dodawanie artyków przez admina
+
+Route::middleware(['auth','CheckAdmin'])->group(function () {
+  Route::get('/admin/addarticle', 'BackendController@showformAddArticle')->name('addArticle');
+ 
+  Route::post(trans('addNewArticle'),'BackendController@NewArticle')->name('addNewArticle');
+});
+// Route dla artykułow
+Route::get('/articles', 'frontendController@showListArticles')->name('ShowListArticles');
+
+Route::middleware(['auth'])->group(function () {
+  Route::get('/showarticle/{id}', 'BackendController@showArticle')->name('showArticle');
+});
