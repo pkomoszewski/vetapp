@@ -14,7 +14,12 @@ use App\User;
 use App\Vet;
 class FrontendController extends Controller
 {
-
+    public function index()
+    {
+        $comments = $this->fR->getIndexSite();
+        
+     return view('pages.index')->with('comments',$comments);
+    }
 
     public function __construct(FrontendGateway $frontendGateway, FrontendRepository $frontendRepository,BackendRepository $BackendRepository,FormValidation $FormValidation)
     {
@@ -116,11 +121,11 @@ public function  viewAddFormAnimal()
 {
    
     
- return view('form.addAnimal');
+ return view('pages.addAnimal');
 }
 
 
-public function index(User $user){
+public function indexProfile(User $user){
 
 
     if(Auth::user()->hasRole(['Weterynarz'])){
@@ -158,6 +163,9 @@ public function profileEdit(Request $request )
 
     if ($request->isMethod('post')) 
     {
+
+
+  
         if(Auth::user()->hasRole(['Weterynarz'])){
          
 
@@ -204,7 +212,7 @@ public function profileEdit(Request $request )
                 }
               
 
-                return redirect()->back(); 
+                return redirect()->route('viewSucessSave');
 
 
         }else{
@@ -249,7 +257,7 @@ public function confirmReservation(Request $request, $vet_id)
     $reservation = $this->fV->vadlidationFormConfirmReservation($request, $vet_id,$owner_id);
             
 
-    return view('pages.index');
+    return view('pages.successReservation');
     
 }
 // potwierdzenie rezerwacji przez weterynarza

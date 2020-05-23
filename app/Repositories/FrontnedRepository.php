@@ -20,6 +20,15 @@ class FrontendRepository {
   
 
     
+  
+    public function getIndexSite()
+    {
+     $comments = Comment::where('commentable_type' ,'App\Vet')->with('user.owners')->get();
+    
+   
+        return $comments; 
+    } 
+    
     public function getListArticles()
     {
       
@@ -119,7 +128,7 @@ class FrontendRepository {
 
     public function getReservationsByVetId( $vet_id )
     {
-        return  Reservation::with('owner')->where('vet_id',$vet_id)->get(); 
+        return  Reservation::with('owner')->where('vet_id',$vet_id)->paginate(4); 
     } 
 
 
@@ -128,6 +137,7 @@ class FrontendRepository {
    
     
 
+$animal=(int)$request->animal;
         $date = $request->data;
         $newDate = date('d-m-Y', strtotime($date ));
         return Reservation::create([
@@ -137,8 +147,13 @@ class FrontendRepository {
                 'opis'=>$request->opis,
                 'owner_id'=> $owner_id,
                 'vet_id'=>$vet_id,
+                'animal_id'=>$animal
+                
                             ]);
     }
+
+
+
 
     public function confirmReservationVet($reservation_id)
     {
@@ -165,22 +180,27 @@ class FrontendRepository {
 
        public function getReservationByOwnerId($owner_id)
        {
-         $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->get();
+         $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->orderBy('day','asc')->paginate(2);
             return $ownerReservation;   
                        
        } 
+
+
+
        public function addFormRegisterVet($vet, $request)
        {
    
         
-      
+          $city= $request->input('miejscowosc');
            $vet->cena_konsulatcji	= $request->input('cena');
            $vet->opis= $request->input('opis');
            $vet->phone()->numer =$request->input('numer');
-           $vet->address_address= $request->input('address_address');
+           $vet->adres= $request->input('adres');
            $vet->address_latitude= $request->input('address_latitude');
            $vet->address_longitude= $request->input('address_longitude');
-           
+           $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
+           $city->save();
+           $vet->city_id =$city->id;
            $vet->save();
            return $vet;
        }

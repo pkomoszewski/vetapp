@@ -41,19 +41,20 @@
                     @endforeach
 
                     @foreach ($results->vets as $vet)
-                    <div class="row">
-                        <div class="container mt-5">
-                            <div class="card">
-                                <div class="row">
-                                    <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
 
+                            <div class="card-title mb-4">
+                                <div class="d-flex justify-content-start">
+                                    <div class="image-container">
                                         @if ($vet->photos->isEmpty())
                                         @else
                                         <img src="{{$vet->photos->first()->path}}" alt=""
                                             class="img-circle img-responsive" with='100px' height='100px'>
                                         @endif
+
                                     </div>
-                                    <div class="col-6">
+                                    <div class="userData ml-3">
                                         <a href="{{ route('sitevet',['id'=>$vet->id]) }}">
                                             <p> {{$vet->imie}} {{$vet->nazwisko}}</p>
                                         </a>
@@ -65,26 +66,23 @@
                                         $vet->averageRating()) !!}
                                         <p> Opini {{$vet->comments->count()}}</p>
                                         <p>{{ $vet->users->count() }} osób lubli</p>
-                                    </div>
-                                    <div class="col-3">
 
-                                        @if(Auth::guest())
-                                        <p><a href="{{ route('login') }}">Zaloguj sie aby umówić się na wizyte</a></p>
-                                        @else
-                                        <a href="{{ route('reservationscalendar',['vet_id'=>$vet->id,'user_id'=>Auth::user()->id]) }}"
-                                            class="btn btn-success pull-right" role="button">Umów się na wizytę</a>
-                                        @endif
+                                        <div class="row">
+
+                                            @if(Auth::guest())
+                                            <p><a href="{{ route('login') }}">Zaloguj sie aby umówić się na wizyte</a>
+                                            </p>
+                                            @else
+                                            <a href="{{ route('reservationscalendar',['vet_id'=>$vet->id,'user_id'=>Auth::user()->id]) }}"
+                                                class="btn btn-dark pull-right m-3" role="button">Umów się na wizytę</a>
+                                            @endif
+                                        </div>
                                     </div>
+
                                 </div>
-
-
-
-
                             </div>
                         </div>
 
                     </div>
-                </div>
-
-                @endforeach
-                @endsection
+                    @endforeach
+                    @endsection

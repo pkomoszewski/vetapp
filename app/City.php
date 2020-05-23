@@ -7,6 +7,7 @@ use App\Vet;
 use App\Clinic;
 class City extends Model
 {
+    protected $fillable = ['name'];
     public function vets(){
         return $this->hasMany(Vet::class);
 

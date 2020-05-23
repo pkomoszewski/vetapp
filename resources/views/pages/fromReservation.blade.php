@@ -13,9 +13,13 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Dla kogo umawiasz wizytę?</label>
                 <div class="col-lg-10">
-                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Wybierz..........</option>
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="animal">
 
+                        @foreach(Auth::user()->owners->animals as $animal)
+                        <option value="{{ $animal->id }} ">
+                            {{$animal->imie}}
+                        </option>
+                        @endforeach
 
                     </select>
                 </div>
@@ -68,7 +72,7 @@
 
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">Następny krok</button>
+                    <button type="submit" class="btn btn-dark">Zakończ rejestracje</button>
                 </div>
             </div>
 

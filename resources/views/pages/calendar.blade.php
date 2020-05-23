@@ -64,7 +64,7 @@ return $m;
 
             <center>
                 <h2><?php echo polish_month($month) ." ". $year ?></h2>
-                <a class="btn btn-primary btn-xs"
+                <a class="btn btn-outline-secondary btn-xs"
                     href="<?php echo $_SERVER['PHP_SELF'].'?week='.($week+1).'&year='.$year; ?>">Następny tydzień</a>
             </center>
 
@@ -87,7 +87,7 @@ return $m;
      $dzientygodnia=$dt->format('l');
 if($dt->format('d M Y')==date('d M Y')){
 
-    echo "<td class='bg-info'>" . $konwersja[$dzientygodnia] ."<p>" . $dt->format('d.m');  " </p></td>\n";
+    echo "<td class='bg-secondary text-white'>" . $konwersja[$dzientygodnia] ."<p>" . $dt->format('d.m');  " </p></td>\n";
 }else{echo "<td>" . $konwersja[$dzientygodnia] . "<p>" . $dt->format('d.m');  " </p></td>\n";}
 
 
@@ -122,10 +122,10 @@ if($dt->format('d M Y')==date('d M Y')){
                 
                 
                      if(testTime($ts,$day->format('Y-m-d'),$reservations) || $day->format('Y-m-d H:i:s') < date("Y-m-d H:i:s")){
-                            ?> <td><button class="btn btn-danger btn-xs"><?php  echo $ts?></button></td>
+                            ?> <td><button class="btn btn-dark btn-xs"><?php  echo $ts?></button></td>
                     <?php     }else{ ?><td><a
                             href="{{ route('ViewformReservation',['date'=>$day->format('Y-m-d'),'ts'=>$ts,'vet_id'=>$vet_id ]) }}"><button
-                                class="btn btn-success btn-xs"><?php  echo $ts?></button></a></td>
+                                class="btn btn-light btn-xs"><?php  echo $ts?></button></a></td>
 
                     <?php  } ?>
 

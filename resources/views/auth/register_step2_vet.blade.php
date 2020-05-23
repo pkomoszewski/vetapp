@@ -36,6 +36,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="text"><i class="zmdi zmdi-text"></i></label>
+                            <input type="text" name="adres" value="{{ old('adres') }}" placeholder="adres" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="text"><i class="zmdi zmdi-text"></i></label>
+                            <input type="text" id="citysearch" name="miejscowosc" value="{{ old('miejscowosc') }}"
+                                placeholder="miejscowość" />
+                        </div>
+                        <div class="form-group">
 
                             <input type="text" id="address-input" name="address_address" class="form-control map-input">
                             <input type="hidden" name="address_latitude" id="address-latitude" value="0" />
@@ -61,12 +71,18 @@
         </div>
     </section>
 </div>
+
+
 @endsection
 
 @section('scripts')
 @parent
 <script
     src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize"
-    async defer></script>
+    async defer>
+</script>
+
+
+
 <script src="/js/mapInput.js"></script>
 @stop

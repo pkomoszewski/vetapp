@@ -19,8 +19,10 @@ class CreateReservationsTable extends Migration
             $table->date('hour'); 
             $table->string('opis');
             $table->boolean('status'); 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
+            $table->unsignedBigInteger('animal_id');
+            $table->unsignedBigInteger('owner_id');
+            $table->unsignedBigInteger('vet_id');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade'); 
             $table->unsignedBigInteger('vet_id');
             $table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade'); 
             $table->timestamps();

@@ -19,6 +19,16 @@ class FormValidation{
   
     public function vadlidationFormConfirmReservation($request,$vet_id,$owner_id)
     {
+
+        if($request->animal){
+
+
+            $this->validate($request,[
+                'animal'=>"required|integer",
+                ]); 
+                
+              
+        }
         $this->validate($request,[
         'imie'=>"required|string",
         'nazwisko'=>"required|string",
@@ -67,9 +77,14 @@ class FormValidation{
 
     public function vadlidationFormRegisterVet($vet, $request)
     {
+
+
+
         $this->validate($request,[
             'imie'=>"required|string",
             'nazwisko'=>"required|string",
+            'adres'=>"required|string",
+            'miejscowosc'=>"required|string",
             'opis'=>"required|string",
             'cena'=>"required|string",
             'numer'=>"required|integer",
@@ -106,6 +121,17 @@ class FormValidation{
     }
 
 
+    public function vadlidationFormAddHistoryTreatment($request,$id)
+    {
+   
+        $this->validate($request,[
+            'opis'=>"required|string",
+            'cena'=>"required|integer",
+            ]);
+
+       
+        return    $this->bR->AddHistoryTreatmentAnimal($request,$id);
+    }
 
 }
 

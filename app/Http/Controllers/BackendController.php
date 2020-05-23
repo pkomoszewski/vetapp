@@ -22,11 +22,36 @@ class BackendController extends Controller
     }
 
 
+    public function showHistoryTreatmeantAnimal($id){
+
+        $histories = $this->bR->getHistoryTreatmentAnimal($id);
+        $totalbill = $this->bR->sumBil($id);
+        return view('pages.viewHistoryTreatmentAnimal')->with(['histories'=>$histories,'totalbill'=>$totalbill],);
+ 
+    }
+
+
     public function showformAddArticle(){
   
         return view('backend.admin.addArticle');
     }
 
+    public function viewSuccessSave(){
+  
+        return view('pages.successSave');
+    }
+
+    public function showformAddHistoryTreatmeantAnimal($animal_id){
+  
+        return view('backend.vet.addHistoryTreatment')->with('animal_id',$animal_id);
+    }
+
+
+    public function NewHistoryTreatmeantAnimal(Request $request,$id){
+  
+        $add = $this->fV->vadlidationFormAddHistoryTreatment($request,$id);
+        return view('backend.admin.addArticle');
+    }
 
     ////////////////
     public function showArticle($id){

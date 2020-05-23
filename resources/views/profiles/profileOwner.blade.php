@@ -1,93 +1,146 @@
 @extends('main')
 
 @section('content')
+
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
+            <div class="card">
 
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="container m-5">
-                            <div class="col-xs-12 col-sm-3">
-                                <img src="http://lorempixel.com/200/200/people/?x=<?= mt_rand(1, 9999999) ?>" alt=""
-                                    class="img-circle img-responsive">
-                            </div>
-                            <div class="col-xs-12 col-sm-9 ">
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                                <img src="http://placehold.it/150x150" id="imgProfile"
+                                    style="width: 150px; height: 150px" class="img-thumbnail" />
+                                <div class="middle">
+                                    <a class="btn btn-dark mt-2"
+                                        href="{{ route('profile',['user'=>Auth::user()->id]) }}"> Edycja profilu </a>
 
-                                <p> {{$user->email}}</p>
-                                <p> {{$user->owners->Imie}}</p>
 
-                                <a href="{{ route('profile',['user'=>Auth::user()->id]) }}"> Edycja profilu </a>
-
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 top-buffer">
-                            <div class='bg-info text-white text-center d-flex justify-content-around'>
-                                <div>
 
                                 </div>
-                                <div>
-                                    <p><a href="{{ route('addAnimal') }}" class="btn btn-primary btn-xs"
-                                            role="button">Dodaj</a></p>
-                                </div>
-
-
                             </div>
-                            @if ($user->owners->animals->isEmpty())
-                            <div>Nie mam aktualnie dodanych zwierząt</div>
-                            @else
-                            @foreach($user->owners->animals as $animal)
-
-
-                            <li class="list-group-item mb-2">
-                                <a href="">{{$animal->imie}}</a>
-
-                                <p>Gatunek: {{$animal->gatunek}}</p>
-                                <a href='/{{$animal->id}}/delete'>Usuń</a>
-                            </li>
-
-
-
-                            @endforeach
-                            @endif
-
-                            @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
+                            <div class="userData ml-3">
+                                <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
+                                        href="javascript:void(0);">
+                                        <p> {{$user->owners->Imie}}</p>
+                                    </a></h2>
+                                <h6 class="d-block">Liczba komentarzy: {{$user->comments->count()}}</h6>
+                                <h6 class="d-block">Liczba zwierzęta: {{$user->owners->animals->count()}}</h6>
                             </div>
-                            @endif
+                            <div class="ml-auto">
+                                <input type="button" class="btn btn-primary d-none" id="btnDiscard"
+                                    value="Discard Changes" />
+                            </div>
                         </div>
-                        <div class="col-sm-12">
-                            @if ($user->comments->isEmpty())
-                            <div>Nie mam aktualnie żadnych komentarzy</div>
-                            @else
-                            <p> Moje komentarze </p>
-                            @foreach($user->comments as $comment)
-                            <li class="list-group-item  mb-2">
-                                {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
-                                $comment->rating) !!}
-                                {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
-                                $comment->rating) !!}
-                                {{$comment->content}}
-
-                                <hr />
-                                <a href="{{ $comment->commentable->link}}">{{ $comment->commentable->type }}</a>
-                            </li>
-
-                            @endforeach
-                            @endif
-
-                        </div>
-
-
-                        Jeszcze dopisac polubienia
                     </div>
-                </div>
-            </div>
 
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+                                        role="tab" aria-controls="basicInfo" aria-selected="true">Informacje</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="Animal-tab" data-toggle="tab" href="#Animal" role="tab"
+                                        aria-controls="Animal" aria-selected="false">Moje zwierzęta</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
+                                        aria-controls="comment" aria-selected="false">Moje komentarze</a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content ml-1" id="myTabContent">
+                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
+                                    aria-labelledby="basicInfo-tab">
+
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Imię</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{$user->owners->imie}}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Email</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            <p> {{$user->email}}</p>
+                                        </div>
+                                    </div>
+                                    <hr />
+
+
+
+
+                                </div>
+                                <div class="tab-pane fade" id="Animal" role="tabpanel" aria-labelledby="Animal-tab">
+                                    @if ($user->owners->animals->isEmpty())
+                                    <div>Nie mam aktualnie dodanych zwierząt</div>
+                                    @else
+                                    @foreach($user->owners->animals as $animal)
+
+
+                                    <li class="list-group-item mb-2">
+                                        <a href="">{{$animal->imie}}</a>
+
+                                        <p>Gatunek: {{$animal->gatunek}}</p>
+                                        <a href='/{{$animal->id}}/delete'>Usuń</a>
+                                    </li>
+
+
+
+                                    @endforeach
+                                    @endif
+
+
+                                    <a href="{{ route('addAnimal') }}" class="btn btn-dark btn-xs"
+                                        role="button">Dodaj</a>
+                                </div>
+
+
+                                <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                                    @if ($user->comments->isEmpty())
+                                    <div>Nie mam aktualnie żadnych komentarzy</div>
+                                    @else
+                                    <p> Moje komentarze </p>
+                                    @foreach($user->comments as $comment)
+                                    <li class="list-group-item  mb-2">
+                                        {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
+                                        $comment->rating) !!}
+                                        {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
+                                        $comment->rating) !!}
+                                        <p>{{$comment->content}}</p>
+
+
+                                        <hr />
+                                        <a href="{{ $comment->commentable->link}}">{{ $comment->commentable->type }}</a>
+                                    </li>
+
+                                    @endforeach
+                                    @endif
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
+
 @endsection

@@ -1,101 +1,115 @@
 @extends('main')
-@section('javascript')
+
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-12">
 
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="container m-5">
-                            <div class="col-xs-12 col-sm-3">
-                                @if ($vet->photos->isEmpty())
-                                @else
-                                <img src="{{$vet->photos->first()->path}}" alt="" class="img-circle img-responsive"
-                                    with='100px' height='100px'>
-                                @endif
-                            </div>
-                            <div class="col-xs-12 col-sm-9 ">
-                                <p>{{ $vet->imie }} {{ $vet->nazwisko}}</p>
-                                <p>{{ $vet->opis}}</p>
-                                <p>{{ $vet->adres }}</p>
-                                <p> Cena kosultacji: {{$vet->cena_konsulatcji}} zł<p>
 
 
 
-                                        @auth
-                                        <div class="col-6 ml-2">
-                                            @if($vet->isLiked())
-                                            <a href="{{ route('unlike',['like_id'=>$vet->id,'type'=>'App\Vet']) }}"
-                                                class="btn btn-primary btn-xs top-buffer">Unlike this object</a>
-                                            @else
-                                            <a href="{{ route('like',['like_id'=>$vet->id,'type'=>'App\Vet']) }}"
-                                                class="btn btn-primary btn-xs top-buffer">Like this object</a>
-                                            @endif
+            <div class="card-body">
 
-                                            @endauth
-                                        </div>
-                                        <div id="reservation">
-                                            <div id="datepicker" data-date="12/03/2012"></div>
-                                            <input type="hidden" id="my_hidden_input">
-                                        </div>
+                <div class="card-title mb-4">
+                    <div class="d-flex justify-content-start">
+                        <div class="image-container">
+                            @if ($vet->photos->isEmpty())
+                            @else
+                            <img src="{{$vet->photos->first()->path}}" alt="" class="img-circle img-responsive"
+                                with='100px' height='100px'>
+                            @endif
 
-
-
-
-
-
-
-
-                                        <div class="row">
-
-                                            <div class="col-6 mt-5">
-                                                Komentarze
-
-                                                @foreach( $vet->comments as $comment)
-                                                <!-- Lecture 22 -->
-
-                                                <p> {{$comment->user->owners->imie}} </p>
-
-                                                {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
-                                                $comment->rating) !!}
-                                                {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
-                                                $comment->rating) !!}
-                                                <p>{{$comment->content}}</p>
-
-
-
-                                                <hr>
-                                                @endforeach
-
-                                            </div>
-                                        </div>
-
-                            </div>
                         </div>
-                    </div>
-                    @if($vet->address_latitude)
-                    <div class="row mt-5">
-                        <div class="col-12">
-                            <div style="width: 100%; height: 400px" id="address-map"></div>
+                        <div class="userData ml-3">
+
+
+
+                            <h3>{{ $vet->imie }} {{ $vet->nazwisko}}</h3>
+                            <p>O sobie: {{ $vet->opis}}</p>
+                            <p>Adres: {{ $vet->adres }} {{ $vet->miejscowosc }}</p>
+                            <p> Cena kosultacji: {{$vet->cena_konsulatcji}} zł<p>
+
+                                    {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
+                                    $vet->averageRating()) !!}
+                                    {{-- Mozna spróbowac przypisac zmiena do cache.  Dwa razy sie wykonuje zapytanie do bazy nie potrzebnie--}}
+                                    {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
+                                    $vet->averageRating()) !!}
+                                    <p> Opini {{$vet->comments->count()}}</p>
+                                    <p>{{ $vet->users->count() }} osób lubli</p>
+                                    <div class="row">
+
+                                        @if(Auth::guest())
+                                        <p><a href="{{ route('login') }}">Zaloguj sie aby umówić się na
+                                                wizyte</a>
+                                        </p>
+                                        @else
+                                        <a href="{{ route('reservationscalendar',['vet_id'=>$vet->id,'user_id'=>Auth::user()->id]) }}"
+                                            class="btn btn-dark pull-right m-3" role="button">Umów się na
+                                            wizytę</a>
+                                        @endif
+                                    </div>
                         </div>
+
                     </div>
                 </div>
 
 
-                @endif
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+
+                            <li class="nav-item active">
+                                <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment"
+                                    role="tab">Komenatrze
+                                    użytkowników</a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab">Lokalizacja na
+                                    mapie</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content ml-1" id="myTabContent">
+
+                            <div class="tab-pane fade show active" id="comment" role="tabpanel">
+                                @foreach( $vet->comments as $comment )
+
+                                <li class="list-group-item  mb-2">
+                                    <p>{{$comment->user->email}}</p>
+                                    {!! str_repeat('<i class="fa fa-star"></i>',
+                                    $comment->rating) !!}
+                                    {!! str_repeat('<i class="fa fa-star-o"></i>', 5 -
+                                    $comment->rating) !!}
+                                    <p>{{$comment->content}}</p>
+
+
+                                    <hr />
+
+                                </li>
+                                @endforeach
+                            </div>
+
+                            <div class="tab-pane fade" id="map" role="tabpanel">
+
+
+                                <div style="width: 100%; height: 400px" id="address-map"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
                 @auth
-                <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample"
+                <a class="btn btn-dark" role="button" data-toggle="collapse" href="#collapseExample"
                     aria-expanded="false" aria-controls="collapseExample">
-                    Add comment
+                    Dodaj komentarz
                 </a>
                 @else
-                <p><a href="{{ route('login') }}">Login to add a comment</a></p>
+                <p><a href="{{ route('login') }}">Zaloguj się, aby dodać komentarz</a></p>
                 @endauth
-
 
                 <div class="collapse" id="collapseExample">
                     <div class="well">
@@ -128,7 +142,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-10 col-lg-offset-2">
-                                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                                        <button type="submit" class="btn btn-dark">Zapisz komentarz</button>
                                     </div>
                                 </div>
                             </fieldset>
@@ -137,25 +151,35 @@
 
                     </div>
                 </div>
-                <script>
-                    var map;
-         function initMap() {
-            var uluru = {lat: {{$vet->address_latitude}}, lng: {{$vet->address_longitude}}};
-            var map = new google.maps.Map(document.getElementById('address-map'), {
-            center: uluru,
-            zoom: 15,
-         
-           });
-         
-            var marker = new google.maps.Marker({position: uluru, map: map});
-             }
-                </script>
-                @endsection
+            </div>
 
 
 
-                <script
-                    src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY')}}&callback=initMap">
-                    async defer
-                </script>
-                @endsection
+        </div>
+
+    </div>
+    <script>
+        var map;
+             function initMap() {
+                var uluru = {lat: {{$vet->address_latitude}}, lng: {{$vet->address_longitude}}};
+                var map = new google.maps.Map(document.getElementById('address-map'), {
+                center: uluru,
+                zoom: 15,
+             
+               });
+             
+                var marker = new google.maps.Marker({position: uluru, map: map});
+                 }
+             
+    </script>
+</div>
+
+@endsection
+
+@section('javascript')
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY')}}&callback=initMap">
+    async defer
+</script>
+
+@endsection

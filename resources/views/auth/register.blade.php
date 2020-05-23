@@ -5,7 +5,7 @@
         <div class="container">
             <div class="signup-content">
                 <div class="signup-form">
-                    <h2 class="form-title">Utworz konto użytkownika</h2>
+                    <h2 class="form-title">Utwórz konto użytkownika</h2>
                     <form method="POST" class="register-form" id="register-form" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group">
@@ -23,7 +23,7 @@
                             <label for="text"><i class="zmdi zmdi-text"></i></label>
                             <input type="text" name="imie" value="{{ old('imie') }}" id="imie"
                                 placeholder="Twój Imie" />
-                            @error('email')
+                            @error('imie')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -53,7 +53,17 @@
                             <input type="submit" name="signup" id="signup" class="form-submit" value="Rejestracja" />
                         </div>
                     </form>
+                    @if ($errors->any())
+                    <div style="color: red;">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
+
 
             </div>
         </div>

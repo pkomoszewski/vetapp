@@ -12,6 +12,7 @@ use App\Vet;
 use App\Photo;
 use App\Phone;
 use App\Owner;
+use App\TreatmentHistory;
 use Illuminate\Support\Facades\Auth;
 class BackendRepository {  
     
@@ -22,14 +23,26 @@ class BackendRepository {
         return Animal::find($id);
     }
             
-
-
-    
-    public function getArticle($id)
+    public function getHistoryTreatmentAnimal($id)
     {
-        return Article::find($id);
+        return TreatmentHistory::where('animal_id',$id)->get();
     }
     
+    public function sumBil($id)
+    {
+
+        $result = TreatmentHistory::where('animal_id',$id)->sum('rachunek');
+
+        return  $result;
+    }
+
+    public function getArticle($id)
+    {
+
+
+        return Article::with('comments.user','photos')->find($id);
+    }
+
 public function deleteAnimal(Animal $Animal)
 {
     return $Animal->delete();
@@ -53,6 +66,24 @@ public function addNewAnimal($request){
 
 }
 
+
+public function AddHistoryTreatmentAnimal($request,$id){
+
+  
+
+
+    $newTreatmentHistory = TreatmentHistory::create([
+        'opis'=>$request->input('opis'),
+        'weterynarz'=> Auth::user()->vets->name,
+        'rachunek'=> $request->input('cena'),
+        'animal_id'=> $id,
+    ]);
+    $newTreatmentHistory->save();
+    return $newTreatmentHistory;
+
+}
+
+
 public function saveVet($request)
 {
     $vet = Vet::where('user_id',$request->user()->id)->first();
@@ -68,6 +99,25 @@ public function saveVet($request)
 
     return $vet;
 }
+
+
+
+public function addHistoryTreatmenatAnimal($request)
+{
+    $vet = Vet::where('user_id',$request->user()->id)->first();
+    $vet->imie = $request->input('imie');
+    $vet->nazwisko = $request->input('nazwisko');
+    $vet->opis = $request->input('opis');
+    $vet->cena_konsulatcji = $request->input('cena');
+    $vet->godzina_otwarcia = $request->input('godzina_otwarcia');
+    $vet->godzina_zamkniecia = $request->input('godzina_zamkniecia');
+    $vet->adres = $request->input('adres');
+    $vet->phone()->number =$request->input('numer');
+    $vet->save();
+
+    return $vet;
+}
+
 
 
 public function createVetPhoto($vet,$path)
@@ -98,13 +148,7 @@ public function getPhone($id)
 
 public function updatePhone(Vet $vet, $phone,$numer)
 {
-
-
-   
     return  $vet->phone->update(['numer'=> $numer,]);
-
-
-
 }
 
 

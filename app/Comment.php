@@ -11,7 +11,7 @@ class Comment extends Model
         return $this->morphTo();
     }
     
-    /* Lecture 16 */
+
     public function user()
     {
         return $this->belongsTo('App\User');

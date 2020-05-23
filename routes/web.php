@@ -13,9 +13,7 @@
 
 use App\Http\Controllers\OrderController;
 
-Route::get('/', function () {
-    return view('pages.index');
-});
+Route::get('/', 'FrontendController@index');
 
 Route::get('/calendar', function () {
     return view('pages.calendar');
@@ -28,8 +26,7 @@ Route::get('register-step2', 'Auth\RegisterStep2Controller@showForm')->name('reg
 Route::post('register-step2', 'Auth\RegisterStep2Controller@postForm')
   ->name('register-step2post');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/allConcert', 'ConcertController@index');
+;
 
 
 // Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
@@ -41,15 +38,13 @@ Route::post(trans('save.vetprofile').'/{id}','ProfilesController@edit')->name('p
 
 
 //Routing do profilu uzytkownika zaleznie czy jest Onwerem czy weterynarzem
-Route::get('/profile/{user}', 'FrontendController@index')->name('profile.index');
+Route::get('/profile/{user}', 'FrontendController@indexProfile')->name('profile.index');
 // Edycja "Profilu przez uzytkownika"
 Route::match(['GET','POST'],trans('routes.profile').'/{user}','FrontendController@profileEdit')->name('profile');
 
 
 
-// do wyrzucenia 
-Route::get('/showorder/{id}','OrderController@index')->name('showOrders');
-Route::get('/order/{id}/{user}','OrderController@makeOrder')->name('makeOrder.edit');
+
 
 
 
@@ -109,4 +104,15 @@ Route::get('/articles', 'frontendController@showListArticles')->name('ShowListAr
 
 Route::middleware(['auth'])->group(function () {
   Route::get('/showarticle/{id}', 'BackendController@showArticle')->name('showArticle');
+});
+Route::middleware(['auth'])->group(function () {
+  Route::get('/history/{id}', 'BackendController@showHistoryTreatmeantAnimal')->name('showHistoryTreatmeantAnimal');
+
+});
+
+Route::middleware(['auth'])->group(function () {
+  Route::get('/successsave', 'BackendController@viewSuccessSave')->name('viewSucessSave');
+
+  Route::get('/historyadd/{id}', 'BackendController@showformAddHistoryTreatmeantAnimal')->name('showformAddHistoryTreatmeantAnimal');
+  Route::post('/addHistory/{id}','BackendController@NewHistoryTreatmeantAnimal')->name('addNewHistoryTreatmeantAnimal');
 });

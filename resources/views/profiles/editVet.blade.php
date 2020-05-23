@@ -36,8 +36,8 @@
             <div class="form-group">
                 <label for="opis" class="col-lg-2 control-label">Opis</label>
                 <div class="col-lg-10">
-                    <input name="opis" type="textarea" required class="form-control" id="opis"
-                        value="{{$user->vets->opis}}">
+                    <textarea class="form-control" id="textarea" rows="10" name="opis">{{$user->vets->opis}}</textarea>
+
                 </div>
             </div>
 
@@ -71,7 +71,7 @@
 
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">Zapisz</button>
+                    <button type="submit" class="btn btn-dark">Zapisz</button>
                 </div>
             </div>
             <div class="form-group">

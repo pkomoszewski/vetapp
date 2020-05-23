@@ -21,17 +21,22 @@
                     <div class="card mb-4">
 
 
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h5 class="card-title text-muted text-uppercase text-center"></h5>
 
                             <h6 class="card-text text-center">{{$reservation->day}} </h6>
-                            <h6 class="card-text text-center">{{$reservation->vet->name}} </h6>
                             <h6 class="card-text text-center">{{$reservation->hour}} </h6>
-                            <p class="card-text text-center">{{$reservation->opis}} </p>
+                            <h6 class="card-text text-center">Weterynarz: {{$reservation->vet->name}} </h6>
+                            <h6 class="card-text text-center">umówiony z {{$reservation->animal->imie}}
+
+                                <p class="card-text text-center">{{$reservation->opis}} </p>
                             </h6>
 
                             <hr>
-
+                            <a href="{{ route('showHistoryTreatmeantAnimal',['id'=>$reservation->animal->id]) }}">
+                                <button class="btn btn-dark btn-xs">Historia Leczenia
+                                </button>
+                            </a>
 
 
                         </div>
@@ -51,7 +56,7 @@
                 @endforeach
                 @endif
 
-
+                {{$reservations->links()}}
             </div>
         </div>
     </section>

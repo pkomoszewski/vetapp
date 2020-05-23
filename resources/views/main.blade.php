@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
 
@@ -31,7 +31,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light  ">
+  <nav class="navbar-expand-lg navbar-light  ">
     <div class="container">
       <a class="navbar-brand" href="/">VettApp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
