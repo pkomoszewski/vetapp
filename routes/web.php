@@ -92,12 +92,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//dodawanie artyków przez admina
+//Panel administratora Drugi moduł
 
 Route::middleware(['auth','CheckAdmin'])->group(function () {
   Route::get('/admin/addarticle', 'BackendController@showformAddArticle')->name('addArticle');
- 
+  Route::get('/admin/pas', 'BackendController@showAdminPanel')->name('indexPAS');
+  Route::get('/admin/visits', 'BackendController@showAllReservations')->name('indexVisits');
   Route::post(trans('addNewArticle'),'BackendController@NewArticle')->name('addNewArticle');
+  Route::get('delete/{id}','BackendController@deleteUser')->name('deleteUser');
+  Route::get('/admin/ban/{id}','BackendController@banUser')->name('banUser');
+  Route::get('/admin/vet/all','BackendController@showAllVet')->name('allVet');
+
 });
 // Route dla artykułow
 Route::get('/articles', 'frontendController@showListArticles')->name('ShowListArticles');

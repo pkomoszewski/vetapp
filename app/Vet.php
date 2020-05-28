@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class Vet extends Model
 {
+  
 
     use Presenters\VetPresenter; 
+    protected $fillable = ['imie','nazwisko','Vet'];
     public function cities(){
         return $this->hasOne(City::class);
 

@@ -12,6 +12,8 @@ use App\Vet;
 use App\Photo;
 use App\Phone;
 use App\Owner;
+use App\Role;
+use App\Reservation;
 use App\TreatmentHistory;
 use Illuminate\Support\Facades\Auth;
 class BackendRepository {  
@@ -43,12 +45,60 @@ class BackendRepository {
         return Article::with('comments.user','photos')->find($id);
     }
 
+////////////////////////////////////////////////////////////////////
+    public function deleteUser($id)
+    {
+        $User=User::find($id);
+        return $User->delete();
+    }
+  //blokowanie i odblokowywanie uzytkownikow
+    public function banUser($id)
+    {
+        $User=User::find($id);
+        $message='';
+            if( $User->ban)
+            {
+                $User->ban=false; 
+
+                $message="Użytkownik został odblokowany";
+            }else{
+
+                $User->ban=true;
+                
+                $message="Użytkownik został zablokwany";
+            }
+                    
+            $User->save();
+            return $message;
+        
+    }
+////////////////////////////////////////////////////////
+//Obsluga widoku admina weterynarz
+public function showAllVet()
+{
+ 
+    $Vets =Role::with('users.vets.phone',) -> where ('typ', 'Weterynarz') -> get();
+    return $Vets;
+}
+
+////////////////////////////////////////////////////do przemyslenia troche douzo
 public function deleteAnimal(Animal $Animal)
 {
     return $Animal->delete();
 }
    
+public function getOwner()
+{
+    $Owners =Role::with('users.owners') -> where ('typ', 'Użytkownik') -> get();
+    return $Owners;
+}
 
+
+public function getAllReservations()
+{
+    $Reservations =Reservation::with('owner','animal')->get();
+    return $Reservations;
+}
 
 public function addNewAnimal($request){
 

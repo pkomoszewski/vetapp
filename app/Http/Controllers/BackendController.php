@@ -59,14 +59,47 @@ class BackendController extends Controller
         $article = $this->bR->getArticle($id);
         return view('pages.article')->with('article',$article);
     }
-////////////////////////////
-
+///////////////////////////////////Panel administrator list
     public function NewArticle(Request $request){
 
         $add = $this->fV->vadlidationFormAddArticle($request);
         return view('backend.admin.addArticle');
     }
    
-    
+    public function showAdminPanel(){
+
+     $Owners=$this->bR->getOwner();
+        return view('backend.admin.index')->with('owners',$Owners);
+    }
+
+    public function showAllReservations(){
+
+        $Reservations=$this->bR->getAllReservations();
+           return view('backend.admin.showAllReservation')->with('Reservations',$Reservations);
+       }
+///////////////////////////////////////////////////////////////////////////////
+//Obsluga userów w panelu administaratora
+
+       public function deleteUser($id){
+
+        $deleteUser=$this->bR->deleteUser($id);
+          return redirect()->back()->with('success', 'Użytkownik został usunięty');
+       }
+       
+       public function BanUser($id){
+        $BanUser=$this->bR->BanUser($id);
+          return redirect()->back()->with('success', $BanUser);
+       }
+
+///////////////////////////////////////////////////////////////////////////////
+//Obsluga weterynarzy na panelu administratora
+   
+public function showAllVet(){
+
+    $vets=$this->bR->showAllVet();
+       return view('backend.admin.showAllVet')->with('vets',$vets);
+   }
+
 
 }
+

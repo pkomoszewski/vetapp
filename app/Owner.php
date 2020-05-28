@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Owner extends Model
 {
+    use Presenters\OwnerPresenter; 
     protected $fillable = ['imie'];
     public function animals()
     {

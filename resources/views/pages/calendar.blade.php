@@ -70,7 +70,7 @@ return $m;
 
 
             <br><br>
-            <table class="table table-bordered">
+            <table class="table table-borderless">
                 <tr class="success">
 
                     <?php
@@ -85,12 +85,20 @@ return $m;
      $konwersja['Saturday'] = 'sobota';
      $konwersja['Sunday'] = 'niedziela';
      $dzientygodnia=$dt->format('l');
+
+
+   
+
+    
 if($dt->format('d M Y')==date('d M Y')){
 
     echo "<td class='bg-secondary text-white'>" . $konwersja[$dzientygodnia] ."<p>" . $dt->format('d.m');  " </p></td>\n";
-}else{echo "<td>" . $konwersja[$dzientygodnia] . "<p>" . $dt->format('d.m');  " </p></td>\n";}
+}elseif($dt->format('w')<date('w')){echo "<td>" ."</td>\n";}
 
+else{
+    echo "<td>" . $konwersja[$dzientygodnia] . "<p>" . $dt->format('d.m');  " </p></td>\n";
 
+}
 
         $dt->modify('+1 day');
     } while ($week == $dt->format('W'));
@@ -110,8 +118,7 @@ if($dt->format('d M Y')==date('d M Y')){
                     }
                     return false;
                 }
-
-
+                
                 $temp = clone $tempdt;
                 foreach($timeslots as $ts){
                     $day = clone $temp;
@@ -122,7 +129,7 @@ if($dt->format('d M Y')==date('d M Y')){
                 
                 
                      if(testTime($ts,$day->format('Y-m-d'),$reservations) || $day->format('Y-m-d H:i:s') < date("Y-m-d H:i:s")){
-                            ?> <td><button class="btn btn-dark btn-xs"><?php  echo $ts?></button></td>
+                            ?> <td></td>
                     <?php     }else{ ?><td><a
                             href="{{ route('ViewformReservation',['date'=>$day->format('Y-m-d'),'ts'=>$ts,'vet_id'=>$vet_id ]) }}"><button
                                 class="btn btn-light btn-xs"><?php  echo $ts?></button></a></td>
