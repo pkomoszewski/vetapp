@@ -86,7 +86,7 @@ Route::middleware(['auth','CheckAdmin'])->group(function () {
   Route::get('/admin/article/all','BackendController@getListArticles')->name('allArticle');
   Route::post('/admin/article/delete','BackendController@deleteArticle')->name('deleteArticle');
 
-  Route::get('/admin/static/','BackendController@static')->name('staticSite');
+  Route::get('/admin/static/','BackendController@showSiteStatic')->name('staticSite');
     
   Route::get('/admin/article/edit/{id}','BackendController@showEditArticle')->name('showEditArticle');
   Route::post('/admin/article/edit/{id}','BackendController@saveEditArticle')->name('saveEditArticle');
