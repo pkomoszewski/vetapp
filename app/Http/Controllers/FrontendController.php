@@ -17,8 +17,10 @@ class FrontendController extends Controller
     public function index()
     {
         $comments = $this->fR->getIndexSite();
+        $articleComments = $this->fR->getIndexSite();
         
-     return view('pages.index')->with('comments',$comments);
+     return view('pages.index')->with(['comments'=>$comments,
+                                      'articlecomments'=>$articleComments]);
     }
 
     public function __construct(FrontendGateway $frontendGateway, FrontendRepository $frontendRepository,BackendRepository $BackendRepository,FormValidation $FormValidation)
