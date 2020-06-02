@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 use App\Http\Controllers\OrderController;
 
 Route::get('/', 'FrontendController@index')->name('home');
@@ -36,9 +25,6 @@ Route::match(['GET','POST'],trans('routes.profile').'/{user}','FrontendControlle
 Route::post(trans('save.vetprofile').'/{id}','ProfilesController@edit')->name('profile.save');
 
 
-
-
-
 //Routing do profilu uzytkownika zaleznie czy jest Onwerem czy weterynarzem
 Route::get('/profile/{user}', 'FrontendController@indexProfile')->name('profile.index');
 Route::post('deleteSelf','BackendController@deleteSelf')->name('deleteSelf');
@@ -56,9 +42,9 @@ Route::post(trans('search'),'FrontendController@vetsearch')->name('vetSearch');
 Route::get('/like/{like_id}/{type}', 'FrontendController@like')->name('like'); 
 Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlike');
 
-///////////////////rezerwacje widoki rezerwacji u uzytkownika
+///////////////////rezerwacje widoki rezerwacji
 ////////u uzytkownika
-Route::get('/reservations/{owner_id}/', 'FrontendController@calendarVisitToUser')->name('calendarVisitToUser');
+Route::get('/reservations/{owner_id}', 'FrontendController@calendarVisitToUser')->name('calendarVisitToUser');
 ////////u weterynarza
 Route::get('/calendarvisits/{user_id}', 'FrontendController@siteCalendarvisit')->name('calendarvisits');
 Route::get('/confirmvisits'.'/{reservation_id}', 'FrontendController@confirmReservationVet')->name('confirmReservationVet');
@@ -100,7 +86,8 @@ Route::middleware(['auth','CheckAdmin'])->group(function () {
   Route::get('/admin/article/all','BackendController@getListArticles')->name('allArticle');
   Route::post('/admin/article/delete','BackendController@deleteArticle')->name('deleteArticle');
 
-
+  Route::get('/admin/static/','BackendController@static')->name('staticSite');
+    
   Route::get('/admin/article/edit/{id}','BackendController@showEditArticle')->name('showEditArticle');
   Route::post('/admin/article/edit/{id}','BackendController@saveEditArticle')->name('saveEditArticle');
 
