@@ -29,6 +29,18 @@ class FrontendRepository {
         return $comments; 
     } 
     
+    
+    public function getIndexSiteCommentArticle()
+    {
+     $comments = Comment::where('commentable_type' ,'App\Article')->with('user.owners')->paginate(5);
+    
+   
+        return $articlecomments; 
+    } 
+    
+    
+    
+    
     public function getListArticles()
     {
       
