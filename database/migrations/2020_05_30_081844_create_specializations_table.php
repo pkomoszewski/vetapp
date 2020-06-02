@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConcertUserTable extends Migration
+class CreateSpecializationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateConcertUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('concert_user', function (Blueprint $table) {
+        Schema::create('specializations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('concert_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateConcertUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('concert_user');
+        Schema::dropIfExists('specializations');
     }
 }

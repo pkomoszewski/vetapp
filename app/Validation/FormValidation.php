@@ -102,6 +102,7 @@ class FormValidation{
     //walidacja formularza dodawanie artykulu
     public function vadlidationFormAddArticle($request)
     {
+    
         if (!$request->hasFile('articlePicture'))
         {
             $this->validate($request,[
@@ -111,12 +112,14 @@ class FormValidation{
             ]);
           
         }
+      
         $this->validate($request,[
-            'articlePicture'=>"image|max:100",
+            'articlePicture'=>"image",
             'title'=>"required|string",
             'content'=>"required|string",
             ]);
        
+     
         return    $this->bR->addArticle($request);
     }
 
@@ -132,6 +135,21 @@ class FormValidation{
        
         return    $this->bR->AddHistoryTreatmentAnimal($request,$id);
     }
+    public function vadlidationEditProfileVet($request){
+        $this->validate($request,[
+            'imie'=>"required|string",
+            'nazwisko'=>"required|string",
+            'opis'=>"string",
+            'numer'=>"integer",
+            'cena'=>"string",
+            'adres'=>"string",
+          
+            ]);
+
+            
+    }
+
+ 
 
 }
 

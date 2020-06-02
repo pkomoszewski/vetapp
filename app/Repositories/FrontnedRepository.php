@@ -23,7 +23,7 @@ class FrontendRepository {
   
     public function getIndexSite()
     {
-     $comments = Comment::where('commentable_type' ,'App\Vet')->with('user.owners')->get();
+     $comments = Comment::where('commentable_type' ,'App\Vet')->with('user.owners')->paginate(5);
     
    
         return $comments; 
@@ -32,7 +32,7 @@ class FrontendRepository {
     public function getListArticles()
     {
       
-        return Article::all(); 
+        return Article::paginate(10);;
     } 
     
    
@@ -90,7 +90,7 @@ class FrontendRepository {
     {
 
         // moze byc do poprawy
-      $Vet= Vet::with('comments.user','phone')->find($vet_id);
+      $Vet= Vet::with('comments.user','phone','photos')->find($vet_id);
 
          return $Vet;   
                     
@@ -162,7 +162,7 @@ $animal=(int)$request->animal;
 
     $confirmReservationId=Reservation::find($reservation_id);
 
-        if($confirmReservationId->staus==0){
+        if($confirmReservationId->status==0){
         $confirmReservationId->update([
 
           'status' => 1,
@@ -176,6 +176,32 @@ $animal=(int)$request->animal;
         return false;
        
        }
+
+
+       public function cancelReservationVet($reservation_id)
+       {
+      
+       
+   
+       $confirmReservationId=Reservation::find($reservation_id);
+   
+           if($confirmReservationId->status==1){
+           $confirmReservationId->update([
+   
+             'status' => 0,
+             
+   
+           ]
+           
+           );
+     
+           return true;
+           }
+           return false;
+          
+          }
+
+
 
 
        public function getReservationByOwnerId($owner_id)

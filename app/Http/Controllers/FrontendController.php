@@ -129,7 +129,7 @@ public function indexProfile(User $user){
 
 
     if(Auth::user()->hasRole(['Weterynarz'])){
-     $Vet= $this->fR->getVet($user->vets->id);
+     $Vet= $this->fR->getVet(Auth::id());
      return view('profiles.profileVet')->with([
      'vet'=>$Vet,
      'user'=>$user
@@ -137,13 +137,16 @@ public function indexProfile(User $user){
 
      }
 
-     //do wstawienia middalware w celu ochrony
+    if(Auth::user()->hasRole(['Użytkownik'])){
+        $Owner= $this->fR->getOwner(Auth::id());
+        return view('profiles.profileOwner',['user'=>$Owner]);
+
+    }
+  
+
+
     
 
-     $Owner= $this->fR->getOwner($user->id);
-
-
-return view('profiles.profileOwner',['user'=>$Owner]);
 }
 
 
@@ -261,15 +264,26 @@ public function confirmReservation(Request $request, $vet_id)
     
 }
 // potwierdzenie rezerwacji przez weterynarza
-public function confirmReservationVet($vet_id,$reservation_id)
+public function confirmReservationVet($reservation_id)
 {
 //walidacja
-    
+
     $confirmReservationVet = $this->fR->ConfirmReservationVet($reservation_id);
             
     return redirect()->back(); 
     
 }
+
+public function cancelReservationVet($reservation_id)
+{
+//walidacja
+
+    $cancelReservationVet = $this->fR-> cancelReservationVet($reservation_id);
+            
+    return redirect()->back(); 
+    
+}
+
 
 }
 

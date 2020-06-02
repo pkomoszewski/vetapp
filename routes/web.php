@@ -13,7 +13,7 @@
 
 use App\Http\Controllers\OrderController;
 
-Route::get('/', 'FrontendController@index');
+Route::get('/', 'FrontendController@index')->name('home');
 
 Route::get('/calendar', function () {
     return view('pages.calendar');
@@ -26,11 +26,13 @@ Route::get('register-step2', 'Auth\RegisterStep2Controller@showForm')->name('reg
 Route::post('register-step2', 'Auth\RegisterStep2Controller@postForm')
   ->name('register-step2post');
 
-;
+
+Route::match(['GET','POST'],trans('routes.profile').'/{user}','FrontendController@profileEdit')->name('profile');
 
 
-// Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
 
+///////////////////////////////////////////////////////////////////////////////
+//do usuniecia
 Route::post(trans('save.vetprofile').'/{id}','ProfilesController@edit')->name('profile.save');
 
 
@@ -39,16 +41,8 @@ Route::post(trans('save.vetprofile').'/{id}','ProfilesController@edit')->name('p
 
 //Routing do profilu uzytkownika zaleznie czy jest Onwerem czy weterynarzem
 Route::get('/profile/{user}', 'FrontendController@indexProfile')->name('profile.index');
+Route::post('deleteSelf','BackendController@deleteSelf')->name('deleteSelf');
 // Edycja "Profilu przez uzytkownika"
-Route::match(['GET','POST'],trans('routes.profile').'/{user}','FrontendController@profileEdit')->name('profile');
-
-
-
-
-
-
-
-
 
 
 
@@ -67,7 +61,8 @@ Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlik
 Route::get('/reservations/{owner_id}/', 'FrontendController@calendarVisitToUser')->name('calendarVisitToUser');
 ////////u weterynarza
 Route::get('/calendarvisits/{user_id}', 'FrontendController@siteCalendarvisit')->name('calendarvisits');
-Route::get('/calendarvisits/{vet_id}'.'/{reservation_id}', 'FrontendController@confirmReservationVet')->name('confirmReservationVet');
+Route::get('/confirmvisits'.'/{reservation_id}', 'FrontendController@confirmReservationVet')->name('confirmReservationVet');
+Route::get('/cancelvisits'.'/{reservation_id}', 'FrontendController@cancelReservationVet')->name('cancelReservationVet');
 
 ///////////////////
 Route::get('/reservationscalnedar/{vet_id}/{user_id}/', 'FrontendController@siteReservationCalendar')->name('reservationscalendar');
@@ -90,18 +85,29 @@ Route::get('/{animal_id}/delete', 'AnimalController@delete');
 Route::post('/addComment/{commentable_id}/{type}', 'FrontendController@addComment')->name('addComment'); 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 //Panel administratora Drugi moduł
 
 Route::middleware(['auth','CheckAdmin'])->group(function () {
-  Route::get('/admin/addarticle', 'BackendController@showformAddArticle')->name('addArticle');
+
   Route::get('/admin/pas', 'BackendController@showAdminPanel')->name('indexPAS');
   Route::get('/admin/visits', 'BackendController@showAllReservations')->name('indexVisits');
-  Route::post(trans('addNewArticle'),'BackendController@NewArticle')->name('addNewArticle');
-  Route::get('delete/{id}','BackendController@deleteUser')->name('deleteUser');
+  Route::post('/admin/visits/delete/','BackendController@deleteReservation')->name('deleteVisit');
+  Route::post('delete','BackendController@deleteUser')->name('deleteUser');
   Route::get('/admin/ban/{id}','BackendController@banUser')->name('banUser');
   Route::get('/admin/vet/all','BackendController@showAllVet')->name('allVet');
+  Route::get('/admin/article/all','BackendController@getListArticles')->name('allArticle');
+  Route::post('/admin/article/delete','BackendController@deleteArticle')->name('deleteArticle');
+
+
+  Route::get('/admin/article/edit/{id}','BackendController@showEditArticle')->name('showEditArticle');
+  Route::post('/admin/article/edit/{id}','BackendController@saveEditArticle')->name('saveEditArticle');
+
+  Route::match(['GET','POST'],'/addArticle','BackendController@newArticle')->name('newArticle');
+  
+
+ 
 
 });
 // Route dla artykułow
@@ -121,3 +127,4 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/historyadd/{id}', 'BackendController@showformAddHistoryTreatmeantAnimal')->name('showformAddHistoryTreatmeantAnimal');
   Route::post('/addHistory/{id}','BackendController@NewHistoryTreatmeantAnimal')->name('addNewHistoryTreatmeantAnimal');
 });
+

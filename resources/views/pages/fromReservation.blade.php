@@ -13,6 +13,7 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Dla kogo umawiasz wizytę?</label>
                 <div class="col-lg-10">
+                    @if(!Auth::user()->owners->animals==null)
                     <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="animal">
 
                         @foreach(Auth::user()->owners->animals as $animal)
@@ -22,6 +23,9 @@
                         @endforeach
 
                     </select>
+                    @else
+                    Brak zwierzat do wyboru
+                    @endif
                 </div>
             </div>
 

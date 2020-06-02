@@ -11,8 +11,9 @@
         </div>
         <form method="POST" action="{{ route('vetSearch') }}" class="form-inline">
 
-          <input name="city" class="form-control autocomplete" type="text" placeholder="wyszukaj"
-            aria-label="wyszkukaj">
+          <input name="city" class="form-control autocomplete" type="text" placeholder="wyszukaj">
+
+          <input name="category" class="form-control ml-2" type="text" placeholder="kategoria">
           <button type="submit" class="btn btn-dark ml-3">Szukaj</button>
           @csrf
         </form>
@@ -47,10 +48,8 @@
 
               @foreach($comments as $comment)
 
-              <h5 class="display-10"> {{$comment->user->owners->imie}}</h5>
 
-
-              <p> {{$comment->content}}</p>
+              <h6> {{$comment->commentable->Type}}</h6>
 
 
               {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
@@ -58,6 +57,7 @@
               {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
               $comment->rating) !!}
               <p>{{$comment->content}}</p>
+              <p class="display-10"> {{$comment->user->owners->imie}}</p>
 
 
 

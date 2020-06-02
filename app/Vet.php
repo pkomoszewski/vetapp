@@ -49,4 +49,10 @@ class Vet extends Model
 
         return $this->belongsToMany('App\Reservation');
      }
+
+
+     public function specializations()
+     {
+         return $this->belongsToMany('App\Specialization');
+     }
 }

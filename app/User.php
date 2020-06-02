@@ -16,8 +16,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-         'email', 'password',
+         'email', 'password','ban',
     ];
+    
 
     /**
      * The attributes that should be hidden for arrays.
@@ -91,4 +92,7 @@ class User extends Authenticatable
      }
     
 
+     public function unotifications(){
+         return $this->hasMany('App\Notification');
+     }
 }

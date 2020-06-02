@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layouts.Backend.main')
 
 @section('content')
 
@@ -14,7 +14,8 @@
                     <div class="card-title mb-4">
                         <div class="d-flex justify-content-start">
                             <div class="image-container">
-                                @if ($vet->photos->isEmpty())
+                                @if($vet->photos->isEmpty())
+                                <img src="" id="imgProfile" style="width: 250px; height: 180px" class="img-thumbnail" />
                                 @else
                                 <img src="{{$vet->photos->first()->path}}" id="imgProfile"
                                     style="width: 250px; height: 180px" class="img-thumbnail" />
@@ -47,7 +48,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment"
-                                        role="tab">Komenatrze
+                                        role="tab">Komentarze
                                         użytkowników</a>
                                 </li>
 
@@ -55,6 +56,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" id="map-tab" data-toggle="tab" href="#map"
                                         role="tab">Lokalizacja na mapie</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab">Ustawienia
+                                    </a>
                                 </li>
                             </ul>
                             <div class="tab-content ml-1" id="myTabContent">

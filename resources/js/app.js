@@ -43,3 +43,90 @@ $(function () {
 
     });
 });
+
+
+var Ajax = {
+
+    get: function (url, success, data = null, beforeSend = null) {
+
+        $.ajax({
+
+            cache: false,
+            url: base_url + '/' + url,
+            type: "GET",
+            data: data,
+            success: function (response) {
+
+                App[success](response);
+
+            },
+            beforeSend: function () {
+
+                if (beforeSend)
+                    App[beforeSend]();
+
+            }
+
+        });
+    },
+
+
+
+    set: function (data = {}, url, success = null) {
+
+        $.ajax({
+
+            cache: false,
+            url: base_url + '/' + url,
+            type: "GET",
+            dataType: "json",
+            data: data,
+            success: function (response) {
+
+                if (success)
+                    App[success](response);
+
+            }
+
+        });
+    }
+
+
+};
+
+
+
+
+
+
+
+$(document).on("click", ".unread_notification", function (event) {
+
+    event.preventDefault();
+
+    $(this).removeClass('unread_notification');
+
+    var ncount = parseInt($('#app-notifications-count').html());
+
+    if (ncount > 0) {
+        $('#app-notifications-count').html(ncount - 1);
+
+        if (ncount == 1)
+            $('#app-notifications-count').hide();
+    }
+
+    var idOfNotification = $(this).children().attr('href');
+    $(this).children().removeAttr('href');
+    App.SetReadNotification(idOfNotification);
+
+});
+
+
+
+$(function () {
+
+    App.GetNotShownNotifications();
+
+});
+
+

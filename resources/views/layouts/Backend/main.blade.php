@@ -94,8 +94,8 @@
                 @csrf
               </form>
             </div>
-
-            @endauth
+          </li>
+          @endauth
 
 
 
@@ -106,63 +106,11 @@
    
         @yield('content')
    
-  <footer class="site-footer">
+  <footer class="py-5 bg-black">
     <div class="container">
-      <div class="row">
-        <div class="col-md-9">
-          <div class="row">
-            <div class="col-md-6">
-              <h2 class="footer-heading mb-4">About</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident rerum unde possimus molestias
-                dolorem fuga, illo quis fugiat!</p>
-            </div>
-
-            <div class="col-md-3">
-              <h2 class="footer-heading mb-4">Navigations</h2>
-              <ul class="list-unstyled">
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Testimonials</a></li>
-                <li><a href="#">Contact Us</a></li>
-              </ul>
-            </div>
-            <div class="col-md-3">
-              <h2 class="footer-heading mb-4">Follow Us</h2>
-              <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
-              <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-              <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-              <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <form action="#" method="post">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control border-secondary text-white bg-transparent"
-                placeholder="Search products..." aria-label="Enter Email" aria-describedby="button-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary text-white" type="button" id="button-addon2">Search</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="row pt-5 mt-5 text-center">
-        <div class="col-md-12">
-          <div class="border-top pt-5">
-            <p>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;<script>
-                document.write(new Date().getFullYear());
-              </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i>
-              by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-          </div>
-        </div>
-
-      </div>
+      <p class="m-0 text-center text-white small">Copyright &copy; kotarbinski 2020</p>
     </div>
+    <!-- /.container -->
   </footer>
 
   <!-- Bootstrap core JavaScript -->
@@ -172,6 +120,28 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script>
+    $("#menu-toggle").click(function (e) {
+e.preventDefault();
+$("#wrapper").toggleClass("toggled");
+});
+
+$('#delete').on('show.bs.modal', function (event) {
+var button = $(event.relatedTarget) 
+var delete_id = button.data('deleteid') 
+var modal = $(this)
+modal.find('.modal-body #delete_id').val(delete_id);
+})
+  </script>
 
 
   @yield('javascript')

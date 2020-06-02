@@ -27,16 +27,29 @@
                             <h6 class="card-text text-center">{{$reservation->day}} </h6>
                             <h6 class="card-text text-center">{{$reservation->hour}} </h6>
                             <h6 class="card-text text-center">Weterynarz: {{$reservation->vet->name}} </h6>
+
+
+                            @if ($reservation->animal==null)
+                            <td>Brak wybranego zwierzaka </td>
+                            @else
                             <h6 class="card-text text-center">umówiony z {{$reservation->animal->imie}}
+                                @endif
+
 
                                 <p class="card-text text-center">{{$reservation->opis}} </p>
                             </h6>
 
                             <hr>
+
+                            @if ($reservation->animal==null)
+                            <td>Brak możliwości podejrzenia histori leczenia </td>
+                            @else
                             <a href="{{ route('showHistoryTreatmeantAnimal',['id'=>$reservation->animal->id]) }}">
                                 <button class="btn btn-dark btn-xs">Historia Leczenia
                                 </button>
                             </a>
+                            @endif
+
 
 
                         </div>
