@@ -167,7 +167,7 @@ public function showSiteStatic(){
   $countOwner=Owner::all()->count();
   $countComment=Comment::all()->count();
     
-    return redirect()->Route('showSiteStatic')->with(['countUser'=>$countUser,
+    return view('backend.admin.showAllStatic')->with(['countUser'=>$countUser,
                                                     'countVet'=>$countVet,
                                                     'countClinic'=>$countClinic,
                                                     'countOwner'=>$countOwner,
