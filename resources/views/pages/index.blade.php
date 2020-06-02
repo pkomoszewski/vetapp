@@ -28,18 +28,10 @@
 <section>
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-6 order-lg-2">
-        <div class="p-5">
-          <img class="img-fluid rounded-circle" src="img/01.jpg" alt="">
-        </div>
-      </div>
+    
       <div class="col-lg-6 order-lg-1">
         <div class="p-5">
           <h4 class="display-10">Najnowe komontarze o weterynarzach</h4>
-
-
-
-
 
           <div class="row">
 
@@ -58,9 +50,6 @@
               $comment->rating) !!}
               <p>{{$comment->content}}</p>
               <p class="display-10"> {{$comment->user->owners->imie}}</p>
-
-
-
               <hr>
               @endforeach
 
@@ -79,17 +68,21 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6">
-        <div class="p-5">
-          <img class="img-fluid rounded-circle" src="img/02.jpg" alt="">
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="p-5">
-          <h4 class="display-10">Najnowe komontarze o artykułach</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse
-            assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae
-            adipisci, beatae obcaecati.</p>
-        </div>
+        
+              @foreach($articlecomments as $comment)
+
+
+              <h6> {{$comment->commentable->Type}}</h6>
+
+
+              {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
+              $comment->rating) !!}
+              {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
+              $comment->rating) !!}
+              <p>{{$comment->content}}</p>
+              <p class="display-10"> {{$comment->user->owners->imie}}</p>
+              <hr>
+              @endforeach
       </div>
     </div>
   </div>
