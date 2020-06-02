@@ -17,7 +17,7 @@ class FrontendController extends Controller
     public function index()
     {
         $comments = $this->fR->getIndexSite();
-        $articleComments = $this->fR->getIndexSite();
+        $articleComments = $this->fR->getIndexSiteCommentArticle;
         
      return view('pages.index')->with(['comments'=>$comments,
                                       'articlecomments'=>$articleComments]);
