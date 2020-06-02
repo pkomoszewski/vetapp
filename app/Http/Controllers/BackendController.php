@@ -159,5 +159,20 @@ public function saveEditArticle(Request $request,$id){
 }
 
 
+public function showSiteStatic(){
+            
+  $countUser=User::all()->count();
+  $countVet=Vet::all()->count();
+  $countClinic=Clinic::all()->count();
+  $countOwner=Owner::all()->count();
+  $countComment=Comment::all()->count();
+    
+    return redirect()->Route('showSiteStatic')->with(['countUser'=>$countUser,
+                                                    'countVet'=>$countVet,
+                                                    'countClinic'=>$countClinic,
+                                                    'countOwner'=>$countOwner,
+                                                    'countComment'=>$countComment]);
+
+}
 
 }
