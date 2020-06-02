@@ -17,7 +17,7 @@ class FrontendController extends Controller
     public function index()
     {
         $comments = $this->fR->getIndexSite();
-        $articleComments = $this->fR->getIndexSiteCommentArticle;
+        $articleComments = $this->fR->getIndexSiteCommentArticle();
         
      return view('pages.index')->with(['comments'=>$comments,
                                       'articlecomments'=>$articleComments]);
@@ -39,18 +39,22 @@ class FrontendController extends Controller
     }
 
 
-    public function vetsearch(Request $request)
+    public function search(Request $request)
     {
     
-        if($Result = $this->fG->getSearchResults($request))
+        if($request->input('choose')=="Weterynarz")
         {
-     
+
+            $Result = $this->fG->getSearchResultsVet($request);
+        
             return view('frontend.resultsSearchVet')->with('results',$Result);
         }
-        else
+        elseif($request->input('choose')=="Klinika")
         {
-        
-            //do poprawy
+             $Result = $this->fG->getSearchResultsClinic($request);
+                return view('frontend.resultsSearchClinic')->with('results',$Result);
+            
+     
           
         }
         

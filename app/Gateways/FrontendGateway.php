@@ -31,30 +31,18 @@ class FrontendGateway {
         return $results;
     } 
 
-    public function getSearchResults($request)
+    public function getSearchResultsVet($request)
     {
         $request->flash();
-
         if( $request->input('city') != null)
         {
-
-            $result = $this->fR->getSearchResults($request->input('city'));
+            $result = $this->fR->getSearchResultsVet($request->input('city'));
 
             if($result)
             {
-
-              
-
-
-
-                if(count($result->vets)> 0)
+                if(count($result)> 0)
                 return $result;  
                 else return false;
-
-
-
-
-
             }
 
         }
@@ -63,6 +51,27 @@ class FrontendGateway {
 
     }
 
+    
+
+    public function getSearchResultsClinic($request)
+    {
+        $request->flash();
+        if( $request->input('city') != null)
+        {
+            $result = $this->fR->getSearchResultsClinic($request->input('city'));
+
+            if($result)
+            {
+                if(count($result)> 0)
+                return $result;  
+                else return false;
+            }
+
+        }
+        
+        return false;
+
+    }
 
 
 }

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Repositories\BackendRepository;
 use App\Repositories\FrontendRepository;
 use App\Validation\FormValidation;
+use App\User;
+use App\Vet;
+use App\Clinic;
+use App\Owner;
+use App\Comment;
 class BackendController extends Controller
 {
 

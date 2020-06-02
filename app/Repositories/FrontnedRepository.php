@@ -23,7 +23,7 @@ class FrontendRepository {
   
     public function getIndexSite()
     {
-     $comments = Comment::where('commentable_type' ,'App\Vet')->with('user.owners')->paginate(5);
+     $comments = Comment::where('commentable_type' ,'App\Vet')->with('user.owners')->paginate(2);
     
    
         return $comments; 
@@ -32,7 +32,7 @@ class FrontendRepository {
     
     public function getIndexSiteCommentArticle()
     {
-     $comments = Comment::where('commentable_type' ,'App\Article')->with('user.owners')->paginate(5);
+     $articlecomments = Comment::where('commentable_type' ,'App\Article')->with('user.owners')->paginate(2);
     
    
         return $articlecomments; 
@@ -55,12 +55,25 @@ class FrontendRepository {
                       
     } 
    
-    public function getSearchResults( string $city)
+    public function getSearchResultsVet( string $city)
     {
-      $results =City::with(['vets.photos','vets.comments','clinics.photos'])->where('name',$city)->first() ?? false; 
-        return  $results;
+   
+      $city=City::where('name',$city)->first();
+    
+      $results =Vet::with(['photos','comments'])->where('city_id',$city->id)->get() ?? false; 
+
+      return  $results;
       
     } 
+
+    public function getSearchResultsClinic( string $city)
+    {
+      $city=City::where('name',$city)->first();
+      $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)->get() ?? false; 
+      return  $results;
+      
+    } 
+
     
     public function like($like_id, $type, $request)
     {

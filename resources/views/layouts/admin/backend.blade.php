@@ -44,10 +44,9 @@
                 <a href="" class="list-group-item list-group-item-action bg-light">Uprawnienia</a>
                 <a href="{{route('indexVisits')}}" class="list-group-item list-group-item-action bg-light">Wizyty</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Historie rezerwacji</a>
-                <a href="{{route("staticSite"}}" class="list-group-item list-group-item-action bg-light"Statystki</a>
+                <a href="{{route("staticSite")}}" class="list-group-item list-group-item-action bg-light">Statystki</a>
             </div>
         </div>
-
         <div id="page-content-wrapper">
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">

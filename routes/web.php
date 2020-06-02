@@ -35,7 +35,7 @@ Route::post('deleteSelf','BackendController@deleteSelf')->name('deleteSelf');
 //podpowiedz dla wyszukiwania miast
 Route::get('/searchCities', 'FrontendController@searchCities');
 
-Route::post(trans('search'),'FrontendController@vetsearch')->name('vetSearch');
+Route::post(trans('search'),'FrontendController@search')->name('Search');
 
 
 //polubienia uzytkowników

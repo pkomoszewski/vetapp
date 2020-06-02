@@ -7,13 +7,17 @@
       <div class="col-md-7 align-self-center text-center text-md-left">
         <div class="intro-text">
           <h1>Twoj zwierzak <span class="d-md-block">szuka pomocy?</span></h1>
-          <p class="mb-4">Znajdz weterynarza i umów się z na wizytę<span class="d-block"></p>
+          <p class="mb-4">Znajdź weterynarza lub klinikę i umów się z na wizytę<span class="d-block"></p>
         </div>
-        <form method="POST" action="{{ route('vetSearch') }}" class="form-inline">
+        <form method="POST" action="{{ route('Search') }}" class="form-inline">
 
           <input name="city" class="form-control autocomplete" type="text" placeholder="wyszukaj">
 
-          <input name="category" class="form-control ml-2" type="text" placeholder="kategoria">
+          <select class="form-control ml-2" name="choose">
+            <option>Weterynarz</option>
+            <option>Klinika</option>
+
+          </select>
           <button type="submit" class="btn btn-dark ml-3">Szukaj</button>
           @csrf
         </form>
@@ -28,14 +32,14 @@
 <section>
   <div class="container">
     <div class="row align-items-center">
-    
+
       <div class="col-lg-6 order-lg-1">
         <div class="p-5">
-          <h4 class="display-10">Najnowe komontarze o weterynarzach</h4>
+          <h4 class="display-10">Najnowe komentarze o weterynarzach</h4>
 
           <div class="row">
 
-            <div class="col-6 mt-5">
+            <div class="col-lg-6 mt-5">
 
 
               @foreach($comments as $comment)
@@ -55,20 +59,24 @@
 
             </div>
 
+
+
           </div>
 
 
         </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section>
-  <div class="container">
-    <div class="row align-items-center">
+      </div>
       <div class="col-lg-6">
-        
+
+        <div class="p-5">
+          <h4 class="display-10">Najnowe komentarze o artykułach</h4>
+
+          <div class="row">
+
+            <div class="col-lg-6 mt-5">
+
+
               @foreach($articlecomments as $comment)
 
 
@@ -83,10 +91,26 @@
               <p class="display-10"> {{$comment->user->owners->imie}}</p>
               <hr>
               @endforeach
+
+            </div>
+
+
+
+          </div>
+
+
+        </div>
       </div>
     </div>
+
+  </div>
+
+
+
   </div>
 </section>
+
+
 
 
 @endsection

@@ -29,15 +29,12 @@
             <tr>
 
                 <th>ilość użytkowników</th>
-
                 <th>ilość właściciel</th>
-
+                <th>ilość Weterynarzy </th>
                 <th>ilość Klinic </th>
-				<th>ilość Weterynarzy </th>
-                <th>Ilość Wszystkich wizyt</th>
-				<th>Ilość Ilość wszystkich komentarzy </th>
+                <th>Ilość Ilość wszystkich komentarzy </th>
 
-                  <th style="width: 36px;"></th>
+                <th style="width: 36px;"></th>
 
             </tr>
 
@@ -47,22 +44,18 @@
 
             <tr>
 
-       
 
-                <td>{{$user->id}}</td>
 
-                <td>{{$user->email}}</td>
-
-                <td>{{$user->vets->imie}}</td>
-
-                <td>{{$user->vets->nazwisko}}</td>
-
-                <td>{{$user->vets->adres}}</td>
+                <td>{{$countUser}}</td>
+                <td>{{$countOwner}}</td>
+                <td>{{$countVet}}</td>
+                <td>{{$countClinic}}</td>
+                <td>{{$countComment}}</td>
 
 
             </tr>
 
-     
+
 
 
 

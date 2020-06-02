@@ -11,7 +11,7 @@ class Vet extends Model
   
 
     use Presenters\VetPresenter; 
-    protected $fillable = ['imie','nazwisko','Vet'];
+    protected $fillable = ['imie','nazwisko','Vet','city_id'];
     public function cities(){
         return $this->hasOne(City::class);
 
