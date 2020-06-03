@@ -2,15 +2,23 @@
 
 @section('content')
 <div class="container">
+    <div class="d-flex justify-content-end m-3 ">
+        <div ">
+            <p>Sortuj według:</p>
 
-    <div class="row">
-    <p>Sortuj według</p>
-      <select class="form-control ml-2" name="sortby">
+            <select class=" form-control ml-2" name="sortby">
+
             <option>Cena</option>
             <option>Opinii</option>
             <option>ilość komentarzy</option>
-          </select>
+
+            </select>
+
+        </div>
+
+        <a href="/?filter=Price">Price</a>
     </div>
+
     <div class="row">
         <div class="col-md-12">
 

@@ -35,9 +35,11 @@ Route::post('deleteSelf','BackendController@deleteSelf')->name('deleteSelf');
 //podpowiedz dla wyszukiwania miast
 Route::get('/searchCities', 'FrontendController@searchCities');
 
-Route::post(trans('search'),'FrontendController@search')->name('Search');
+Route::get(trans('search'),'FrontendController@search')->name('Search');
 
 
+/////////
+Route::post(trans('newletter'),'FrontendController@addNewsletter')->name('addNewsletter');
 //polubienia uzytkowników
 Route::get('/like/{like_id}/{type}', 'FrontendController@like')->name('like'); 
 Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlike');

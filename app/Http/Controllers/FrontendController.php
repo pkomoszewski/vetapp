@@ -41,7 +41,7 @@ class FrontendController extends Controller
 
     public function search(Request $request)
     {
-    
+   
         if($request->input('choose')=="Weterynarz")
         {
 
@@ -59,6 +59,9 @@ class FrontendController extends Controller
         }
         
     }
+
+
+    
 
 
    
@@ -287,6 +290,17 @@ public function cancelReservationVet($reservation_id)
     $cancelReservationVet = $this->fR-> cancelReservationVet($reservation_id);
             
     return redirect()->back(); 
+    
+}
+
+
+public function addNewsletter(Request $request)
+{
+
+
+    $AddtoNewletter = $this->fR-> addNewsletter($request);
+            
+    return redirect()->back()->with('success', 'Zostałeś pomyślnie dodany do Newslettera');; 
     
 }
 

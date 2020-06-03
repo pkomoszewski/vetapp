@@ -12,6 +12,7 @@ use App\Vet;
 use App\Comment;
 use App\Clinic;
 use App\Reservation;
+use App\Newsletter;
 use Illuminate\Support\Facades\Auth;
 
 class FrontendRepository {  
@@ -59,8 +60,18 @@ class FrontendRepository {
     {
    
       $city=City::where('name',$city)->first();
-    
-      $results =Vet::with(['photos','comments'])->where('city_id',$city->id)->get() ?? false; 
+    if(request('sortby')=='ilość komentarzy'){
+      $results =Vet::with(['photos','comments'])
+      ->where('city_id',$city->id)->when(request('sortby')=="Ilości Opinii", function($query) {
+      return $query->orderBy('comments_count', 'asc');
+      })->get() ?? false; 
+    }
+
+      $results =Vet::with(['photos','comments'])
+      ->where('city_id',$city->id)->when(request('sortby')=="Min cena", function($query) {
+      return $query->orderBy('cena_konsulatcji', 'asc');
+  })
+    ->get() ?? false; 
 
       return  $results;
       
@@ -226,7 +237,21 @@ $animal=(int)$request->animal;
           
           }
 
+public function  addNewsletter($request){
 
+  $this->validate($request, [
+    'email' => 'required|email',
+
+]);
+
+$addNew = New Newsletter;
+$addNew ->email=$request->input('email');
+
+
+return $addNew->save(); 
+
+
+}
 
 
        public function getReservationByOwnerId($owner_id)

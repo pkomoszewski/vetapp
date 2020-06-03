@@ -101,10 +101,11 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-6">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+            <h4>Dołącz do newslettera</h4>
+            <p>Chcesz być na bieżąco z nowościami, dołącz do Newslettera!</p>
+            <form action="{{route('addNewsletter')}}" method="post">
+              @csrf
+              <input type="email" name="email"><input type="submit" value="Subskrybuj">
             </form>
           </div>
         </div>

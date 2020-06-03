@@ -9,7 +9,7 @@
           <h1>Twoj zwierzak <span class="d-md-block">szuka pomocy?</span></h1>
           <p class="mb-4">Znajdź weterynarza lub klinikę i umów się z na wizytę<span class="d-block"></p>
         </div>
-        <form method="POST" action="{{ route('Search') }}" class="form-inline">
+        <form method="GET" action="{{ route('Search') }}" class="form-inline">
 
           <input name="city" class="form-control autocomplete" type="text" placeholder="wyszukaj">
 
@@ -19,7 +19,7 @@
 
           </select>
           <button type="submit" class="btn btn-dark ml-3">Szukaj</button>
-          @csrf
+
         </form>
       </div>
       <div class="col-md-5 align-self-end text-center text-md-right">
