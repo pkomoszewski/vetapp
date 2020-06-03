@@ -2,6 +2,15 @@
 
 @section('content')
 <div class="container">
+
+    <div class="row">
+    <p>Sortuj według</p>
+      <select class="form-control ml-2" name="sortby">
+            <option>Cena</option>
+            <option>Opinii</option>
+            <option>ilość komentarzy</option>
+          </select>
+    </div>
     <div class="row">
         <div class="col-md-12">
 
