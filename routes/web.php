@@ -63,7 +63,7 @@ Route::get(trans('vet').'/{id}','FrontendController@sitevet')->name('sitevet');
 Route::get(trans('clinic').'/{id}','FrontendController@siteclinic')->name('siteclinic'); 
 
 //Zwierzaki
-
+Route::get('/contact','FrontendController@siteContact')->name('Contact');
 Route::get('/addAnimal','FrontendController@viewAddFormAnimal')->name('addAnimal');// Zmienic nazwe route
 
 Route::post(trans('addNewAnimal').'/{id}','BackendController@NewAnimal')->name('addNewAnimal');
