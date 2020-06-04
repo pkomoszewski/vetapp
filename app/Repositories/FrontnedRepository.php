@@ -60,7 +60,7 @@ class FrontendRepository {
     {
    
       $city=City::where('name',$city)->first();
-    if(request('sortby')=='ilość komentarzy'){
+    if(request('sortby')=='Ilości Opinii'){
       $results =Vet::with(['photos','comments'])
       ->where('city_id',$city->id)->when(request('sortby')=="Ilości Opinii", function($query) {
       return $query->orderBy('comments_count', 'asc');
@@ -80,9 +80,23 @@ class FrontendRepository {
     public function getSearchResultsClinic( string $city)
     {
       $city=City::where('name',$city)->first();
-      $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)->get() ?? false; 
-      return  $results;
+        if(request('sortby')=='ilość komentarzy'){
+      $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)
+          ->when(request('sortby')=="Opinie",function($query){
+          return $query->orderBy('comments_count','asc');
+            ->get() ?? false; }
+                 
+                 
+           if(request('sortby')=='ilość polubień'){
+      $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)
+          ->when(request('sortby')=="ilość polubień",function($query){
+          return $query->orderBy('likable_count','asc');
+            ->get() ?? false; }       
+                 
+          
       
+      return  $results;
+       }
     } 
 
     
