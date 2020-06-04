@@ -292,7 +292,11 @@ public function cancelReservationVet($reservation_id)
     return redirect()->back(); 
     
 }
-
+ public function siteContact();
+    {
+    
+    return view("pages.contact");
+    }
 
 public function addNewsletter(Request $request)
 {
