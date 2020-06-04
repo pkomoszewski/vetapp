@@ -8,7 +8,6 @@
 
             <select class=" form-control ml-2" name="sortby">
 
-            <option>Cena</option>
             <option>Opinii</option>
             <option>ilość komentarzy</option>
 
