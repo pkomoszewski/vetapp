@@ -9,7 +9,7 @@
             <select class=" form-control ml-2" name="sortby">
 
             <option>Opinii</option>
-            <option>ilość komentarzy</option>
+            <option>ilość polubień</option>
 
             </select>
 
