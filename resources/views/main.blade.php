@@ -54,7 +54,7 @@
             </div>
           </li>
           <li><a href="{{ route('ShowListArticles') }}">Artykuły</a></li>
-          <li><a href="">Kontakt</a></li>
+          <li><a href="{{route('Contact')}}">Kontakt</a></li>
           <li><a href="#faq">F.A.Q</a></li>
 
           <li class="get-started"><a href="{{ route('login') }}">Zaloguj się</a></li>
