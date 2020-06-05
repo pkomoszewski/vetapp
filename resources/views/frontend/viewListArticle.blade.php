@@ -18,7 +18,7 @@
                                         {{\Illuminate\Support\Str::words($article->content, 50,'....')}}
                                     </p>
                                     <a href="{{ route('showArticle',['id'=>$article->id]) }}"
-                                        class="btn btn-dark">Czytaj
+                                        class="btn button-vet">Czytaj
                                         dalej</a>
                                 </div>
                                 <div class="card-footer text-muted">

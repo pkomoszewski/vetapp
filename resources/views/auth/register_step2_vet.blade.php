@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.Frontend.main')
 
 @section('content')
 <div class="main">
     <section class="signup">
         <div class="container">
-            <div class="signup-content">
+            <div class="signup-content d-flex justify-content-center">
                 <div class="signup-form">
-                    <h2 class="form-title">Proszę o dokończenie kongiguracji konta</h2>
+                    <h2 class="form-title">Proszę o dokończenie konfiguracji konta</h2>
                     <form method="POST" class="register-form" id="register-form"
                         action="{{ route('register-step2post') }}">
                         @csrf

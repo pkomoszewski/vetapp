@@ -11,10 +11,10 @@
                     <div class="card-title mb-4">
                         <div class="d-flex justify-content-start">
                             <div class="image-container">
-                                <img src="http://placehold.it/150x150" id="imgProfile"
+                                <img src="{{url('/images/person.png')}}" id="imgProfile"
                                     style="width: 150px; height: 150px" class="img-thumbnail" />
                                 <div class="middle">
-                                    <a class="btn btn-dark mt-2"
+                                    <a class="btn button-vet mt-2"
                                         href="{{ route('profile',['user'=>Auth::user()->id]) }}"> Edycja profilu </a>
 
 
@@ -107,7 +107,7 @@
                                     @endif
 
 
-                                    <a href="{{ route('addAnimal') }}" class="btn btn-dark btn-xs"
+                                    <a href="{{ route('addAnimal') }}" class="btn button-vet btn-xs"
                                         role="button">Dodaj</a>
                                 </div>
 

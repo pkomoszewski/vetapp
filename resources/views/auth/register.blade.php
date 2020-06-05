@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.Frontend.main')
 @section('content')
 <div class="main">
     <section class="signup">
         <div class="container">
-            <div class="signup-content">
+            <div class="signup-content d-flex justify-content-center">
                 <div class="signup-form">
                     <h2 class="form-title">Utwórz konto użytkownika</h2>
                     <form method="POST" class="register-form" id="register-form" action="{{ route('register') }}">
@@ -50,7 +50,7 @@
                                 regulamin <a href="#" class="term-service">Terms of service</a></label>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit" value="Rejestracja" />
+                            <input type="submit" name="signup" id="signup" class="button-vet" value="Rejestracja" />
                         </div>
                     </form>
                     @if ($errors->any())

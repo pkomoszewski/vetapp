@@ -60,7 +60,7 @@
 
 
         @auth
-        <a class="btn btn-dark" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
+        <a class="btn button-vet" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
           aria-controls="collapseExample">
           Dodaj komentarz
         </a>

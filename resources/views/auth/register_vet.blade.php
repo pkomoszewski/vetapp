@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.Frontend.main')
 @section('content')
 <div class="main">
     <section class="signup">
@@ -58,7 +58,7 @@
                                 regulamin <a href="#" class="term-service">Terms of service</a></label>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit" value="Rejestracja" />
+                            <input type="submit" name="signup" id="signup" value="Rejestracja" class="button-vet" />
                         </div>
                     </form>
                 </div>

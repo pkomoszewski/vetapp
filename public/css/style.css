@@ -128,6 +128,13 @@ body {
     padding: 10px 25px;
   }
   
+
+  .button-vet{
+    background: #5777ba;
+    color: #fff;
+    border-radius: 50px;
+    padding: 10px 25px;
+  }
   .nav-menu .get-started a:hover {
     background: #748ec6;
     color: #fff;

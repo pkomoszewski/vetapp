@@ -20,7 +20,7 @@
 
             </select>
 
-            <button type=" submit" class="btn btn-dark ml-3">Filtr</button>
+            <button type=" submit" class="btn button-vet ml-3">Filtr</button>
 
             </form>
 
@@ -45,9 +45,13 @@
                                 <div class="d-flex justify-content-start">
                                     <div class="image-container">
                                         @if ($vet->photos->isEmpty())
+                                        <img src="{{url('/images/person.png')}}" alt=""
+                                            class="img-circle img-responsive" with='150px' height='150px'>
+
                                         @else
+
                                         <img src="{{$vet->photos->first()->path}}" alt=""
-                                            class="img-circle img-responsive" with='100px' height='100px'>
+                                            class="img-circle img-responsive" with='150px' height='150px'>
                                         @endif
 
                                     </div>
@@ -72,7 +76,8 @@
                                             </p>
                                             @else
                                             <a href="{{ route('reservationscalendar',['vet_id'=>$vet->id,'user_id'=>Auth::user()->id]) }}"
-                                                class="btn btn-dark pull-right m-3" role="button">Umów się na wizytę</a>
+                                                class="btn button-vet pull-right m-3" role="button">Umów się na
+                                                wizytę</a>
                                             @endif
                                         </div>
                                     </div>

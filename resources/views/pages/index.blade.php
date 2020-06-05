@@ -18,7 +18,7 @@
             <option>Klinika</option>
 
           </select>
-          <button type="submit" class="btn btn-dark ml-3">Szukaj</button>
+          <button type="submit" class="btn button-vet ml-3">Szukaj</button>
 
         </form>
       </div>

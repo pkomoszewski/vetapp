@@ -84,19 +84,19 @@ class FrontendRepository {
       $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)
           ->when(request('sortby')=="Opinie",function($query){
           return $query->orderBy('comments_count','asc');
-            ->get() ?? false; }
+          }) ->get() ?? false; }
                  
                  
            if(request('sortby')=='ilość polubień'){
       $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)
           ->when(request('sortby')=="ilość polubień",function($query){
           return $query->orderBy('likable_count','asc');
-            ->get() ?? false; }       
+          })->get() ?? false; }       
                  
           
       
       return  $results;
-       }
+       
     } 
 
     
