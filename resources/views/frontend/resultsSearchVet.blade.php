@@ -43,10 +43,12 @@
 
                             <div class="card-title mb-4">
                                 <div class="d-flex justify-content-start">
+
+
                                     <div class="image-container">
                                         @if ($vet->photos->isEmpty())
-                                        <img src="{{url('/images/person.png')}}" alt=""
-                                            class="img-circle img-responsive" with='150px' height='150px'>
+                                        <img src="{{url('/images/person.png')}}" class="img-circle img-responsive"
+                                            with='150px' height='150px'>
 
                                         @else
 
@@ -59,8 +61,8 @@
                                         <a href="{{ route('sitevet',['id'=>$vet->id]) }}">
                                             <p> {{$vet->imie}} {{$vet->nazwisko}}</p>
                                         </a>
-                                        <p>{{$vet->adres}}</p>
-                                        <p> Cena konsultacji: {{$vet->cena_konsulatcji}}</p>
+                                        <p>{{ucwords($vet->adres)}}</p>
+                                        <p> Cena konsultacji: {{$vet->cena_konsulatcji}} zł</p>
                                         {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
                                         $vet->averageRating()) !!}
                                         {{-- Mozna spróbowac przypisac zmiena do cache.  Dwa razy sie wykonuje zapytanie do bazy nie potrzebnie--}}

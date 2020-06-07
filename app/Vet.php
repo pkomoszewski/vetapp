@@ -55,4 +55,14 @@ class Vet extends Model
      {
          return $this->belongsToMany('App\Specialization');
      }
+
+     public function Clinics(){
+        return $this->hasMany('App\Clinic');
+
+    }
+    
+    public function locations()
+    {
+        return $this->morphMany('App\Location', 'locationable');
+    }
 }

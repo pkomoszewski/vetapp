@@ -15,13 +15,15 @@
                         <div class="d-flex justify-content-start">
                             <div class="image-container">
                                 @if($vet->photos->isEmpty())
-                                <img src="" id="imgProfile" style="width: 250px; height: 180px" class="img-thumbnail" />
+                                <img src="{{url('/images/person.png')}}" id="imgProfile"
+                                    style="width: 250px; height: 180px" class="img-thumbnail" />
+
                                 @else
                                 <img src="{{$vet->photos->first()->path}}" id="imgProfile"
                                     style="width: 250px; height: 180px" class="img-thumbnail" />
                                 @endif
                                 <div class="middle">
-                                    <a class="btn btn-dark mt-2"
+                                    <a class="btn button-vet mt-2"
                                         href="{{ route('profile',['user'=>Auth::user()->id]) }}"> Edycja
                                         profilu </a>
                                 </div>
@@ -59,6 +61,10 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab">Ustawienia
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="map-tab" data-toggle="tab" href="#klinka" role="tab">Klinka
                                     </a>
                                 </li>
                             </ul>
@@ -161,6 +167,10 @@
                                     <div style="width: 100%; height: 400px" id="address-map"></div>
                                 </div>
 
+                                <div class="tab-pane fade" id="klinka" role="tabpanel">
+
+                                    <a class="btn button-vet mt-2" href="{{ route("addClinic")}}"> Dodaj klinkę</a>
+                                </div>
                             </div>
                         </div>
                     </div>

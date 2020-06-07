@@ -139,8 +139,10 @@ public function indexProfile(User $user){
 
     if(Auth::user()->hasRole(['Weterynarz'])){
      $Vet= $this->fR->getVet(Auth::id());
+
      return view('profiles.profileVet')->with([
      'vet'=>$Vet,
+     
      'user'=>$user
      ]);
 

@@ -14,11 +14,9 @@
         <thead>
             <tr>
                 <th>id</th>
+                <th>Nazwa</th>
                 <th>Email</th>
-                <th>Imie</th>
-                <th>Nazwisko</th>
-                <th>Adres</th>
-                <th>Telefon</th>
+                <th>Właściciel</th>
                 <th colspan="3">Akcja</th>
 
 
@@ -27,57 +25,54 @@
         </thead>
         <tbody>
 
-            @foreach ($vets as $vet)
-            @foreach( $vet->users as $user)
+
+            @foreach( $clinics as $clinic)
             <tr>
-                @isset($user->vets->imie)
-                <td>{{$user->id}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->vets->imie}}</td>
-                <td>{{$user->vets->nazwisko}}</td>
-                <td>{{$user->vets->adres}}</td>
-                @if(!$user->vets->phone==null)
-                <td>{{$user->vets->phone->numer}}</td>
-                @else
-                <td>-</td>
-                @endif
-                <td><a href="{{ route('sitevet',$user->vets->id) }}" class="btn btn-success">Podgląd</a> </td>
-                @if($user->ban)
-                <td><a href="{{route('banUser', $user->id)}}" class="btn btn-warning">Odblokuj</a></td>
+                <td>{{$clinic->id}}</td>
+                <td>{{$clinic->nazwa}}</td>
+                <td>{{$clinic->email}}</td>
+                <td>{{$clinic->vet->Name}}</td>
+
+                <td><a href="{{ route('siteclinic',['id'=>$clinic->id]) }}" class="btn btn-success">Podgląd</a></td>
+                @if($clinic->status)
+                <td><a href="{{route('StatusClinic', $clinic->id)}}" class="btn btn-warning">Zablokuj</a></td>
                 @endif
 
-                @if(!$user->ban)
-                <td><a href="{{route('banUser', $user->id)}}" class="btn btn-info">Zablokuj</a>
-
+                @if(!$clinic->status)
+                <td><a href="{{route('StatusClinic', $clinic->id)}}" class="btn btn-info">Potwierdzenie</a>
                 </td>
                 @endif
                 <td>
-                    <button class="btn btn-danger" data-deleteid={{$user->id}} data-toggle="modal"
+                    <button class="btn btn-danger" data-deleteid={{$clinic->id}} data-toggle="modal"
                         data-target="#delete">Usuń</button>
 
                 </td>
-                @endisset
-
+                <td>
+                    <a href="clinic.html"><i class="icon-pencil"></i></a>
+                    <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                </td>
             </tr>
             @endforeach
-            @endforeach
+
 
         </tbody>
     </table>
 </div>
-
+<div class="pagination">
+    dodoc paginacje
+</div>
 <div class="modal modal-danger fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title text-center" id="myModalLabel">Potwierdzienie usunięcia</h4>
             </div>
-            <form action="{{route('deleteUser')}}" method="post">
+            <form action="{{route('deleteClinic')}}" method="post">
 
                 {{csrf_field()}}
                 <div class="modal-body">
                     <p class="text-center">
-                        Czy napewno chcesz usunąć tego weterynarza?
+                        Czy napewno chcesz usunąć tą klinikę?
                     </p>
                     <input type="hidden" name="delete_id" id="delete_id" value="">
 
@@ -90,6 +85,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

@@ -149,6 +149,20 @@ class FormValidation{
             
     }
 
+    public function vadlidationFormAddClinic($request){
+        $this->validate($request,[
+            'Nazwa'=>"required|string",
+            'Email'=>"required|string",
+            'Adres'=>"string",
+            'Numer'=>"integer",
+            'godzina_otwarcia'=>"string",
+            'godzina_zamkniecia'=>"string",
+           
+          
+            ]);
+
+            $this->bR->AddNewClinic($request);
+    }
  
 
 }

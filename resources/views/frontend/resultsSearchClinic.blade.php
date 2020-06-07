@@ -15,7 +15,7 @@
 
         </div>
 
-        <a href="/?filter=Price">Price</a>
+
     </div>
 
     <div class="row">
@@ -34,6 +34,9 @@
                                 <div class="d-flex justify-content-start">
                                     <div class="image-container">
                                         @if ($clinic->photos->isEmpty())
+                                        <img src="{{url('/images/clinic.png')}}" class="img-responsive" with='150px'
+                                            height='150px'>
+
                                         @else
                                         <img src="{{$clinic->photos->first()->path}}" alt=""
                                             class="img-circle img-responsive" with='100px' height='100px'>
@@ -43,8 +46,9 @@
                                     <div class="userData ml-3">
                                         <a href="{{ route('siteclinic',['id'=>$clinic->id]) }}">
                                             <p> {{$clinic->nazwa}}</p>
-                                            <p> {{$clinic->opis}}</p>
+
                                         </a>
+                                        <p> {{$clinic->opis}}</p>
                                         <p>{{$clinic->adres}}</p>
                                         {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
                                         $clinic->averageRating()) !!}
@@ -54,16 +58,7 @@
                                         <p> Opini {{$clinic->comments->count()}}</p>
                                         <p>{{ $clinic->users->count() }} osób lubli</p>
 
-                                        <div class="row">
 
-                                            @if(Auth::guest())
-                                            <p><a href="{{ route('login') }}">Zaloguj sie aby umówić się na wizyte</a>
-                                            </p>
-                                            @else
-                                            <a href="{{ route('reservationscalendar',['clinic_id'=>$clinic->id,'user_id'=>Auth::user()->id]) }}"
-                                                class="btn btn-dark pull-right m-3" role="button">Umów się na wizytę</a>
-                                            @endif
-                                        </div>
                                     </div>
 
                                 </div>

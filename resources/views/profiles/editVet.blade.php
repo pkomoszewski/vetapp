@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="cena" class="col-lg-2 control-label">godzina otwarcia</label>
+                <label class="col-lg-2 control-label">godzina otwarcia</label>
                 <div class="col-lg-10">
                     <input name="godzina_otwarcia" type="text" required class="form-control" id="godzina_otwarcia"
                         value="{{$user->vets->TimeStart}}">
@@ -71,7 +71,7 @@
 
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-dark">Zapisz</button>
+                    <button type="submit" class="btn button-vet">Zapisz</button>
                 </div>
             </div>
             <div class="form-group">

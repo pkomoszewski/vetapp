@@ -63,7 +63,7 @@
                         </div>
 
                         <br /><br />
-                        <a href="{{ route('home') }}">Pomin teraz</a>
+                        <a href="{{ route('home') }}">Pomiń teraz</a>
                     </form>
                 </div>
 

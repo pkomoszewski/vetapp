@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVetsTable extends Migration
+class CreateLocationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,17 @@ class CreateVetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vets', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('imie');
-            $table->string('nazwisko');
-            $table->string('opis');
-            $table->string('doswiadczenie');
-            $table->integer('cena_konsulatcji');
-            $table->string('adres');
-            $table->integer('city_id');
+            $table->string('locationable_type');
+            $table->bigInteger('locationable_id');
+            $table->string('address')->nullable();
             $table->string('address_address')->nullable();
             $table->double('address_latitude')->nullable();
             $table->double('address_longitude')->nullable();
-            $table->bigInteger('user_id')->unsigned(); 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-
+            $table->biginteger('city_id')->unsigned(); 
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->json('whenOpen');
             $table->timestamps();
         });
     }
@@ -40,6 +35,6 @@ class CreateVetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vets');
+        Schema::dropIfExists('locations');
     }
 }

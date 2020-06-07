@@ -15,6 +15,9 @@ use App\Owner;
 use App\Role;
 use App\Reservation;
 use App\TreatmentHistory;
+use App\Clinic;
+use App\City;
+use App\Location;
 use Illuminate\Support\Facades\Auth;
 class BackendRepository {  
     
@@ -72,12 +75,40 @@ class BackendRepository {
             return $message;
         
     }
+
+    public function changeStatusClinic($id)
+    {
+        $Clinic=Clinic::find($id);
+        $message='';
+            if( $Clinic->status)
+            {
+                $Clinic->status=false; 
+
+                $message="Zmieniono status kliniki na niepotwierdzony";
+            }else{
+
+                $Clinic->status=true;
+                
+                $message="Zmieniono status kliniki na potwierdzony";
+            }
+                    
+            $Clinic->save();
+            return $message;
+        
+    }
+
+    public function deleteClinic($id)
+    {
+        $Clinic=Clinic::find($id);
+        return $Clinic->delete();
+    }
+
 ////////////////////////////////////////////////////////
 //Obsluga widoku admina weterynarz
 public function showAllVet()
 {
  
-    $Vets =Role::with('users.vets.phone',) -> where ('typ', 'Weterynarz') -> get();
+    $Vets =Role::with('users.vets.phone') -> where ('typ', 'Weterynarz') -> get();
     return $Vets;
 }
 
@@ -98,6 +129,18 @@ public function getAllReservations()
 {
     $Reservations =Reservation::with('owner','animal')->get();
     return $Reservations;
+}
+
+public function deleteReservation($id)
+{
+    $Reservation=Reservation::find($id);
+    return $Reservation->delete();
+}
+
+public function getAllClinics()
+{
+    $Clinics =Clinic::with('photos','vet','location')->get();
+    return $Clinics;
 }
 
 public function addNewAnimal($request){
@@ -176,6 +219,13 @@ public function createVetPhoto($vet,$path)
     $photo->path = $path;
     $vet->photos()->save($photo);
 }
+public function createClinicPhoto($article,$path)
+{
+    $photo = new Photo;
+    $photo->path = $path;
+    $article->photos()->save($photo);
+}
+
 
 public function createArticlePhoto($article,$path)
 {
@@ -216,7 +266,7 @@ public function addArticle($request)
 {
 
     $article= new Article;
-    $article->title=$request->input('title');
+    $article->nazwa=$request->input('title');
     $article->content=$request->input('content');
     $article->save();
     if ($request->hasFile('articlePicture')){
@@ -227,6 +277,40 @@ public function addArticle($request)
     return  true;
 }
 
+public function addNewClinic($request)
+{
+
+    $timeOpen=$request->input('godzina_otwarcia');
+    $timeClose=$request->input('godzina_zamkniecia');
+    $Clinic= new Clinic;
+    $Clinic->nazwa=$request->input('Nazwa');
+    $Clinic->email=$request->input('Email');
+    $Clinic->opis=$request->input('opis');
+ 
+    $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
+    $city->save();
+   
+    $Clinic->vet_id=Auth::user()->vets->id;
+    $Clinic->status=false;
+    $Clinic->save();
+
+    $phone = new Phone;
+    $phone->numer =$request->input('Numer');
+    $Clinic->phone()->save($phone);
+
+    $location = new Location;
+    $location->city_id= $city->id;
+    $location->address=$request->input('Adres');
+    $location->whenOpen =request('whenOpen');
+    $Clinic->location()->save($location);
+
+    if ($request->hasFile('ClinicPicture')){
+
+        $path = $request->file('ClinicPicture')->store('Clinic', 'public');
+        $this->createArticlePhoto($article,$path);
+    }
+    return  true;
+}
 
 }
   

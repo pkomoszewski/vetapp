@@ -37,8 +37,7 @@
 
       <div class="logo mr-auto">
         <h1 class="text-light"><a href="/">Vetapp</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
       </div>
 
       <nav class="nav-menu  d-lg-block">
@@ -99,14 +98,11 @@
 
     <div class="container py-4">
       <div class="copyright">
-        &copy; Copyright <strong><span>Appland</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Vetapp</span></strong>
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-app-landing-page-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+
+        Opracowane przez Paweł KOMOSZEWSKI <a href="/">Vetapp</a>
       </div>
     </div>
   </footer>

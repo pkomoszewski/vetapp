@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layouts.Backend.main')
 
 @section('content')
 
@@ -11,7 +11,7 @@
         <fieldset>
 
             <div class="form-group">
-                <label class="col-lg-2 control-label">Dla kogo umawiasz wizytę?</label>
+                <label class="col-lg-3 control-label">Dla kogo umawiasz wizytę?</label>
                 <div class="col-lg-10">
                     @if(!Auth::user()->owners->animals==null)
                     <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="animal">
@@ -76,7 +76,7 @@
 
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-dark">Zakończ rejestracje</button>
+                    <button type="submit" class="btn button-vet">Zakończ rejestracje</button>
                 </div>
             </div>
 

@@ -81,19 +81,25 @@ class FrontendRepository {
     {
       $city=City::where('name',$city)->first();
         if(request('sortby')=='ilość komentarzy'){
-      $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)
+      $results =Clinic::with(['photos','comments','location'])->where('location.city_id',$city->id,'status',1)
           ->when(request('sortby')=="Opinie",function($query){
           return $query->orderBy('comments_count','asc');
           }) ->get() ?? false; }
                  
                  
            if(request('sortby')=='ilość polubień'){
-      $results =Clinic::with(['photos','comments'])->where('city_id',$city->id)
+      $results =Clinic::with(['photos','comments','location'])->wherehas('locationcity_id',$city->id,'status',1)
           ->when(request('sortby')=="ilość polubień",function($query){
           return $query->orderBy('likable_count','asc');
           })->get() ?? false; }       
                  
-          
+          if(request('sortby')==null){
+            $results =Clinic::with(['photos','comments'])->wherehas('location',function ($query) use($city)  {
+              $query->where('city_id','=',$city->id);
+          })->where('status', 1)->get() ?? false;
+
+
+          }
       
       return  $results;
        
@@ -119,7 +125,7 @@ class FrontendRepository {
     {
 
         // moze byc do poprawy
-      $Vet= Vet::with('comments.user','photos')->find($vet_id);
+      $Vet= Vet::with('comments.user','photos','locations')->find($vet_id);
 
          return $Vet;   
                     
@@ -139,8 +145,7 @@ class FrontendRepository {
     public function getVet($vet_id)
     {
 
-        // moze byc do poprawy
-      $Vet= Vet::with('comments.user','phone','photos')->find($vet_id);
+      $Vet= Vet::with('comments.user','phone','photos')->where('user_id',$vet_id)->first()??false;
 
          return $Vet;   
                     
@@ -279,9 +284,7 @@ return $addNew->save();
 
        public function addFormRegisterVet($vet, $request)
        {
-   
         
-          $city= $request->input('miejscowosc');
            $vet->cena_konsulatcji	= $request->input('cena');
            $vet->opis= $request->input('opis');
            $vet->phone()->numer =$request->input('numer');

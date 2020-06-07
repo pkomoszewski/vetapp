@@ -55,7 +55,7 @@ return $m;
 ?>
 
 
-<!--Next week-->
+
 
 <div class="container">
     <div class="row">
@@ -64,8 +64,13 @@ return $m;
 
             <center>
                 <h2><?php echo polish_month($month) ." ". $year ?></h2>
-                <a class="btn btn-outline-secondary btn-xs"
+
+
+                <a class="btn button-vet"
+                    href="<?php echo $_SERVER['PHP_SELF'].'?week='.($week-1).'&year='.$year; ?>">Poprzedni tydzień</a>
+                <a class="btn button-vet"
                     href="<?php echo $_SERVER['PHP_SELF'].'?week='.($week+1).'&year='.$year; ?>">Następny tydzień</a>
+
             </center>
 
 
@@ -76,7 +81,7 @@ return $m;
                     <?php
 
 
-    do {
+do {
     $konwersja['Monday'] = 'poniedziałek';
      $konwersja['Tuesday'] = 'wtorek';
      $konwersja['Wednesday'] = 'środa';
@@ -85,21 +90,9 @@ return $m;
      $konwersja['Saturday'] = 'sobota';
      $konwersja['Sunday'] = 'niedziela';
      $dzientygodnia=$dt->format('l');
-
-
-   
-
-    
 if($dt->format('d M Y')==date('d M Y')){
-
-    echo "<td class='bg-secondary text-white'>" . $konwersja[$dzientygodnia] ."<p>" . $dt->format('d.m');  " </p></td>\n";
-}elseif($dt->format('w')<date('w')){echo "<td>" ."</td>\n";}
-
-else{
-    echo "<td>" . $konwersja[$dzientygodnia] . "<p>" . $dt->format('d.m');  " </p></td>\n";
-
-}
-
+    echo "<td class='bg-secondary'>" . $konwersja[$dzientygodnia] ."<p>" . $dt->format('d.m');  " </p></td>\n";
+}else{echo "<td>" . $konwersja[$dzientygodnia] . "<p>" . $dt->format('d.m');  " </p></td>\n";}
         $dt->modify('+1 day');
     } while ($week == $dt->format('W'));
     ?>
@@ -128,11 +121,11 @@ else{
                 for ($i = 1; $i <= 7; $i++) {
                 
                 
-                     if(testTime($ts,$day->format('Y-m-d'),$reservations) || $day->format('Y-m-d H:i:s') < date("Y-m-d H:i:s")){
+                     if(testTime($ts,$day->format('Y-m-d'),$reservations) || $day->format('Y-m-d H:i:s') < date("Y-m-d H:i:s") || date("H:i") > $ts && $day->format('Y-m-d') == date("Y-m-d")){
                             ?> <td></td>
                     <?php     }else{ ?><td><a
                             href="{{ route('ViewformReservation',['date'=>$day->format('Y-m-d'),'ts'=>$ts,'vet_id'=>$vet_id ]) }}"><button
-                                class="btn btn-light btn-xs"><?php  echo $ts?></button></a></td>
+                                class="btn btn-light btn-xs"><?php  echo $ts ?></button></a></td>
 
                     <?php  } ?>
 

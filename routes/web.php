@@ -62,6 +62,9 @@ Route::get(trans('vet').'/{id}','FrontendController@sitevet')->name('sitevet');
 //dla kliniki
 Route::get(trans('clinic').'/{id}','FrontendController@siteclinic')->name('siteclinic'); 
 
+Route::match(['GET','POST'],'/addClinic','BackendController@newClinic')->name('addClinic');
+
+
 //Zwierzaki
 Route::get('/contact','FrontendController@siteContact')->name('Contact');
 Route::get('/addAnimal','FrontendController@viewAddFormAnimal')->name('addAnimal');// Zmienic nazwe route
@@ -84,10 +87,12 @@ Route::middleware(['auth','CheckAdmin'])->group(function () {
   Route::post('/admin/visits/delete/','BackendController@deleteReservation')->name('deleteVisit');
   Route::post('delete','BackendController@deleteUser')->name('deleteUser');
   Route::get('/admin/ban/{id}','BackendController@banUser')->name('banUser');
-  Route::get('/admin/vet/all','BackendController@showAllVet')->name('allVet');
-  Route::get('/admin/article/all','BackendController@getListArticles')->name('allArticle');
+  Route::get('/admin/vets','BackendController@showAllVet')->name('allVet');
+  Route::get('/admin/articles','BackendController@getListArticles')->name('allArticle');
   Route::post('/admin/article/delete','BackendController@deleteArticle')->name('deleteArticle');
-
+  Route::get('/admin/clinics','BackendController@showAllClinics')->name('allClinic');
+  Route::get('/admin/status/{id}','BackendController@changeStatusClinic')->name('StatusClinic');
+  Route::post('/admin/clinics/delete/','BackendController@deleteClinic')->name('deleteClinic');
   Route::get('/admin/static/','BackendController@showSiteStatic')->name('staticSite');
     
   Route::get('/admin/article/edit/{id}','BackendController@showEditArticle')->name('showEditArticle');

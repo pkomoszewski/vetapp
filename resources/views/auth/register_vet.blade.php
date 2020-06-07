@@ -5,7 +5,7 @@
         <div class="container">
             <div class="signup-content">
                 <div class="signup-form">
-                    <h2 class="form-title">Utworz konto weterynarza</h2>
+                    <h2 class="form-title">Utwórz konto weterynarza</h2>
                     <form method="POST" class="register-form" id="register-form"
                         action="{{ route('registervetpost') }}">
                         @csrf
@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>Akcetpuje
-                                regulamin <a href="#" class="term-service">Terms of service</a></label>
+                                regulamin <a href="#" class="term-service">czytaj</a></label>
                         </div>
                         <div class="form-group form-button">
                             <input type="submit" name="signup" id="signup" value="Rejestracja" class="button-vet" />

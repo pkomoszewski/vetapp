@@ -45,7 +45,7 @@
               @foreach($comments as $comment)
 
 
-              <h6> {{$comment->commentable->Type}}</h6>
+              {{-- <h6> {{$comment->commentable->Type}}</h6> --}}
 
 
               {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',

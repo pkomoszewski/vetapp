@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 class Clinic extends Model
 {
+    use Presenters\ClinicPresenter; 
 
     public function users()
     {
@@ -29,5 +30,18 @@ class Clinic extends Model
     {
         return $this->users()->where('user_id',Auth::user()->id)->exists();
     }
+
+    public function vet()
+    {
+        return $this->belongsTo('App\Vet');
+    }
+
+    public function location()
+    {
+        return $this->morphOne('App\Location', 'locationable');
+    }
+
+
+ 
 }
 

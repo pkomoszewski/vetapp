@@ -75,7 +75,17 @@ class BackendController extends Controller
         return view('backend.admin.addArticle');
     }
 
-    
+    public function newClinic(Request $request){
+
+        if($request->isMethod('post')){
+          $add = $this->fV->vadlidationFormAddClinic($request);
+         return redirect()->Route('allArticle')->with('success', 'Klinka została dodana ');
+        }
+              
+        
+        
+              return view('backend.vet.addClinic');
+          }   
 //////////////////////////////////////////////////// 
    
     public function showAdminPanel(){
@@ -90,6 +100,13 @@ class BackendController extends Controller
         $Reservations=$this->bR->getAllReservations();
            return view('backend.admin.showAllReservation')->with('reservations',$Reservations);
        }
+
+       public function showAllClinics(){
+
+        $Clinics=$this->bR->getAllClinics();
+           return view('backend.admin.showAllClinic')->with('clinics',$Clinics);
+       }
+
 
        public function deleteSelf(Request $request){
 
@@ -109,11 +126,23 @@ class BackendController extends Controller
           return redirect()->back()->with('success', 'Użytkownik został usunięty');
        }
        
-       public function BanUser($id){
+       public function banUser($id){
         $BanUser=$this->bR->BanUser($id);
           return redirect()->back()->with('success', $BanUser);
        }
+//////////////////////////////////////////////////////////////////////////
+//////obsluga klinic
+       public function changeStatusClinic($id){
+        $statusClinic=$this->bR->changeStatusClinic($id);
+          return redirect()->back()->with('success', $statusClinic);
+       }
 
+       public function deleteClinic(Request $request){
+
+        $id=$request->input('delete_id');
+        $deleteClinic=$this->bR->deleteClinic($id);
+          return redirect()->back()->with('success', 'Klinika został usunięta');
+       }
 /////////////////////////////////////////////////////////
 ///obsluga rezerwacji
 
@@ -124,6 +153,9 @@ public function deleteReservation(Request $request){
     $deleteReservation=$this->bR->deleteReservation($id);
       return redirect()->back()->with('success', 'Rezerwacja został usunięta');
    }
+
+
+  
 
 
 ///////////////////////////////////////////////////////////////////////////////

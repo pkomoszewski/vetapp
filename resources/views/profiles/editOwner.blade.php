@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-dark">Zapisz</button>
+                    <button type="submit" class="btn button-vet">Zapisz</button>
                 </div>
             </div>
             <div class="form-group">
@@ -31,19 +31,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-10 col-lg-offset-2">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail">
-                            <img class="img-responsive"
-                                src="http://lorempixel.com/275/150/people/?x=<?= mt_rand(1, 9999999) ?>" alt="...">
-                            <div class="caption">
-                                <p><a href="#" class="btn btn-dark btn-xs" role="button">Delete</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
         </fieldset>
     </form>
