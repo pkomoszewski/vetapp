@@ -172,19 +172,45 @@
                             </div>
 
                             <div class="tab-pane fade" id="map" role="tabpanel">
-                                <?php $i=1 ?>
-                                @foreach ($vet->locations as $location)
+                                <div class="col-md-4 col-6">
 
-                                <p> <strong>Adres {{$i}}:</strong> {{$location->address}} </p>
-                                <p><strong>Miasto:</strong>
-                                    {{$location->city_id}}</p>
-                                <?php $i++ ?>
-                                <button class="btn button-vet" data-deleteid={{$vet->id}} data-toggle="modal"
-                                    data-target="#delete">Pokaż na mapie</button>
 
+                                </div>
+                                @php
+                                $i=1
+                                @endphp
+                                @foreach ($vet->locations as $location )
+
+                                <h6>Adres {{$i}}</h6>
+
+
+
+                                <p> {{$location->address}}</p>
+                                <p> {{$location->city->name}}</p>
+                                <div id="div{{$i}}" class=" data">
+                                    <div>
+
+                                        <a data-deleteid={{$vet->id}} data-toggle="modal" data-target="#delete"
+                                            href="">Pokaż na
+                                            mapie</a>
+                                    </div>
+                                    <div>
+                                        <h6>Godziny otwarcia</h6>
+                                        @foreach ($location->whenOpen as $time)
+                                        @isset($time['key'])
+                                        <b>{{$time['key']}}</b>: {{ $time['value']}}<br />
+
+                                        @endisset
+                                        @endforeach
+
+                                    </div>
+
+                                    @php
+                                    $i++
+                                    @endphp
+                                </div>
                                 <hr>
                                 @endforeach
-
 
                             </div>
 

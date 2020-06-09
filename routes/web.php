@@ -63,7 +63,7 @@ Route::get(trans('vet').'/{id}','FrontendController@sitevet')->name('sitevet');
 Route::get(trans('clinic').'/{id}','FrontendController@siteclinic')->name('siteclinic'); 
 
 Route::match(['GET','POST'],'/addClinic','BackendController@newClinic')->name('addClinic');
-
+Route::match(['GET','POST'],'/addAdress','BackendController@newAdress')->name('addAdress');
 
 //Zwierzaki
 Route::get('/contact','FrontendController@siteContact')->name('Contact');
@@ -71,7 +71,7 @@ Route::get('/addAnimal','FrontendController@viewAddFormAnimal')->name('addAnimal
 
 Route::post(trans('addNewAnimal').'/{id}','BackendController@NewAnimal')->name('addNewAnimal');
 Route::get('/{animal_id}/delete', 'AnimalController@delete');
-
+Route::get('/blocked','BackendController@blockedUser')->name('blockedUser');
 // dodawanie komentarz
 Route::post('/addComment/{commentable_id}/{type}', 'FrontendController@addComment')->name('addComment'); 
 Auth::routes();

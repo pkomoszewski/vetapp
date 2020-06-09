@@ -312,6 +312,47 @@ public function addNewClinic($request)
     return  true;
 }
 
+
+public function addNewAddress($request)
+{
+
+
+    $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
+    $city->save();
+   
+   
+
+ 
+
+    $location = new Location;
+    $location->city_id= $city->id;
+    $location->address=$request->input('adres');
+    $location->whenOpen =request('whenOpen');
+
+
+    $vet=Vet::where('user_id',Auth::id())->first();
+
+   
+    
+    return  $vet->locations()->save($location);;
+}
+
+
+public function blockedUser()
+{
+    $User= Auth::User();
+    $message='';
+        if( !$User->ban)
+        {
+            $User->ban=true;
+            
+            $message="Użytkownik został zablokwany";
+        }    
+        $User->save();
+        return $message;
+    
+}
+
 }
   
 

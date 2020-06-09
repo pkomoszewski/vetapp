@@ -153,10 +153,8 @@ class FormValidation{
         $this->validate($request,[
             'Nazwa'=>"required|string",
             'Email'=>"required|string",
-            'Adres'=>"string",
+            'opis'=>"string",
             'Numer'=>"integer",
-            'godzina_otwarcia'=>"string",
-            'godzina_zamkniecia'=>"string",
            
           
             ]);
@@ -164,6 +162,17 @@ class FormValidation{
             $this->bR->AddNewClinic($request);
     }
  
+    public function vadlidationFormAddAddress($request){
+        $this->validate($request,[
+            'adres'=>"required|string",
+            'miejscowosc'=>"required|string",
+        
+           
+          
+            ]);
+
+            $this->bR->AddNewAddress($request);
+    }
 
 }
 

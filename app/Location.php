@@ -18,4 +18,14 @@ class Location extends Model
         return $this->morphTo();
     }
 
+    public function city(){
+        return $this->belongsTo('App\City');
+
+    }
+
+    public function vet()
+    {
+        return $this->belongsTo('App\Vet');
+    }
+
 }

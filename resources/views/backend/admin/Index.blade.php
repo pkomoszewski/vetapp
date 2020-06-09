@@ -59,9 +59,7 @@
         </tbody>
     </table>
 </div>
-<div class="pagination">
-    dodoc paginacje
-</div>
+
 <div class="modal modal-danger fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

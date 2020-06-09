@@ -49,6 +49,10 @@
                                         role="tab">Informacje</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab">Adres</a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment"
                                         role="tab">Komentarze
                                         użytkowników</a>
@@ -56,11 +60,12 @@
 
 
                                 <li class="nav-item">
-                                    <a class="nav-link" id="map-tab" data-toggle="tab" href="#map"
-                                        role="tab">Lokalizacja na mapie</a>
+                                    <a class="nav-link" id="service-tab" data-toggle="tab" href="#service"
+                                        role="tab">Usługi</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab">Ustawienia
+                                    <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting"
+                                        role="tab">Ustawienia
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -110,36 +115,17 @@
                                                     @endif
                                         </div>
                                     </div>
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Adres</label>
-                                        </div>
-                                        <div class="col-md-8 col-6">
-                                            <p>{{$vet->adres}}</p>
-                                        </div>
-                                    </div>
+
                                     <hr />
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
                                             <label style="font-weight:bold;">Miasto</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            Wyświetl miasto
+                                            {{$vet->locations->first()->city->name}}
                                         </div>
                                     </div>
-                                    <hr />
 
-                                    <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Godziny przyjęć</label>
-                                        </div>
-                                        <div class="col-md-8 col-6">
-                                            {{$vet->TimeStart}}
-                                            do
-                                            {{$vet->TimeEnd}}</p>
-                                        </div>
-                                    </div>
                                     <hr />
 
                                 </div>
@@ -160,17 +146,58 @@
                                     </li>
                                     @endforeach
                                 </div>
-
-                                <div class="tab-pane fade" id="map" role="tabpanel">
-
-
-                                    <div style="width: 100%; height: 400px" id="address-map"></div>
-                                </div>
-
                                 <div class="tab-pane fade" id="klinka" role="tabpanel">
 
                                     <a class="btn button-vet mt-2" href="{{ route("addClinic")}}"> Dodaj klinkę</a>
                                 </div>
+                                <div class="tab-pane fade" id="setting" role="tabpanel">
+
+                                    <a class="btn button-vet mt-2" href="{{route('addAdress')}}"> Dodaj adres</a>
+                                </div>
+                                <div class="tab-pane fade" id="map" role="tabpanel">
+                                    <div class="col-md-4 col-6">
+
+
+                                    </div>
+                                    @php
+                                    $i=1
+                                    @endphp
+                                    @foreach ($vet->locations as $location )
+
+                                    <h6>Adres {{$i}}</h6>
+
+
+
+                                    <p> {{$location->address}}</p>
+                                    <p> {{$location->city->name}}</p>
+                                    <div id="div{{$i}}" class=" data">
+                                        <div>
+
+                                            <a data-deleteid={{$vet->id}} data-toggle="modal" data-target="#delete"
+                                                href="">Pokaż na
+                                                mapie</a>
+                                        </div>
+                                        <div>
+                                            <h6>Godziny otwarcia</h6>
+                                            @foreach ($location->whenOpen as $time)
+                                            @isset($time['key'])
+                                            <b>{{$time['key']}}</b>: {{ $time['value']}}<br />
+
+                                            @endisset
+                                            @endforeach
+
+                                        </div>
+
+                                        @php
+                                        $i++
+                                        @endphp
+                                    </div>
+                                    <hr>
+                                    @endforeach
+
+                                </div>
+
+
                             </div>
                         </div>
                     </div>

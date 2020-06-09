@@ -74,18 +74,31 @@ class BackendController extends Controller
   
         return view('backend.admin.addArticle');
     }
+public function newAdress(Request $request){
 
+        if($request->isMethod('post')){
+          $add = $this->fV->vadlidationFormAddAddress($request);
+         return redirect()->Route('allArticle')->with('success', 'Klinka została dodana ');
+        }
+              
+        
+        
+              return view('backend.vet.addAdress');
+          }  
     public function newClinic(Request $request){
 
         if($request->isMethod('post')){
           $add = $this->fV->vadlidationFormAddClinic($request);
-         return redirect()->Route('allArticle')->with('success', 'Klinka została dodana ');
+         return redirect()->back()->with('success', 'Klinka został dodany ');
         }
               
         
         
               return view('backend.vet.addClinic');
           }   
+
+
+          
 //////////////////////////////////////////////////// 
    
     public function showAdminPanel(){
@@ -192,6 +205,13 @@ public function saveEditArticle(Request $request,$id){
             
     $edit = $this->bR->editArticle($request,$id);
     return redirect()->Route('allArticle')->with('success', 'Artykuł został pomyślnie edytowany');
+
+}
+
+public function blockedUser(){
+            
+    $edit = $this->bR->blockedUser();
+    return redirect()->route('/');
 
 }
 

@@ -13,6 +13,8 @@ use App\Comment;
 use App\Clinic;
 use App\Reservation;
 use App\Newsletter;
+use App\Phone;
+use App\Location;
 use Illuminate\Support\Facades\Auth;
 
 class FrontendRepository {  
@@ -145,7 +147,7 @@ class FrontendRepository {
     public function getVet($vet_id)
     {
 
-      $Vet= Vet::with('comments.user','phone','photos')->where('user_id',$vet_id)->first()??false;
+      $Vet= Vet::with('comments.user','phone','photos','locations')->where('user_id',$vet_id)->first()??false;
 
          return $Vet;   
                     
@@ -287,14 +289,24 @@ return $addNew->save();
         
            $vet->cena_konsulatcji	= $request->input('cena');
            $vet->opis= $request->input('opis');
-           $vet->phone()->numer =$request->input('numer');
-           $vet->adres= $request->input('adres');
-           $vet->address_latitude= $request->input('address_latitude');
-           $vet->address_longitude= $request->input('address_longitude');
            $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
            $city->save();
-           $vet->city_id =$city->id;
            $vet->save();
+
+           $phone= new Phone;
+           $phone->numer=$request->input('numer');
+           $vet->phone()->save($phone);
+
+          $location = new Location;
+          $location->city_id= $city->id;
+          $location->address=$request->input('adres');
+          $location->address_latitude= $request->input('address_latitude');
+          $location->address_longitude= $request->input('address_longitude');
+          $location->whenOpen =request('whenOpen');
+          $vet->locations()->save($location);
+
+          
+
            return $vet;
        }
 

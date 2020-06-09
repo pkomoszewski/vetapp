@@ -32,6 +32,18 @@ const app = new Vue({
 });
 
 $(function () {
+    $('#adresSelect').change(function () {
+
+        var id = $(this).children(":selected").attr("id");
+
+        $('.data').hide();
+        $('#div' + id).show();
+
+    }).trigger('change');
+});
+
+
+$(function () {
     $(".autocomplete").autocomplete({
         source: base_url + "/searchCities",
         minLength: 2,

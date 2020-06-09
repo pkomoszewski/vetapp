@@ -9,37 +9,25 @@
                     <form method="POST" class="register-form" id="register-form" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+
                             <input type="email" name="email" name="email" value="{{ old('email') }}" id="email"
                                 placeholder="Twój Email" />
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
-                            <label for="text"><i class="zmdi zmdi-text"></i></label>
+
                             <input type="text" name="imie" value="{{ old('imie') }}" id="imie"
                                 placeholder="Twój Imie" />
-                            @error('imie')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+
+
                         </div>
                         <div class="form-group">
-                            <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+
                             <input type="password" name="password" id="pass" placeholder="Hasło" />
                         </div>
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+
                         <div class="form-group">
-                            <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+
                             <input type="password" name="password_confirmation" id="re_pass"
                                 placeholder="Powtórz hasło" />
                         </div>
@@ -54,7 +42,7 @@
                         </div>
                     </form>
                     @if ($errors->any())
-                    <div style="color: red;">
+                    <div class="alert alert-danger mt-2">
                         <ul>
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>

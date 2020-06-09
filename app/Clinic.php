@@ -41,7 +41,10 @@ class Clinic extends Model
         return $this->morphOne('App\Location', 'locationable');
     }
 
-
+    public function service()
+    {
+        return $this->morphOne('App\Service', 'serviceable');
+    }
  
 }
 

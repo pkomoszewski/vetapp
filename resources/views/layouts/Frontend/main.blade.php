@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
     rel="stylesheet">
 
-
+  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <link href="/css/one-page-wonder.min.css" rel="stylesheet">
   <link href="/css/one-page-wonder.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/rejestracja.css') }}">
@@ -26,8 +26,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/css/font-awesome.min.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
   <script>
     var base_url = '{{ url('/') }}';
@@ -117,7 +116,7 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
   @yield('javascript')

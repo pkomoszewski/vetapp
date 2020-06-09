@@ -149,6 +149,19 @@
                                             <button class="btn btn-danger" data-deleteid="{{Auth::id()}}"
                                                 data-toggle="modal" data-target="#delete">Usuń</button>
                                         </div>
+                                        <hr>
+
+                                    </div>
+                                    <div class="row mt-2">
+
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Zablokowanie konta</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+
+                                            <button class="btn btn-warning" data-deleteid="{{Auth::id()}}"
+                                                data-toggle="modal" data-target="#bocked">Zablokowanie</button>
+                                        </div>
                                     </div>
                                     <hr />
 
@@ -183,6 +196,31 @@
                     <div class="modal-body">
                         <p class="text-center">
                             Czy napewno chcesz usunąć swoje konto?
+                        </p>
+                        <input type="hidden" name="delete_id" id="delete_id" value="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Anuluj</button>
+                        <button type="submit" class="btn btn-warning">Tak, Usuń</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-danger fade" id="bocked" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center" id="myModalLabel">Potwierdzienie zablokowania konta</h4>
+                </div>
+                <form action="{{route('blockedUser')}}" method="GET">
+
+                    {{csrf_field()}}
+                    <div class="modal-body">
+                        <p class="text-center">
+                            Czy napewno chcesz zablokować swoje konto?
                         </p>
                         <input type="hidden" name="delete_id" id="delete_id" value="">
 

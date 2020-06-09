@@ -65,4 +65,13 @@ class Vet extends Model
     {
         return $this->morphMany('App\Location', 'locationable');
     }
+
+
+    public function service()
+    {
+        return $this->morphOne('App\Service', 'serviceable');
+    }
+
+   
+
 }
