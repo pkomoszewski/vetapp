@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Validation\FormValidation;
 use App\Vet;
+use App\Specialization;
 
 class RegisterStep2Controller extends Controller
 {
@@ -20,7 +21,8 @@ class RegisterStep2Controller extends Controller
     public function showForm()
     {
         $vet=Vet::where('user_id',Auth::id())->first();
-        return view('auth.register_step2_vet')->with(['vet'=>$vet]);
+        $specializations=Specialization::all();
+        return view('auth.register_step2_vet')->with(['vet'=>$vet,'specializations'=>$specializations]);
     }
     public function postForm(Request $request)
     {

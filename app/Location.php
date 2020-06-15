@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
   
+    
+    use Presenters\LocationPresenter; 
     protected $casts = [
         'whenOpen' => 'array'
     ];
@@ -27,5 +29,7 @@ class Location extends Model
     {
         return $this->belongsTo('App\Vet');
     }
+
+    
 
 }

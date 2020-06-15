@@ -19,12 +19,12 @@
 
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <link href="/css/one-page-wonder.min.css" rel="stylesheet">
-  <link href="/css/one-page-wonder.css" rel="stylesheet">
+
   <link rel="stylesheet" href="{{ asset('css/rejestracja.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 
@@ -39,8 +39,6 @@
 
       <div class="logo mr-auto">
         <h1 class="text-light"><a href="/">Vetapp</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav class="nav-menu  d-lg-block">
@@ -110,17 +108,16 @@
     </div>
   </footer>
 
-  <!-- Bootstrap core JavaScript -->
+ 
 
 
-  <script src="{{ asset('js/app.js') }}"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
+
 
 
   @yield('javascript')
 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </body>
 
 </html>

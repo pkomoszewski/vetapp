@@ -69,7 +69,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="map-tab" data-toggle="tab" href="#klinka" role="tab">Klinka
+                                    <a class="nav-link" id="klinka-tab" data-toggle="tab" href="#klinka" role="tab">Klinka
                                     </a>
                                 </li>
                             </ul>
@@ -147,12 +147,31 @@
                                     @endforeach
                                 </div>
                                 <div class="tab-pane fade" id="klinka" role="tabpanel">
-
+                                    <h6>Twoje kliniki</h6>
+                                    @foreach ($vet->clinics as $clinic)
+                                    <p>Nazwa: {{$clinic->nazwa}}
+                                
+                                  <a href="{{$clinic->link}}">Podgląd</a></p>
+                            
+                            
+                                    @endforeach
                                     <a class="btn button-vet mt-2" href="{{ route("addClinic")}}"> Dodaj klinkę</a>
+                                   
+
+                                   
                                 </div>
                                 <div class="tab-pane fade" id="setting" role="tabpanel">
 
-                                    <a class="btn button-vet mt-2" href="{{route('addAdress')}}"> Dodaj adres</a>
+                                    <a class="mt-2" href="{{route('addAdress')}}">Dodanie nowego adresu</a>
+                                    <hr>
+                                    <p>Planowany czas trwania wizyt</p>
+                                    <form action="" method="post">
+                                        <div class="form-group w-25">
+                                        <select name="interval" id="interval" class="form-control">
+                                        <option value="30">Domyślny</option>
+                                        </select>
+                                    </div>
+                                    </form>
                                 </div>
                                 <div class="tab-pane fade" id="map" role="tabpanel">
                                     <div class="col-md-4 col-6">
@@ -210,20 +229,18 @@
 
 
         </div>
-    </div>
+    </div>  
 
     <script>
-        var map;
-function initMap() {
-var uluru = {lat: {{$vet->address_latitude}}, lng: {{$vet->address_longitude}}};
-var map = new google.maps.Map(document.getElementById('address-map'), {
-center: uluru,
-zoom: 15,
+    for(i=5;i<=60;i=i+5){
+         $('#interval').append($('<option>', {
+    value: i,
+    text: i+' min',
+         
+}));
+    }
 
-});
 
-var marker = new google.maps.Marker({position: uluru, map: map});
- }
     </script>
 </div>
 @endsection

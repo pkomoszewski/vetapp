@@ -3,7 +3,7 @@
 <div class="main">
     <section class="signup">
         <div class="container">
-            <div class="signup-content">
+            <div class="signup-content d-flex justify-content-center">
                 <div class="signup-form">
                     <h2 class="form-title">Utwórz konto weterynarza</h2>
                     <form method="POST" class="register-form" id="register-form"
@@ -35,15 +35,26 @@
                                 placeholder="Powtórz hasło" />
                         </div>
 
-                        <div class="form-group">
-                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                            <label for="agree-term" class="label-agree-term"><span><span></span></span>Akcetpuje
-                                regulamin <a href="#" class="term-service">czytaj</a></label>
+                        <div class="d-flex align-items-center mb-2" >
+                           
+                            <input type="checkbox" name="regulamin" id="regulamin" class="mr-2" />
+                            <label for="regulamin" class="m-0" ><span><span></span></span>Akcetpuje
+                                regulamin <a href="#" class="term-service">Terms of service</a></label>
+                          
                         </div>
                         <div class="form-group form-button">
                             <input type="submit" name="signup" id="signup" value="Rejestracja" class="button-vet" />
                         </div>
                     </form>
+                    @if ($errors->any())
+                    <div class="alert alert-danger mt-2">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
 
             </div>

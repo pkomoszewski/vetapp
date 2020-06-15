@@ -281,9 +281,40 @@ figure {
   .form-group:last-child {
     margin-bottom: 0px; }
 
-input {
+
+.form-group input{
+
   width: 100%;
-  display: block;
+}
+textarea {
+  border: none;
+  border-bottom: 1px solid #999;
+  padding: 6px 30px;
+  font-family: Poppins;
+  box-sizing: border-box; 
+}
+
+textarea::-webkit-input-placeholder {
+  color: #999; }
+  textarea::-moz-placeholder {
+  color: #999; }
+  textarea:-ms-input-placeholder {
+  color: #999; }
+  textarea:-moz-placeholder {
+  color: #999; }
+  textarea:focus {
+  border-bottom: 1px solid #222; }
+  textarea:focus::-webkit-input-placeholder {
+    color: #222; }
+    textarea:focus::-moz-placeholder {
+    color: #222; }
+    textarea:focus:-ms-input-placeholder {
+    color: #222; }
+    textarea:focus:-moz-placeholder {
+    color: #222; }
+input {
+  
+
   border: none;
   border-bottom: 1px solid #999;
   padding: 6px 30px;
@@ -320,16 +351,7 @@ input {
   display: inline-block;
   width: auto; }
 
-label {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  color: #222; }
+
 
 .label-has-error {
   top: 22%; }
@@ -512,4 +534,4 @@ label.valid {
     margin-right: 0px;
     margin-bottom: 10px; } }
 
-/*# sourceMappingURL=style.css.map */
+

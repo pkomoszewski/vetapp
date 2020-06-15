@@ -8,7 +8,7 @@ trait ClinicPresenter {
     
     public function getLinkAttribute()
     {
-        return route('siteClinic',['id'=>$this->id]);
+        return route('siteclinic',['id'=>$this->id]);
     }
     
     public function getTypeAttribute()

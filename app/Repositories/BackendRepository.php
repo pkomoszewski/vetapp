@@ -4,7 +4,6 @@
 namespace App\Repositories; 
 
  
-use App\Concert;
 use App\Article;
 use App\Animal;
 use App\User;
@@ -184,10 +183,7 @@ public function saveVet($request)
     $vet->nazwisko = $request->input('nazwisko');
     $vet->opis = $request->input('opis');
     $vet->cena_konsulatcji = $request->input('cena');
-    $vet->godzina_otwarcia = $request->input('godzina_otwarcia');
-    $vet->godzina_zamkniecia = $request->input('godzina_zamkniecia');
-    $vet->adres = $request->input('adres');
-    $vet->phone()->number =$request->input('numer');
+
     $vet->save();
 
     return $vet;

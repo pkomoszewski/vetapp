@@ -178,21 +178,19 @@ public function profileEdit(Request $request )
     if ($request->isMethod('post')) 
     {
 
-
   
         if(Auth::user()->hasRole(['Weterynarz'])){
          
-
+      
 
             $this->validate($request,[
                 'imie'=>"required|string",
                 'nazwisko'=>"required|string",
-                'opis'=>"required|string",
-                'numer'=>"integer",
-                'cena'=>"string",
-                'adres'=>"required|string",
+                
               
                 ]);
+                
+
                 $vet= $this->bR->saveVet($request);
                 $numer=$request->input('numer');
                 if(!$request->input('numer')==null){

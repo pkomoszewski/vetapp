@@ -5,10 +5,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-
-
-
-
             <div class="card-body">
 
                 <div class="card-title mb-4">
@@ -25,13 +21,10 @@
 
                         </div>
                         <div class="userData ml-3">
-
-
-
                             <h3>{{ $vet->imie }} {{ $vet->nazwisko}}</h3>
 
 
-                            <p>Adres: {{ucwords($vet->adres) }} {{ucwords($vet->miejscowosc)}}</p>
+                            <p>Adres: {{ucwords($vet->locations->first()->address) }} {{ucwords($vet->locations->first()->miejscowosc)}}</p>
                             <p> Cena kosultacji: {{$vet->cena_konsulatcji}} zł<p>
 
                                     {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
@@ -44,7 +37,7 @@
 
                                     @auth
                                     @if($vet->isLiked())
-                                    <p>Lublisz tego weterynarza</p>
+                                    <p>Lubisz tego weterynarza</p>
                                     <a href="{{ route('unlike',['like_id'=>$vet->id,'type'=>'App\Vet']) }}">Anuluj
                                         polubienie</i></a>
                                     @else
@@ -64,19 +57,10 @@
                                             class="btn button-vet pull-right m-3" role="button">Umów się na
                                             wizytę</a>
                                         @endif
-
                                     </div>
-
-
                         </div>
-
-
-
                     </div>
                 </div>
-
-
-
                 <div class="row">
                     <div class="col-12">
                         <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
@@ -86,7 +70,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="map-tab" data-toggle="tab" href="#experience"
-                                    role="tab">Doświadczenie</a>
+                                    role="tab">Usługi</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment"
@@ -185,17 +169,18 @@
 
 
 
-                                <p> {{$location->address}}</p>
-                                <p> {{$location->city->name}}</p>
+                                <p>Adres: {{$location->address}} {{$location->city->name}}</p>
+                              
                                 <div id="div{{$i}}" class=" data">
-                                    <div>
+                                    <div class=" mb-2">
 
-                                        <a data-deleteid={{$vet->id}} data-toggle="modal" data-target="#delete"
+                                        <a data-deleteid={{$vet->id}} data-toggle="modal" data-target="#showmap"
                                             href="">Pokaż na
                                             mapie</a>
                                     </div>
+                              
                                     <div>
-                                        <h6>Godziny otwarcia</h6>
+                                        <h6>Godziny przyjęć</h6>
                                         @foreach ($location->whenOpen as $time)
                                         @isset($time['key'])
                                         <b>{{$time['key']}}</b>: {{ $time['value']}}<br />
@@ -233,9 +218,20 @@
 
                             </div>
                             <div class="tab-pane fade" id="experience" role="tabpanel">
+<h6>Usługi</h6>
+@foreach ($vet->service->services as $service)
+@isset($service['kind'])
+    <p>- {{$service['kind']}}: {{$service['price']}} zł </p>
+@endisset
+@endforeach
+<hr>
+<h6>Możliwość wizyty domowej</h6>
+@if ($vet->homevisit)
+    <p>Tak</p>
+  @else
+  <p>Nie</p>
+@endif
 
-
-                                doświadczenie
                             </div>
 
 
@@ -254,7 +250,7 @@
 
 </div>
 
-<div class="modal modal-danger fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal modal-danger fade" id="showmap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div style="width: 100%; height: 400px" id="address-map"></div>
@@ -263,9 +259,12 @@
 </div>
 
 <script>
+     const latitude = {{$vet->locations->first()->address_latitude}}  || -33.8688;
+        const longitude =  {{$vet->locations->first()->address_longitude}} ||  151.2195 ;
+
     var map;
              function initMap() {
-                var uluru = {lat: {{$vet->address_latitude}}, lng: {{$vet->address_longitude}}};
+                var uluru = {lat: latitude, lng: longitude};
                 var map = new google.maps.Map(document.getElementById('address-map'), {
                 center: uluru,
                 zoom: 15,

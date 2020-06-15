@@ -4,7 +4,7 @@
 namespace App\Repositories; 
 
  
-use App\Concert;
+
 use App\Article;
 use App\City;
 use App\User;
@@ -15,8 +15,9 @@ use App\Reservation;
 use App\Newsletter;
 use App\Phone;
 use App\Location;
-use Illuminate\Support\Facades\Auth;
-
+use App\Service;
+use App\Specialization;
+use DB;
 class FrontendRepository {  
     
     use \Illuminate\Foundation\Validation\ValidatesRequests;
@@ -63,17 +64,24 @@ class FrontendRepository {
    
       $city=City::where('name',$city)->first();
     if(request('sortby')=='Ilości Opinii'){
-      $results =Vet::with(['photos','comments'])
-      ->where('city_id',$city->id)->when(request('sortby')=="Ilości Opinii", function($query) {
-      return $query->orderBy('comments_count', 'asc');
+      $results =Vet::with(['photos','comments','locations'])->withCount('comments')->orderBy('comments_count', 'desc')
+      ->wherehas('locations',function($query) use($city){
+        $query->where('city_id','=',$city->id);
+      } )->get() ?? false;
+    }
+    if(request('sortby')=='Cena'){
+      $results =Vet::with(['photos','comments','locations'])
+      ->wherehas('locations',function($query) use($city){
+        $query->where('city_id','=',$city->id);
+      } )->when(request('sortby')=="Cena", function($query) {
+      return $query->orderBy('cena_konsulatcji', 'asc');
       })->get() ?? false; 
     }
-
-      $results =Vet::with(['photos','comments'])
-      ->where('city_id',$city->id)->when(request('sortby')=="Min cena", function($query) {
-      return $query->orderBy('cena_konsulatcji', 'asc');
-  })
-    ->get() ?? false; 
+    if(request('sortby')==null){
+      $results =Vet::with(['photos','comments','locations'])->wherehas('locations',function ($query) use($city)  {
+        $query->where('city_id','=',$city->id);
+    })->get() ?? false;
+  }
 
       return  $results;
       
@@ -185,6 +193,7 @@ class FrontendRepository {
 
     public function getReservationsByVetId( $vet_id )
     {
+     
         return  Reservation::with('owner')->where('vet_id',$vet_id)->paginate(4); 
     } 
 
@@ -277,22 +286,41 @@ return $addNew->save();
 
        public function getReservationByOwnerId($owner_id)
        {
-         $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->orderBy('day','asc')->paginate(2);
+        if(request('sortby')=='Daty wizyty'){
+         $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->orderBy('day','asc')->get();
             return $ownerReservation;   
-                       
+        }   
+        if(request('sortby')=='Domyślny'|| request('sortby')==null){
+          $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->get();
+             return $ownerReservation;   
+         }  
+
        } 
 
 
 
        public function addFormRegisterVet($vet, $request)
        {
-        
+   
            $vet->cena_konsulatcji	= $request->input('cena');
            $vet->opis= $request->input('opis');
+           if(!$request->input('interval')==null){
+            $vet->time_visit= $request->input('time_visit');
+           }
+           if($request->input('visits')=="true"){
+            $vet->homevisit= 1;
+           }
+
            $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
            $city->save();
            $vet->save();
+           $speces= request('specializations');
+           if(!$speces==null){
+           foreach($speces as $spec){
+            $sp=Specialization::select('id')->where('name',$spec)->first();
+            $vet->specializations()->attach($sp);
 
+           }}
            $phone= new Phone;
            $phone->numer=$request->input('numer');
            $vet->phone()->save($phone);
@@ -302,11 +330,13 @@ return $addNew->save();
           $location->address=$request->input('adres');
           $location->address_latitude= $request->input('address_latitude');
           $location->address_longitude= $request->input('address_longitude');
-          $location->whenOpen =request('whenOpen');
+          $location->whenOpen=request('whenOpen');
           $vet->locations()->save($location);
 
-          
-
+          $services=new Service;
+          $services->setServicesAttribute(request('services'));
+          $vet->service()->save($services);
+       
            return $vet;
        }
 

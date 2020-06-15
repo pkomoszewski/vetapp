@@ -56,7 +56,7 @@ class Vet extends Model
          return $this->belongsToMany('App\Specialization');
      }
 
-     public function Clinics(){
+     public function clinics(){
         return $this->hasMany('App\Clinic');
 
     }

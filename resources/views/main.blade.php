@@ -39,8 +39,7 @@
 
       <div class="logo mr-auto">
         <h1 class="text-light"><a href="/">Vetapp</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+     
       </div>
 
       <nav class="nav-menu  d-lg-block">
@@ -164,7 +163,7 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+ 
 
 
   @yield('javascript')

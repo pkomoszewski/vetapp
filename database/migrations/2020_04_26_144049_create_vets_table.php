@@ -17,8 +17,9 @@ class CreateVetsTable extends Migration
             $table->bigIncrements('id');
             $table->string('imie');
             $table->string('nazwisko');
-            $table->string('opis');
-            $table->integer('cena_konsulatcji');
+            $table->string('opis')->default("");
+            $table->integer('cena_konsulatcji')->nullable();
+            $table->integer('time_visit')->nullable();
             $table->bigInteger('user_id')->unsigned(); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         

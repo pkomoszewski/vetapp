@@ -107,7 +107,7 @@
                                     @endif
 
 
-                                    <a href="{{ route('addAnimal') }}" class="btn button-vet btn-xs"
+                                    <a href="{{ route('addAnimal') }}" class="btn button-vet btn-xs mt-2"
                                         role="button">Dodaj</a>
                                 </div>
 
@@ -149,9 +149,10 @@
                                             <button class="btn btn-danger" data-deleteid="{{Auth::id()}}"
                                                 data-toggle="modal" data-target="#delete">Usuń</button>
                                         </div>
-                                        <hr>
+                                    
 
                                     </div>
+                                    <hr/>
                                     <div class="row mt-2">
 
                                         <div class="col-sm-3 col-md-2 col-5">
@@ -163,10 +164,9 @@
                                                 data-toggle="modal" data-target="#bocked">Zablokowanie</button>
                                         </div>
                                     </div>
-                                    <hr />
+                       
 
 
-                                    <hr />
 
 
 

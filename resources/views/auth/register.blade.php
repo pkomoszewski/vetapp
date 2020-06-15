@@ -32,10 +32,12 @@
                                 placeholder="Powtórz hasło" />
                         </div>
 
-                        <div class="form-group">
-                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                            <label for="agree-term" class="label-agree-term"><span><span></span></span>Akcetpuje
+                        <div class="d-flex align-items-center mb-2" >
+                           
+                            <input type="checkbox" name="regulamin" id="regulamin" class="mr-2" />
+                            <label for="regulamin" class="m-0" ><span><span></span></span>Akcetpuje
                                 regulamin <a href="#" class="term-service">Terms of service</a></label>
+                          
                         </div>
                         <div class="form-group form-button">
                             <input type="submit" name="signup" id="signup" class="button-vet" value="Rejestracja" />

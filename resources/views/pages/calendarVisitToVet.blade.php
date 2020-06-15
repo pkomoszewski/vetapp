@@ -7,6 +7,28 @@
     <section class="pricing py-5 ">
         <div class="container">
             <div class="row d-block">
+                <div >
+                    <p>Sortuj według:</p>
+        
+                    <form  action=" {{ route('Search') }}" class="form-inline" method="GET">
+        
+                    <input name="city" placeholder="wyszukaj" type="hidden" value={{request('city')}} />
+        
+                    <input name="choose" type="hidden" value={{request('choose')}} />
+        
+                    <select class=" form-control ml-2" name="sortby" value="">
+                        <option > Domyślny</option>
+                        <option <?= (request('sortby') == "Ilości Opinii") ? "SELECTED" : "" ?>> Ilości Opinii</option>
+        
+                        <option <?= (request('sortby') == "Cena") ? "SELECTED" : "" ?>>Cena</option>
+        
+                    </select>
+        
+                    <button type=" submit" class="btn button-vet ml-3">Filtr</button>
+        
+                    </form>
+        
+                </div>
                 <h3>Planowane wizyty pacjentów</h3>
                 @csrf
 

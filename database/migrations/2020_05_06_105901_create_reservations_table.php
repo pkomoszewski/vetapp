@@ -16,14 +16,13 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('day');
-            $table->date('hour'); 
+            $table->string('hour'); 
             $table->string('opis');
             $table->boolean('status'); 
-            $table->unsignedBigInteger('animal_id');
+            $table->unsignedBigInteger('animal_id')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->unsignedBigInteger('vet_id');
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade'); 
-            $table->unsignedBigInteger('vet_id');
+            $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade'); 
             $table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade'); 
             $table->timestamps();
         });

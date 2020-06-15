@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
     rel="stylesheet">
 
-  <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link href="/css/one-page-wonder.min.css" rel="stylesheet">
   <link href="/css/one-page-wonder.css" rel="stylesheet">
 
@@ -109,12 +109,12 @@
 
 
 
-  @yield('javascript')
+  
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
+  @yield('javascript');
 
 
 </body>

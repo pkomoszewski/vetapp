@@ -1,5 +1,5 @@
 function initialize() {
-    console.log('siemka');
+
     $('form').on('keyup keypress', function (e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
@@ -55,7 +55,7 @@ function initialize() {
             });
 
             if (!place.geometry) {
-                window.alert("No details available for input: '" + place.name + "'");
+                window.alert("Nie możemy wyświetlić: '" + place.name + "'");
                 input.value = "";
                 return;
             }

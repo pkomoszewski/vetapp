@@ -46,7 +46,7 @@ Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlik
 
 ///////////////////rezerwacje widoki rezerwacji
 ////////u uzytkownika
-Route::get('/reservations/{owner_id}', 'FrontendController@calendarVisitToUser')->name('calendarVisitToUser');
+Route::get(trans('reservations').'/{owner_id}', 'FrontendController@calendarVisitToUser')->name('calendarVisitToUser');
 ////////u weterynarza
 Route::get('/calendarvisits/{user_id}', 'FrontendController@siteCalendarvisit')->name('calendarvisits');
 Route::get('/confirmvisits'.'/{reservation_id}', 'FrontendController@confirmReservationVet')->name('confirmReservationVet');

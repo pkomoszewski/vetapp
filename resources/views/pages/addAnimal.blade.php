@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2>Dodaj ulubieńca</h2>
+    <h2>Dodaj swoje zwierzę</h2>
     <form method="POST" class="form-horizontal" enctype="multipart/form-data"
         action="{{ route('addNewAnimal',['id'=>Auth::user()->id]) }}">
         @csrf
@@ -23,7 +23,7 @@
 
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-dark">Zapisz</button>
+                    <button type="submit" class="btn button-vet">Zapisz</button>
                 </div>
             </div>
 

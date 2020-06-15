@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Validation;
-use App\Validation\FormValidation;
+
 use App\Repositories\FrontendRepository;
 use App\Repositories\BackendRepository;
 
@@ -93,7 +93,7 @@ class FormValidation{
 
         ]);
         
-        
+     
         
         return    $this->fR->addFormRegisterVet($vet, $request);
     }
@@ -136,6 +136,7 @@ class FormValidation{
         return    $this->bR->AddHistoryTreatmentAnimal($request,$id);
     }
     public function vadlidationEditProfileVet($request){
+        dd("siemka");
         $this->validate($request,[
             'imie'=>"required|string",
             'nazwisko'=>"required|string",
@@ -143,10 +144,11 @@ class FormValidation{
             'numer'=>"integer",
             'cena'=>"string",
             'adres'=>"string",
+    
           
             ]);
 
-            
+           
     }
 
     public function vadlidationFormAddClinic($request){

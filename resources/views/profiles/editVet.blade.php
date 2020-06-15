@@ -12,14 +12,14 @@
             <div class="form-group">
                 <label for="imie" class="col-lg-2 control-label">imie</label>
                 <div class="col-lg-10">
-                    <input name="imie" type="text" required class="form-control" id="imie"
+                    <input name="imie" type="text"  class="form-control" id="imie"
                         value="{{$user->vets->imie}}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="nazwisko" class="col-lg-2 control-label">Nazwisko</label>
                 <div class="col-lg-10">
-                    <input name="nazwisko" type="text" required class="form-control" id="nazwiskok"
+                    <input name="nazwisko" type="text"  class="form-control" id="nazwiskok"
                         value="{{$user->vets->nazwisko}}">
                 </div>
             </div>
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="numer" class="col-lg-2 control-label">Numer telefonu</label>
                 <div class="col-lg-10">
-                    <input name="numer" type="text" required class="form-control" id="numer"
+                    <input name="numer" type="text"  class="form-control" id="numer"
                         value="{{$user->vets->phone->numer ?? null}}">
                 </div>
             </div>
@@ -44,18 +44,18 @@
             <div class="form-group">
                 <label for="cena" class="col-lg-2 control-label">Cena konsultacji</label>
                 <div class="col-lg-10">
-                    <input name="cena" type="text" required class="form-control" id="cena"
+                    <input name="cena" type="text"  class="form-control" id="cena"
                         value="{{$user->vets->cena_konsulatcji}}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-lg-2 control-label">godzina otwarcia</label>
                 <div class="col-lg-10">
-                    <input name="godzina_otwarcia" type="text" required class="form-control" id="godzina_otwarcia"
-                        value="{{$user->vets->TimeStart}}">
+                    <input name="godzina_otwarcia" type="text"  class="form-control" id="godzina_otwarcia"
+                        value="">
                     <label for="cena" class="col-lg-2 control-label">do</label>
-                    <input name="godzina_zamkniecia" type="text" required class="form-control" id="godzina_zamkniecia"
-                        value="{{$user->vets->TimeEnd}}">
+                    <input name="godzina_zamkniecia" type="text"  class="form-control" id="godzina_zamkniecia"
+                        value="">
                 </div>
             </div>
 
@@ -63,7 +63,7 @@
             <div class="form-group">
                 <label for="adres" class="col-lg-2 control-label">Adres</label>
                 <div class="col-lg-10">
-                    <input name="adres" type="text" required class="form-control" id="ades"
+                    <input name="adres" type="text"  class="form-control" id="ades"
                         value="{{$user->vets->adres}}">
                 </div>
             </div>

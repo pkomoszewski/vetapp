@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Role;
 use App\Owner;
+use App\Specialization;
 use App\Vet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,7 @@ class RegisterController extends Controller
    
     if(Auth::user()->hasRole('Weterynarz')){
         $vet=Vet::find(Auth::id());
+    
         return route('register-step2');
     }
     return route('home');
@@ -90,6 +92,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'imie' => ['required', 'string', 'max:50'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'regulamin' =>'accepted',
             
         ]);
     }
@@ -102,6 +105,7 @@ class RegisterController extends Controller
             'imie' => ['required', 'string', 'max:50'],
             'nazwisko' => ['required', 'string', 'max:50'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'regulamin' =>'accepted',
 
         ]);
     }

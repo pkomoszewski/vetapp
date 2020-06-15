@@ -6,9 +6,13 @@
 date_default_timezone_set('Europe/Warsaw');
 setlocale(LC_ALL, 'pl', 'pl_PL', 'pl_PL.ISO8859-2', 'Polish');
 $duration=50;
+if(!$vet->time_visit==null){
+
+    $duration=$vet->time_visit;
+
+}
 $cleanup=0;
-$start =$vet->TimeStart;
-$end =$vet->TimeEnd;
+
 function timeslots($duration,$cleanup,$start,$end){
 $start =new DateTime($start);
 $end=new DateTime($end);
@@ -57,7 +61,7 @@ return $m;
 
 
 
-<div class="container">
+<div class="container d-flex justify-content-center ">
     <div class="row">
 
         <div class="col-md-12">
@@ -78,7 +82,9 @@ return $m;
 
             <div class="tabel d-flex">
                 <?php
+                
                 $data=$vet->locations->first()->whenOpen;
+
 
 
                             
@@ -113,7 +119,7 @@ if($dt->format('d M Y')==date('d M Y')){
     
     ?>
 
-                <div mb-2'>
+                <div class="mb-2">
                     <p class="bg-dark m-2"> <?php echo $konwersja[$dzientygodnia]. " ". $dt->format('d.m') ."</p>"?>
 
                         <?php
