@@ -9,6 +9,7 @@ class Location extends Model
   
     
     use Presenters\LocationPresenter; 
+    protected $fillable = ['address','whenOpen','city_id','address_longitude','address_latitude'];
     protected $casts = [
         'whenOpen' => 'array'
     ];

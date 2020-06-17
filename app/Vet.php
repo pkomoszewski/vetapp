@@ -72,6 +72,9 @@ class Vet extends Model
         return $this->morphOne('App\Service', 'serviceable');
     }
 
-   
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 
 }

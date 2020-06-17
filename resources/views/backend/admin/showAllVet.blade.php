@@ -19,7 +19,7 @@
                 <th>Nazwisko</th>
                 <th>Adres</th>
                 <th>Telefon</th>
-                <th colspan="3">Akcja</th>
+                <th colspan="4">Akcja</th>
 
 
                 <th style="width: 36px;"></th>
@@ -42,6 +42,11 @@
                 <td>-</td>
                 @endif
                 <td><a href="{{ route('sitevet',$user->vets->id) }}" class="btn btn-success">Podgląd</a> </td>
+                @if(!$user->vets->weryfikacja)
+                <td><a href="{{route('verifyVet', $user->vets->id)}}" class="btn btn-warning">Zweryfikuj</a>
+
+                </td>
+                @endif
                 @if($user->ban)
                 <td><a href="{{route('banUser', $user->id)}}" class="btn btn-warning">Odblokuj</a></td>
                 @endif
@@ -51,6 +56,7 @@
 
                 </td>
                 @endif
+                
                 <td>
                     <button class="btn btn-danger" data-deleteid={{$user->id}} data-toggle="modal"
                         data-target="#delete">Usuń</button>

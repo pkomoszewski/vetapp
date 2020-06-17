@@ -44,15 +44,9 @@ class FrontendGateway {
                 return $result;  
                 else return false;
             }
-
         }
-        
         return false;
-
     }
-
-    
-
     public function getSearchResultsClinic($request)
     {
         $request->flash();

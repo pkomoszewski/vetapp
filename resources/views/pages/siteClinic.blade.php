@@ -242,9 +242,9 @@
                 @if (!$clinic->photos->isEmpty())
                 
                 <div id="carouselControls" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" >
                         @foreach ($clinic->photos as $photo)
-                        <div class="carousel-item ">
+                        <div class="carousel-item" id="carousel-item">
                             <img class="d-block w-100" src="{{$photo->path}}" alt="First slide">
                           </div> 
                         @endforeach
@@ -269,8 +269,9 @@
         </div>
     </div>
     <script>
-        const latitude = {{$clinic->location->address_latitude}}  || -33.8688;
-           const longitude =  {{$clinic->location->address_longitude}} ||  151.2195 ;
+        $("#carousel-item").first().addClass( "active" );
+        const latitude = {{$clinic->location->address_latitude ?? ''}}  || -33.8688;
+           const longitude =  {{$clinic->location->address_longitude ?? ''}} ||  151.2195 ;
    
        var map;
                 function initMap() {

@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -23,7 +20,7 @@
                                 @endif
                                 <div class="middle">
                                     <a class="btn button-vet mt-2"
-                                        href="{{ route('profile',['user'=>Auth::user()->id]) }}"> Edycja
+                                        href="{{ route('editProfile',['user'=>Auth::user()->id]) }}"> Edycja
                                         profilu </a>
                                 </div>
                             </div>
@@ -78,7 +75,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Imie i Nazwisko</label>
+                                            <label style="font-weight:bold;">Imie i Nazwisko:</label>
                                         </div>
                                         <div class="col-md-8 col-6">
                                             {{$vet->name}}
@@ -86,10 +83,20 @@
                                         </div>
                                     </div>
                                     <hr />
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Adres email:</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{$vet->user->email}}
+
+                                        </div>
+                                    </div>
+                                    <hr />
 
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Numer telefonu</label>
+                                            <label style="font-weight:bold;">Numer telefonu:</label>
                                         </div>
                                         <div class="col-md-8 col-6">
                                             @if ($vet->phone==null)
@@ -104,11 +111,11 @@
 
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
-                                            <label style="font-weight:bold;">Opis</label>
+                                            <label style="font-weight:bold;">Opis:</label>
                                         </div>
                                         <div class="col-md-8 col-6">
                                             @if ($vet->opis=='')
-                                            <p>Brak opisu. Proszę o wypełnienie</p>
+                                            <p>Brak opisu. Proszę o wypełnienie.</p>
                                             @else
                                             <p>{{$vet->opis}}<p>
                                                     @endif
@@ -150,6 +157,11 @@
                                  
                                 </div>
                                 <div class="tab-pane fade" id="klinka" role="tabpanel">
+                                    @if ($vet->clinics->isEmpty())
+                                        <p>Możesz dodać klinikę</p>
+                                    @else
+                                        
+                                   
                                     <h6>Twoje kliniki</h6>
                                     <br />
                                     @if (\Session::has('success'))
@@ -162,27 +174,23 @@
                                 
                                 <p>  <a href="{{$clinic->link}}">Podgląd</a>  
                                   <a data-deleteid={{$clinic->id}} data-toggle="modal" data-target="#delete"
-                                    href="">Usuń</a></p>
+                                    href="">Usuń</a>
+                                    <a  href="{{ route("saveClinic",['id'=>$clinic->id])}}">Edytuj</a></p>
                             
                             
                                     @endforeach
-                                    <a class="btn button-vet mt-2" href="{{ route("addClinic")}}"> Dodaj klinkę</a>
+                                    @endif
+                                    <a class="btn button-vet mt-2" href="{{ route("saveClinic")}}"> Dodaj klinkę</a>
                                    
-
+                                    
                                    
                                 </div>
                                 <div class="tab-pane fade" id="setting" role="tabpanel">
 
-                                    <a class="mt-2" href="{{route('addAdress')}}">Dodanie nowego adresu</a>
+                                    <a class="mt-2" href="{{route('saveAdress')}}">Dodanie nowego adresu</a>
                                     <hr>
-                                    <p>Planowany czas trwania wizyt</p>
-                                    <form action="" method="post">
-                                        <div class="form-group w-25">
-                                        <select name="interval" id="interval" class="form-control">
-                                        <option value="30">Domyślny</option>
-                                        </select>
-                                    </div>
-                                    </form>
+                                    <p>Planowany czas trwania wizyt: {{$vet->time_visit}} min.</p>
+                                   
                                 </div>
 
                                 <div class="tab-pane fade" id="setting" role="tabpanel">
@@ -215,14 +223,13 @@
                                     <p> {{$location->address}}
                                      {{$location->city->name}} 
                                     </p>
+                                    <p><a href="{{ route("saveAdress",['id'=>$location->id])}}">Edytuj Adres</a></p>
                                     <p> <a data-deleteid={{$vet->id}} data-toggle="modal" data-target="#showmap"
                                         href="">Pokaż na
-                                        mapie</a></p>
+                                        mapie</a>
+                                      </p>
+                                   
                                     <div id="div{{$i}}" >
-                                      
-
-                                           
-                                       
                                         <div>
                                             <h6>Godziny otwarcia</h6>
                                             @foreach ($location->whenOpen as $time)
@@ -247,8 +254,10 @@
                                     <h6>Usługi</h6>
                                     @if (!$vet->service==null)
                                     @foreach ($vet->service->services as $service)
-                                    
+                                    @isset($service['kind'])
                                     <p>- {{$service['kind']}}: od {{$service['price']}} zł </p>
+                                    @endisset
+                                  
                                 
                                 @endforeach
                                     @else
@@ -310,13 +319,7 @@
     </div>
     
     <script>
-    for(i=5;i<=60;i=i+5){
-         $('#interval').append($('<option>', {
-    value: i,
-    text: i+' min',
-         
-}));
-    }
+
 
     const latitude = {{$vet->locations->first()->address_latitude}}  || -33.8688;
         const longitude =  {{$vet->locations->first()->address_longitude}} ||  151.2195 ;

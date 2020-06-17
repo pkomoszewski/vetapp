@@ -179,12 +179,14 @@ public function AddHistoryTreatmentAnimal($request,$id){
 
 public function saveVet($request)
 {
-    $vet = Vet::where('user_id',$request->user()->id)->first();
-    $vet->imie = $request->input('imie');
-    $vet->nazwisko = $request->input('nazwisko');
+  
+    $vet = Vet::find(Auth::user()->vets->id);
+    $vet->user->email = $request->input('email');
     $vet->opis = $request->input('opis');
     $vet->cena_konsulatcji = $request->input('cena');
+    $vet->time_visit=$request->input('interval');
 
+    $vet->service->update(['services'=>request('services')]);
     $vet->save();
 
     return $vet;
@@ -254,6 +256,12 @@ public function getPhoto($id)
 {
     return Photo::find($id);
 }
+public function deletePhoto(Photo $photo)
+    {
+        $path = $photo->storagepath;
+        $photo->delete();
+        return $path;
+    }
 
 public function updateUserPhoto(Vet $vet,Photo $photo)
 {
@@ -301,20 +309,59 @@ public function addNewClinic($request)
     $phone = new Phone;
     $phone->numer =$request->input('Numer');
     $Clinic->phone()->save($phone);
-
-    $location = new Location;
-    $location->city_id= $city->id;
-    $location->address=$request->input('Adres');
     $location->whenOpen =request('whenOpen');
     $Clinic->location()->save($location);
     $services=new Service;
 
-    $services->setServicesAttribute(request('services'));
+    $services->services=request('services');
     $Clinic->service()->save($services);
   
     return  $Clinic;
 }
 
+public function updateClinic($id, $request)
+{
+    $clinic = Clinic::find($id);
+    $clinic->phone->update(['numer'=> $request->input('Numer')]);
+    $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
+    $city->save();
+ 
+    $clinic->location->update(['address'=> $request->input('Adres'),
+    'city_id'=>$city->id,
+    'address_latitude'=>$request->input('address_latitude'),
+    'address_longitude'=>$request->input('address_longitude'),
+    'whenOpen'=>request('whenOpen')]);
+
+    $clinic->service->update(['services'=>request('services')]);
+    $clinic->nazwa = $request->input('Nazwa');
+    $clinic->opis = $request->input('opis');
+
+    $clinic->save();
+
+    return $clinic;
+
+}
+public function updateAddress($id,$request){
+    $location=Location::find($id);
+    $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
+    $city->save();
+    $location->update(['address'=>$request->input('adres'),
+    'whenOpen'=>request('whenOpen'),
+    'address_latitude'=>$request->input('address_latitude'),
+    'address_longitude'=>$request->input('address_longitude'),
+    'city_id'=>$city->id,
+    ]);
+    $location->save();
+    return $location;
+}
+public function getClinic($id)
+{
+    return Clinic::with('location')->find($id);
+}
+public function getLocation($id)
+{
+    return Location::find($id);
+}
 
 public function addNewAddress($request)
 {
@@ -340,6 +387,20 @@ public function addNewAddress($request)
     return  $vet->locations()->save($location);;
 }
 
+public function verifyVet($id)
+{
+    $Vet= Vet::find($id);
+    $message='';
+        if( !$Vet->ban)
+        {
+            $Vet->weryfikacja=true;
+            
+            $message="Weterynarz został zaweryfikowany";
+        }    
+        $Vet->save();
+        return $message;
+    
+}
 
 public function blockedUser()
 {

@@ -7,6 +7,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
+                    @if (!$results->isEmpty())
                     @foreach ($results as $article)
                     <div class="row">
                         <div class="container mt-5">
@@ -27,16 +28,15 @@
                             </div>
                         </div>
 
-
-
-
-
-
-
-
-
-
-
                     </div>
-                    @endforeach
+                    @endforeach 
+                    @else
+                    <h6>Brak artykułów</h6>
+                    @endif
+                </div>    
+            </div>  
+        </div>  
+    </div>  
+</div>
+
                     @endsection

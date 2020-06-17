@@ -99,8 +99,8 @@
     <script>
    
         console.log("start");
-        const latitude = {{$clinic->location->address_latitude}}  || -33.8688;
-           const longitude =  {{$clinic->location->address_longitude}} ||  151.2195 ;
+        const latitude = {{$clinic->location->address_latitude ?? null}}  || -33.8688;
+           const longitude =  {{$clinic->location->address_longitude ?? null}} ||  151.2195 ;
    
        var map;
        var locations = <?php print_r(json_encode($results)) ?>;

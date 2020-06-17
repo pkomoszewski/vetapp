@@ -13,7 +13,10 @@ trait LocationPresenter {
     
 
     
-
+    public function getLinkmapAttribute()
+    {
+        return 'https://maps.google.com/?daddr='.$this->address_latitude.','.$this->address_longitude;
+    }
 
 
     public function getTimeCreatedAttribute()

@@ -41,19 +41,24 @@ class FrontendController extends Controller
 
     public function search(Request $request)
     {
-   
+  
+   if( $request->input('city') != null){
+    $City=$request->input('city');
+   }
         if($request->input('choose')=="Weterynarz")
         {
 
             $Result = $this->fG->getSearchResultsVet($request);
         
-            return view('frontend.resultsSearchVet')->with('results',$Result);
+            return view('frontend.resultsSearchVet')->with(['results'=>$Result
+            ,'city'=>$City]);
         }
         elseif($request->input('choose')=="Klinika")
         {
          
              $Result = $this->fG->getSearchResultsClinic($request);
-                return view('frontend.resultsSearchClinic')->with('results',$Result);
+                return view('frontend.resultsSearchClinic')->with(['results'=>$Result
+            ,'city'=>$City]);
             
      
           
@@ -155,94 +160,17 @@ public function indexProfile(User $user){
 
     }
   
-
-
-    
-
 }
 
 
 public function addComment($commentable_id, $type, Request $request)
     {
-        $comment = $this->fV->vadlidationFormAddComment($commentable_id, $type,$request);
-     
-        
-      
-        
+        $comment = $this->fV->vadlidationFormAddComment($commentable_id, $type,$request); 
         return redirect()->back();
     }
 
-/////////////////////////////////////////////////////////////////////////////
-public function profileEdit(Request $request )
-{
-
-    if ($request->isMethod('post')) 
-    {
-
-  
-        if(Auth::user()->hasRole(['Weterynarz'])){
-         
-      
-
-            $this->validate($request,[
-                'imie'=>"required|string",
-                'nazwisko'=>"required|string",
-                
-              
-                ]);
-                
-
-                $vet= $this->bR->saveVet($request);
-                $numer=$request->input('numer');
-                if(!$request->input('numer')==null){
-                    if($vet->phone!=null){
-                        $phone = $this->bR->getPhone($vet->phone->first()->id);
-                   
-                        $this->bR->updatePhone($vet,$phone,$numer);
-                    }else{
-                 
-                    $this->bR->createphone($vet,$numer);
-                    }
-                }
-                if ($request->hasFile('vetPicture'))
-                {
-                    $this->validate($request,[
-                    'vetPicture'=>"image|max:100",
-                    ]);
-
-                    $path = $request->file('vetPicture')->store('vets', 'public');
-                    if (count($vet->photos) != 0)
-                    {
-                        $photo = $this->bR->getPhoto($vet->photos->first()->id);
-                        Storage::disk('public')->delete($photo->storagepath);
-                        $photo->path = $path;
-                        $this->bR->updateUserPhoto($vet,$photo);
-                    } 
-                    else
-                    {
-                        $this->bR->createVetPhoto($vet,$path);
-                    }           
-                }
-              
-
-                return redirect()->route('viewSucessSave');
 
 
-        }else{
-    
-            return view('profiles.editOwner',['user'=>Auth::user()]);
-        }
- 
-    }
-
-    if(Auth::user()->hasRole(['Weterynarz'])){
-        return view('profiles.editVet',['user'=>Auth::user()]);
-    }else{
-
-        return view('profiles.editOwner',['user'=>Auth::user()]);
-    }
-    
-}
 
 
 

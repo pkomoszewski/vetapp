@@ -219,13 +219,15 @@
                             </div>
                             <div class="tab-pane fade" id="experience" role="tabpanel">
 <h6>Cennik</h6>
-@isset($vet->service)
+@if (!$vet->service==null)
 @foreach ($vet->service->services as $service)
-
-    <p>- {{$service['kind']}}: od {{$service['price']}} zł </p>
-
-@endforeach
+@isset($service['kind'])
+<p>- {{$service['kind']}}: od {{$service['price']}} zł </p>
 @endisset
+@endforeach
+@else
+   <p>Brak informacji. </p> 
+@endif
 <hr>
 <h6>Możliwość wizyty domowej</h6>
 @if ($vet->homevisit)

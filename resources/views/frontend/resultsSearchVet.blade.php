@@ -38,14 +38,14 @@
             <div class="panel panel-default ">
                 <div class="panel-body">
 
-
+              
 
                     @if(!$results==null)
 
                     @foreach ($results as $vet)
                     <div class="card mb-4">
                         <div class="card-body ">
-
+                      
                             <div class="card-title mb-4">
                                 <div class="d-flex justify-content-start">
 
@@ -60,12 +60,17 @@
                                         <img src="{{$vet->photos->first()->path}}" alt=""
                                             class="img-circle img-responsive" with='150px' height='150px'>
                                         @endif
-
+                                   
                                     </div>
                                     <div class="userData ml-3">
-                                        <a href="{{ route('sitevet',['id'=>$vet->id]) }}">
-                                            <p> {{$vet->imie}} {{$vet->nazwisko}}</p>
-                                        </a>
+                                        <a href="{{ route('sitevet',['id'=>$vet->id]) }}"></a>
+                                            <p> {{$vet->imie}} {{$vet->nazwisko}} 
+                                                @if ($vet->weryfikacja)
+                                                <i class="fa fa-check-circle-o"  data-toggle="tooltip" data-placement="top"  title="Zweryfikowany"></i>  
+                                                
+                                                @endif
+                                              </p>
+                                        
                                         <p>{{ucwords($vet->adres)}}</p>
                                         <p> Cena konsultacji: {{$vet->cena_konsulatcji}} zł</p>
                                         {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
@@ -75,7 +80,8 @@
                                         $vet->averageRating()) !!}
                                         <p> Opini {{$vet->comments->count()}}</p>
                                         <p>{{ $vet->users->count() }} osób lubli</p>
-
+                                        <a href="{{$vet->locations->first()->Linkmap}}" class="printest"><i class="fa fa-location-arrow fa-lg"  aria-hidden="true"></i> Mapa</a>
+                                   
                                         <div class="row">
 
                                             @if(Auth::guest())
@@ -104,20 +110,22 @@
         </div>
        
     </div>
-                   
+   
     <script>
    
-        console.log("start");
-        const latitude = {{$vet->locations->first()->address_latitude}}  || -33.8688;
-           const longitude =  {{$vet->locations->first()->address_longitude}} ||  151.2195 ;
-   
+   $(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+     
+   var adres="{{$city}}"
        var map;
        var locations = <?php print_r(json_encode($results)) ?>;
-       console.log(locations);
+       
                 function initMap() {
-                   var uluru = {lat: latitude, lng: longitude};
+                    geocoder = new google.maps.Geocoder();
+                 
                    var map = new google.maps.Map(document.getElementById('address-map'), {
-                   center: uluru,
+                 
                    disableDefaultUI: true,
                     scaleControl: true,
                     zoomControl: true,
@@ -126,12 +134,26 @@
                 styles:[ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#6195a0" } ] }, { "featureType": "administrative.province", "elementType": "geometry.stroke", "stylers": [ { "visibility": "off" } ] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [ { "lightness": "0" }, { "saturation": "0" }, { "color": "#f5f5f2" }, { "gamma": "1" } ] }, { "featureType": "landscape.man_made", "elementType": "all", "stylers": [ { "lightness": "-3" }, { "gamma": "1.00" } ] }, { "featureType": "landscape.natural.terrain", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi", "elementType": "all", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [ { "color": "#bae5ce" }, { "visibility": "on" } ] }, { "featureType": "road", "elementType": "all", "stylers": [ { "saturation": -100 }, { "lightness": 45 }, { "visibility": "simplified" } ] }, { "featureType": "road.highway", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [ { "color": "#fac9a9" }, { "visibility": "simplified" } ] }, { "featureType": "road.highway", "elementType": "labels.text", "stylers": [ { "color": "#4e4e4e" } ] }, { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [ { "color": "#787878" } ] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [ { "visibility": "off" } ] }, { "featureType": "transit", "elementType": "all", "stylers": [ { "visibility": "simplified" } ] }, { "featureType": "transit.station.airport", "elementType": "labels.icon", "stylers": [ { "hue": "#0a00ff" }, { "saturation": "-77" }, { "gamma": "0.57" }, { "lightness": "0" } ] }, { "featureType": "transit.station.rail", "elementType": "labels.text.fill", "stylers": [ { "color": "#43321e" } ] }, { "featureType": "transit.station.rail", "elementType": "labels.icon", "stylers": [ { "hue": "#ff6c00" }, { "lightness": "4" }, { "gamma": "0.75" }, { "saturation": "-68" } ] }, { "featureType": "water", "elementType": "all", "stylers": [ { "color": "#eaf6f8" }, { "visibility": "on" } ] }, { "featureType": "water", "elementType": "geometry.fill", "stylers": [ { "color": "#c7eced" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "lightness": "-49" }, { "saturation": "-53" }, { "gamma": "0.79" } ] } ]
                   });
                 
+
+             
+geocoder.geocode( { 'address': adres}, function(results, status) {
+  if (status == 'OK') {
+    map.setCenter(results[0].geometry.location);
+  
+  } else {
+    console.log('błąd: ' + status);
+  }
+});
+
+
+
+
                   $.each( locations, function( index, value ){
                     
                       var markerPlace = new google.maps.Marker({
   position: new google.maps.LatLng(value.locations[0].address_latitude, value.locations[0].address_longitude),
   map: map,
-  title: "Brussels Grand-Place"
+
 });
 
 var infowindow = new google.maps.InfoWindow({

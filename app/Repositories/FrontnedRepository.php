@@ -305,8 +305,14 @@ return $addNew->save();
    
            $vet->cena_konsulatcji	= $request->input('cena');
            $vet->opis= $request->input('opis');
-           if(!$request->input('interval')==null){
-            $vet->time_visit= $request->input('time_visit');
+        
+           if(!$request->input('interval')==""){
+
+            $int = (int)$request->input('interval');
+          
+            $vet->time_visit= $int ;
+           }else{
+            $vet->time_visit= 30;
            }
            if($request->input('visits')=="true"){
             $vet->homevisit= 1;
@@ -335,7 +341,7 @@ return $addNew->save();
           $vet->locations()->save($location);
 
           $services=new Service;
-          $services->setServicesAttribute(request('services'));
+          $services->services=request('services');
           $vet->service()->save($services);
        
            return $vet;

@@ -8,7 +8,8 @@ function initialize() {
         }
     });
     const locationInputs = document.getElementsByClassName("map-input");
-
+ 
+   
     const autocompletes = [];
     const geocoder = new google.maps.Geocoder;
     for (let i = 0; i < locationInputs.length; i++) {

@@ -11,6 +11,7 @@ use App\Vet;
 use App\Clinic;
 use App\Owner;
 use App\Comment;
+use Illuminate\Support\Facades\Storage; 
 use Illuminate\Support\Facades\Auth;
 class BackendController extends Controller
 {
@@ -75,30 +76,54 @@ class BackendController extends Controller
   
         return view('backend.admin.addArticle');
     }
-public function newAdress(Request $request){
-
+public function saveAdress($id = null, Request $request){
+ 
         if($request->isMethod('post')){
-          $add = $this->fV->vadlidationFormAddAddress($request);
-         return redirect()->Route('allArticle')->with('success', 'Adres został dodany ');
+    
+          $add = $this->fV->vadlidationFormAddAddress($id,$request);
+          return redirect()->back();
         }
-              
+            
+       
+        if($id){
+            return view('backend.vet.saveAdress',['address'=>$this->bR->getLocation($id)]);
+        }else{
+            return view('backend.vet.saveAdress');
+        }
         
-        
-              return view('backend.vet.addAdress');
+           
           }  
-    public function newClinic(Request $request){
-
+    public function saveClinic($id = null,Request $request){
+   
         if($request->isMethod('post')){
-          $add = $this->fV->vadlidationFormAddClinic($request);
+          
+          $add = $this->fV->vadlidationFormAddClinic($id,$request);
          return redirect()->route('profile.index',['user'=>Auth::user()->id ]) ->with('success', 'Klinka została dodana ');
         }
               
+        if($id)
+      return view('backend.vet.saveClinic',['clinic'=>$this->bR->getClinic($id)]);
+        else
+      
         
-        
-              return view('backend.vet.addClinic');
+              return view('backend.vet.saveClinic');
           }   
 
-
+          public function deletePhoto($id)
+          {
+      
+              $photo = $this->bR->getPhoto($id); 
+              
+         //     $this->authorize('checkOwner', $photo);
+              
+              $path = $this->bR->deletePhoto($photo); 
+              
+              Storage::disk('public')->delete($path); 
+              
+             
+      
+              return redirect()->back();
+          }
           
 //////////////////////////////////////////////////// 
    
@@ -144,6 +169,13 @@ public function newAdress(Request $request){
         $BanUser=$this->bR->BanUser($id);
           return redirect()->back()->with('success', $BanUser);
        }
+
+///////////////////////////////////////////////////////////////////////////////
+//Obsluga vet w panelu administaratora
+       public function verifyVet($id){
+        $verifyUser=$this->bR->verifyVet($id);
+          return redirect()->back()->with('success', $verifyUser);
+       }  
 //////////////////////////////////////////////////////////////////////////
 //////obsluga klinic
        public function changeStatusClinic($id){
@@ -232,5 +264,76 @@ public function showSiteStatic(){
                                                     'countComment'=>$countComment]);
 
 }
+public function profileEdit(Request $request )
+{
+  
+    if ($request->isMethod('post')) 
+    {
+   
+  
+        if(Auth::user()->hasRole(['Weterynarz'])){
+         
+        
 
+            $this->validate($request,[
+                'email'=>"required|string",
+                'numer'=>"required|integer",
+                'opis'=>"required|string",
+                'cena'=>"required|string",
+                
+              
+                ]);
+              
+
+                $vet= $this->bR->saveVet($request);
+                $numer=$request->input('numer');
+                if(!$request->input('numer')==null){
+                    if($vet->phone!=null){
+                        $phone = $this->bR->getPhone($vet->phone->first()->id);
+                   
+                        $this->bR->updatePhone($vet,$phone,$numer);
+                    }else{
+                 
+                    $this->bR->createphone($vet,$numer);
+                    }
+                }
+                if ($request->hasFile('vetPicture'))
+                {
+                    $this->validate($request,[
+                    'vetPicture'=>"image|max:100",
+                    ]);
+
+                    $path = $request->file('vetPicture')->store('vets', 'public');
+                    if (count($vet->photos) != 0)
+                    {
+                        $photo = $this->bR->getPhoto($vet->photos->first()->id);
+                        Storage::disk('public')->delete($photo->storagepath);
+                        $photo->path = $path;
+                        $this->bR->updateUserPhoto($vet,$photo);
+                    } 
+                    else
+                    {
+                        $this->bR->createVetPhoto($vet,$path);
+                    }           
+                }
+              
+
+                return redirect()->route('viewSucessSave');
+
+
+        }else{
+    
+            return view('profiles.editOwner',['user'=>Auth::user()]);
+        }
+ 
+    }else{
+
+    if(Auth::user()->hasRole(['Weterynarz'])){
+        return view('profiles.editVet',['user'=>Auth::user()]);
+    }else{
+
+        return view('profiles.editOwner',['user'=>Auth::user()]);
+    }
+}
+}
 }

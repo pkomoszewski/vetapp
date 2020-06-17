@@ -16,13 +16,8 @@ Route::post('register-step2', 'Auth\RegisterStep2Controller@postForm')
   ->name('register-step2post');
 
 
-Route::match(['GET','POST'],trans('routes.profile').'/{user}','FrontendController@profileEdit')->name('profile');
+Route::match(['GET','POST'],'/profileEdit'.'/{user}','BackendController@profileEdit')->name('editProfile');
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-//do usuniecia
-Route::post(trans('save.vetprofile').'/{id}','ProfilesController@edit')->name('profile.save');
 
 
 //Routing do profilu uzytkownika zaleznie czy jest Onwerem czy weterynarzem
@@ -62,8 +57,8 @@ Route::get(trans('vet').'/{id}','FrontendController@sitevet')->name('sitevet');
 //dla kliniki
 Route::get(trans('clinic').'/{id}','FrontendController@siteclinic')->name('siteclinic'); 
 
-Route::match(['GET','POST'],'/addClinic','BackendController@newClinic')->name('addClinic');
-Route::match(['GET','POST'],'/addAdress','BackendController@newAdress')->name('addAdress');
+Route::match(['GET','POST'],'/saveClinic'.'/{id?}','BackendController@saveClinic')->name('saveClinic');
+Route::match(['GET','POST'],'/saveAdress'.'/{id?}','BackendController@saveAdress')->name('saveAdress');
 
 //Zwierzaki
 Route::get('/contact','FrontendController@siteContact')->name('Contact');
@@ -76,7 +71,7 @@ Route::get('/blocked','BackendController@blockedUser')->name('blockedUser');
 Route::post('/addComment/{commentable_id}/{type}', 'FrontendController@addComment')->name('addComment'); 
 Auth::routes();
 
-
+Route::get('/deletePhoto/{id}', 'BackendController@deletePhoto')->name('deletePhoto');
 
 //Panel administratora Drugi moduł
 
@@ -87,6 +82,7 @@ Route::middleware(['auth','CheckAdmin'])->group(function () {
   Route::post('/admin/visits/delete/','BackendController@deleteReservation')->name('deleteVisit');
   Route::post('delete','BackendController@deleteUser')->name('deleteUser');
   Route::get('/admin/ban/{id}','BackendController@banUser')->name('banUser');
+  Route::get('/admin/verify/{id}','BackendController@verifyVet')->name('verifyVet');
   Route::get('/admin/vets','BackendController@showAllVet')->name('allVet');
   Route::get('/admin/articles','BackendController@getListArticles')->name('allArticle');
   Route::post('/admin/article/delete','BackendController@deleteArticle')->name('deleteArticle');

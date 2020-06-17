@@ -151,7 +151,7 @@ class FormValidation{
            
     }
 
-    public function vadlidationFormAddClinic($request){
+    public function vadlidationFormAddClinic($id,$request){
         $this->validate($request,[
             'Nazwa'=>"required|string",
             'Email'=>"required|string",
@@ -160,15 +160,19 @@ class FormValidation{
            
           
             ]);
-            // if($id)
-            // {
-            //     $object = $this->bR->updateObjectWithAddress($id, $request);
-            // }
-            // else
-            // {
-            //     $this->bR->AddNewClinic($request);
-            // }
-           $clinic= $this->bR->AddNewClinic($request);
+
+            //check owner
+            if($id)
+            
+            {
+                $clinic = $this->bR->updateClinic($id, $request);
+            }
+            else
+            {
+                $clinic= $this->bR->AddNewClinic($request);
+             
+            }
+        
 
             if ($request->hasFile('objectPictures'))
             {
@@ -186,16 +190,24 @@ class FormValidation{
             }
     }
  
-    public function vadlidationFormAddAddress($request){
+    public function vadlidationFormAddAddress($id, $request){
         $this->validate($request,[
             'adres'=>"required|string",
             'miejscowosc'=>"required|string",
-        
-           
-          
             ]);
 
-            $this->bR->AddNewAddress($request);
+
+            if($id)
+            
+            {
+                $this->bR->updateAddress($id, $request);
+            }
+            else
+            {
+                $this->bR->AddNewAddress($request);
+             
+            }
+           
     }
 
 }
