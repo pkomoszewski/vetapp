@@ -112,7 +112,7 @@
            const longitude =  {{$vet->locations->first()->address_longitude}} ||  151.2195 ;
    
        var map;
-       var locations = <?php print_r(json_encode($vet->locations)) ?>;
+       var locations = <?php print_r(json_encode($results)) ?>;
        console.log(locations);
                 function initMap() {
                    var uluru = {lat: latitude, lng: longitude};
@@ -129,13 +129,13 @@
                   $.each( locations, function( index, value ){
                     
                       var markerPlace = new google.maps.Marker({
-  position: new google.maps.LatLng(value.address_latitude, value.address_longitude),
+  position: new google.maps.LatLng(value.locations[0].address_latitude, value.locations[0].address_longitude),
   map: map,
   title: "Brussels Grand-Place"
 });
 
 var infowindow = new google.maps.InfoWindow({
-          content: '<p>'+value.address+'</p>'+value.linkvet
+          content: '<p>'+value.locations[0].address+'</p>'+'<a href="/vet/'+value.locations[0].locationable_id+'">Podgląd</a>'
         });
 google.maps.event.addListener(markerPlace, 'click', function() {
     infowindow.open(map, markerPlace);

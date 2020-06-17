@@ -11,7 +11,7 @@
         </div>
         <form method="GET" action="{{ route('Search') }}" class="form-inline">
 
-          <input name="city" class="form-control autocomplete" type="text" placeholder="wyszukaj">
+          <input name="city" class="form-control autocomplete" type="text" placeholder="miasto">
 
           <select class="form-control ml-2" name="choose">
             <option>Weterynarz</option>
@@ -72,7 +72,7 @@
       <div class="col-lg-6">
 
         <div class="p-5">
-          <h4 class="display-10">Najnowe komentarze o artykułach</h4>
+          <h4 class="display-10">Najnowsze komentarze o artykułach</h4>
 
           <div class="row">
 

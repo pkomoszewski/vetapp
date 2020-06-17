@@ -104,10 +104,11 @@ class FrontendRepository {
           })->get() ?? false; }       
                  
           if(request('sortby')==null){
-            $results =Clinic::with(['photos','comments'])->wherehas('location',function ($query) use($city)  {
+      
+            $results =Clinic::with(['photos','comments','location'])->wherehas('location',function ($query) use($city)  {
               $query->where('city_id','=',$city->id);
           })->where('status', 1)->get() ?? false;
-
+ 
 
           }
       

@@ -17,7 +17,7 @@
                 <th>Email</th>
                 <th>Imie</th>
                 <th>Data dodania</th>
-                <th colspan="3">Akcja</th>
+                <th colspan="2">Akcja</th>
 
 
                 <th style="width: 36px;"></th>
@@ -32,7 +32,7 @@
                 <td>{{$user->email}}</td>
                 <td>{{$user->owners->imie}}</td>
                 <td>{{$user->owners->TimeCreated}}</td>
-                <td><a href="" class="btn btn-success">Zadss</a> </td>
+             
                 @if($user->ban)
                 <td><a href="{{route('banUser', $user->id)}}" class="btn btn-warning">Odblokuj</a></td>
                 @endif
@@ -48,10 +48,7 @@
 
                 </td>
 
-                <td>
-                    <a href="user.html"><i class="icon-pencil"></i></a>
-                    <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
-                </td>
+              
             </tr>
             @endforeach
             @endforeach

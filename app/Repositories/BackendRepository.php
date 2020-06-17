@@ -17,6 +17,7 @@ use App\TreatmentHistory;
 use App\Clinic;
 use App\City;
 use App\Location;
+use App\Service;
 use Illuminate\Support\Facades\Auth;
 class BackendRepository {  
     
@@ -215,11 +216,12 @@ public function createVetPhoto($vet,$path)
     $photo->path = $path;
     $vet->photos()->save($photo);
 }
-public function createClinicPhoto($article,$path)
+public function createPhoto($object,$path)
 {
     $photo = new Photo;
     $photo->path = $path;
-    $article->photos()->save($photo);
+
+    $object->photos()->save($photo);
 }
 
 
@@ -276,12 +278,12 @@ public function addArticle($request)
 public function addNewClinic($request)
 {
 
-    $timeOpen=$request->input('godzina_otwarcia');
-    $timeClose=$request->input('godzina_zamkniecia');
+    
     $Clinic= new Clinic;
     $Clinic->nazwa=$request->input('Nazwa');
     $Clinic->email=$request->input('Email');
     $Clinic->opis=$request->input('opis');
+
  
     $city = City::firstOrNew(['name' => $request->input('miejscowosc')]);
     $city->save();
@@ -289,7 +291,13 @@ public function addNewClinic($request)
     $Clinic->vet_id=Auth::user()->vets->id;
     $Clinic->status=false;
     $Clinic->save();
-
+    $location = new Location;
+    $location->city_id= $city->id;
+    $location->address=$request->input('adres');
+    $location->address_latitude= $request->input('address_latitude');
+    $location->address_longitude= $request->input('address_longitude');
+    $location->whenOpen=request('whenOpen');
+    $Clinic->location()->save($location);
     $phone = new Phone;
     $phone->numer =$request->input('Numer');
     $Clinic->phone()->save($phone);
@@ -299,13 +307,12 @@ public function addNewClinic($request)
     $location->address=$request->input('Adres');
     $location->whenOpen =request('whenOpen');
     $Clinic->location()->save($location);
+    $services=new Service;
 
-    if ($request->hasFile('ClinicPicture')){
-
-        $path = $request->file('ClinicPicture')->store('Clinic', 'public');
-        $this->createArticlePhoto($article,$path);
-    }
-    return  true;
+    $services->setServicesAttribute(request('services'));
+    $Clinic->service()->save($services);
+  
+    return  $Clinic;
 }
 
 

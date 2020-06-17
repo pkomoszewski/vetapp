@@ -160,8 +160,30 @@ class FormValidation{
            
           
             ]);
+            // if($id)
+            // {
+            //     $object = $this->bR->updateObjectWithAddress($id, $request);
+            // }
+            // else
+            // {
+            //     $this->bR->AddNewClinic($request);
+            // }
+           $clinic= $this->bR->AddNewClinic($request);
 
-            $this->bR->AddNewClinic($request);
+            if ($request->hasFile('objectPictures'))
+            {
+                
+                $this->validate($request, \App\Photo::imageRules($request,'objectPictures')); 
+                
+             
+                foreach($request->file('objectPictures') as $picture)
+                {
+                    $path = $picture->store('article', 'public');
+    
+                    $this->bR->createPhoto($clinic, $path);
+                }
+    
+            }
     }
  
     public function vadlidationFormAddAddress($request){

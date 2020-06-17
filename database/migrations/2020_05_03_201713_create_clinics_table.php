@@ -21,7 +21,6 @@ class CreateClinicsTable extends Migration
             $table->unsignedBigInteger('vet_id');
             $table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade'); 
             $table->boolean('status'); 
-            $table->json('vetservices');
             $table->timestamps();
         });
     }

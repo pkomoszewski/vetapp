@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="adres" class="col-lg-2 control-label">Miejscowosc</label>
+                <label for="adres" class="col-lg-2 control-label">Miejscowość</label>
                 <div class="col-lg-6">
                     <input name="miejscowosc" type="text" required class="form-control" value="">
                 </div>
@@ -46,11 +46,11 @@
                 </div>
             </div>
 
-            <div id="address-map-container" style="width:100%;height:400px; ">
+            <div id="address-map-container " style="width:100%;height:400px; ">
                 <div style="width: 100%; height: 100%" id="address-map"></div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <h6>Dni otwarcia</h6>
 
                 <?php 
@@ -60,17 +60,17 @@
                 ?>
                 @foreach ($week as $day)
 
-                <div class="col-lg-6 col-lg-offset-2 d-flex">
-                    <div class="col-md-6">
-                        <input class="form-check-input" type="checkbox" name="whenOpen[{{ $i }}][key]" value={{$day}}>
+                <div class="col-lg-6 col-lg-offset-2 d-flex mb-2">
+                    <div class="col-md-3">
+                        <input class="form-check-input" type="checkbox" name="whenOpen[{{ $i }}][key]" value={{$day}} id="{{$i}}">
                         <label class="form-check-label mr-2">
                             {{$day}}
                         </label>
 
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" name="whenOpen[{{ $i }}][value]" class="form-control"
-                            value="{{ old('whenOpen['.$i.'][value]') }}">
+                    <div class="col-md-3">
+                        <input type="text" name="whenOpen[{{ $i }}][value]"  class="invisible" id="hourday{{$i}}"
+                            value="{{ old('whenOpen['.$i.'][value]') }}"  placeholder="Godzina">
                     </div>
 
 
@@ -78,10 +78,45 @@
                 <?php $i++; ?>
                 @endforeach
             </div>
+            <div class="form-service">
+                <h6>Świadczone usługi</h6>
+
+                <?php 
+                  $i=0;
+                $services=array("Antykoncepcja","Badanie trychinoskopowe mięsa","Cesarskie cięcie","Czipowanie","Drobny zabieg chirurgiczny","Drobny zabieg w znieczuleniu","Eutanazja",
+                "Inseminacja","Kastracja","Leczenie złamań","Odrobaczanie","Paszporty dla zwierząt","Przyjmowanie porodu (za godz.)","Sterylizacja","Szczepienie","Usuwanie kamienia nazębnego","Usuwanie kleszczy","Znieczulenie ogólne");
+              
+                ?>
+                @foreach ($services as $service)
+
+                <div class="row-lg-12 row-lg-offset-2 d-flex mb-2">
+                    <div class="col-md-3 ">
+                        <div class="row ml-2">
+
+                            <input class="form-check-input serv" type="checkbox" name="services[{{ $i }}][kind]"
+                            value="{{$service}}" id="serv{{$i}}" />
+                            <label for="service{{$i}}" class="form-check-label mr-2">
+                                {{$service}}
+
+                            </label>
+                        </div>
+                      
+                       
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="services[{{ $i }}][price]"
+                            value="{{ old('services['.$i.'][price]') }}" id="priceserv{{$i}}" class="invisible" placeholder="Cena"/>
+                    </div>
+                </div>
+                <?php $i++; ?>
+                @endforeach
+
+               
+            </div>
             <div class="form-group">
                 <div class="col-lg-6 col-lg-offset-2">
                     <label for="ClinicPicture">Dodaj zdjęcie</label>
-                    <input name="ClinicPicture" type="file" id="ClinicPicture">
+                   <input type="file" name="objectPictures[]" id="objectPictures" multiple>
                 </div>
 
             </div>
@@ -102,10 +137,38 @@
 </fieldset>
 </form>
 </div>
+<script>
 
+       
+$('input[type="checkbox"]').change(function(){
+  
+    var id =$(this).attr('id');
+    if ($(this).is(':checked')){
+        console.log('siemka');
+        $('#hourday'+id).removeClass('invisible');
+        $('#price'+id).removeClass('invisible');
+        }else{
+        $('#hourday'+id).addClass('invisible');
+        $('#price'+id).addClass('invisible');
+    }
+ 
+    
+  
+})
+
+$("#addService").click(function(){
+    var id=$(".serv:last").attr('id');
+    id++;
+console.log(id);
+var input ="<div class='row-lg-12 row-lg-offset-2 d-flex mb-2'><div class='col-md-6 mr-2' >  <input type='text' name='services['"+id+"'][kind]' class='serv' placeholder='rodzja usługi' id='"+id+"'  /> </div>   <div class='col-md-6'><input type='text' placeholder='Cena' name='services['"+id+"'][price]'/></div></div>"
+$('.form-service').append(input); 
+  
+
+})
+</script>
 @endsection
 
-@section('scripts')
+@section('javascript')
 @parent
 <script
     src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize"

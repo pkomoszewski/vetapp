@@ -51,6 +51,7 @@ class FrontendController extends Controller
         }
         elseif($request->input('choose')=="Klinika")
         {
+         
              $Result = $this->fG->getSearchResultsClinic($request);
                 return view('frontend.resultsSearchClinic')->with('results',$Result);
             
