@@ -1,14 +1,14 @@
 <?php
 
 namespace App;
-
+use Cerbero\QueryFilters\FiltersRecords;
 use Illuminate\Database\Eloquent\Model;
 use App\City;
 use Illuminate\Support\Facades\Auth;
 
 class Vet extends Model
 {
-  
+  use FiltersRecords;
 
     use Presenters\VetPresenter; 
     protected $fillable = ['imie','nazwisko','Vet','city_id'];
@@ -65,7 +65,10 @@ class Vet extends Model
     {
         return $this->morphMany('App\Location', 'locationable');
     }
-
+    public function like()
+    {
+        return $this->morphMany('App\Like', 'likeable');
+    }
 
     public function service()
     {

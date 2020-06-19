@@ -19,11 +19,13 @@ class CreateReservationsTable extends Migration
             $table->string('hour'); 
             $table->string('opis');
             $table->boolean('status'); 
+            $table->boolean('cancel'); 
             $table->unsignedBigInteger('animal_id')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->unsignedBigInteger('vet_id');
             $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade'); 
             $table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade'); 
+            
             $table->timestamps();
         });
     }

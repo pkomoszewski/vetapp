@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Tytuł</label>
                 <div class="col-lg-10">
-                    <input name="title" type="text" required class="form-control" value={{$article->title}}>
+                    <input name="title" type="text" required class="form-control" value="{{$article->nazwa}}">
                 </div>
             </div>
             <div class="form-group">
@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">zapisz</button>
+                    <button type="submit" class="btn button-vet">zapisz</button>
                 </div>
             </div>
 

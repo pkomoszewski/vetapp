@@ -95,7 +95,17 @@
                     <input name="vetPicture" type="file" id="vetPicture">
                 </div>
             </div>
+            @if($user->vets->photos==null)
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail w-20" >
+                    <img class="img-fluid" src="{{$user->vets->photos->first()->path ?? ''}}" alt="...">
+                    <div class="mt-2">
+                        <p><a href="{{ route('deletePhoto',['id'=>$user->vets->photos->first()->id])}}" >Usuń</a></p>
+                    </div>
 
+                </div>
+            </div>
+            @endif
 
 
         </fieldset>

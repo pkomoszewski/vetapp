@@ -8,10 +8,10 @@ use App\Repositories\FrontendRepository;
 use App\Repositories\BackendRepository;
 use App\Validation\FormValidation;
 use Illuminate\Support\Facades\Auth;
-use SebastianBergmann\Environment\Console;
-use Illuminate\Support\Facades\Storage; 
 use App\User;
 use App\Vet;
+use App\Location;
+use App\Clinic;
 class FrontendController extends Controller
 {
     public function index()
@@ -47,15 +47,22 @@ class FrontendController extends Controller
    }
         if($request->input('choose')=="Weterynarz")
         {
-
+            if( $request->input('city') == null){
+                $Result = Vet::all();
+                return view('frontend.resultsSearchVet')->with(['results'=>$Result]);
+               }
             $Result = $this->fG->getSearchResultsVet($request);
         
             return view('frontend.resultsSearchVet')->with(['results'=>$Result
             ,'city'=>$City]);
+
         }
         elseif($request->input('choose')=="Klinika")
         {
-         
+            if( $request->input('city') == null){
+                $Result = Clinic::all();
+                return view('frontend.resultsSearchClinic')->with(['results'=>$Result]);
+               }
              $Result = $this->fG->getSearchResultsClinic($request);
                 return view('frontend.resultsSearchClinic')->with(['results'=>$Result
             ,'city'=>$City]);
@@ -63,7 +70,7 @@ class FrontendController extends Controller
      
           
         }
-        
+     
     }
 
 
@@ -96,17 +103,39 @@ public function siteCalendarvisit($user_id)
 {
     $vet=Vet::where('user_id',$user_id)->first();
     $vet_id=$vet->id;
+
    $resrtvationsToVet= $this->fR->getReservationsByVetId($vet_id);
+   
+
  return view('pages.calendarVisitToVet')->with(['reservations'=>$resrtvationsToVet,'vet_id'=>$vet_id]);
 }
 
-
-
-public function siteReservationCalendar($vet_id,$user_id)
+public function siteHistoryVisit($user_id)
 {
-    $reservations = $this->fR->getReservationsByVetId($vet_id);
+    $vet=Vet::where('user_id',$user_id)->first();
+    $vet_id=$vet->id;
+    $resrtvationsToVet= $this->fR->getReservationsByHistoryVetId($vet_id);
+
+ return view('pages.historyVisitToVet')->with(['reservations'=>$resrtvationsToVet,'vet_id'=>$vet_id]);
+}
+
+public function sitecancelVisit($user_id)
+{
+    $vet=Vet::where('user_id',$user_id)->first();
+    $vet_id=$vet->id;
+    $resrtvationsToVet= $this->fR->getReservationsByCancelVetId($vet_id);
+
+ return view('pages.cancelVisitToVet')->with(['reservations'=>$resrtvationsToVet,'vet_id'=>$vet_id]);
+}
+
+
+public function siteReservationCalendar($vet_id,$location_id)
+{
+
+    $reservations = $this->fR->getReservationsByVetIdandLocation($vet_id,$location_id);
     $vet=Vet::find($vet_id);
- return view('pages.calendar')->with(['reservations'=>$reservations,'vet_id'=>$vet_id,'vet'=>$vet],);
+    $location=Location::find($location_id);
+ return view('pages.calendar')->with(['reservations'=>$reservations,'vet_id'=>$vet_id,'vet'=>$vet,'location'=>$location]);
 }
 
 public function showListArticles()
@@ -175,14 +204,17 @@ public function addComment($commentable_id, $type, Request $request)
 
 
 
-public function ViewformReservation($data,$ts,$vet_id)
+public function ViewformReservation($data,$ts,$vet_id,$location_id)
 {
+    $vet=Vet::find($vet_id);
+    $location=Location::find($location_id);
 
     return view('pages.fromReservation',[
     
     'data'=>$data,
     'ts'=>$ts,
-    'vet_id'=>$vet_id
+    'vet'=>$vet,
+    'location'=>$location,
     ]
 
 
@@ -215,6 +247,7 @@ public function confirmReservationVet($reservation_id)
 public function cancelReservationVet($reservation_id)
 {
 //walidacja
+
 
     $cancelReservationVet = $this->fR-> cancelReservationVet($reservation_id);
             

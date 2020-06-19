@@ -2,7 +2,7 @@
 
 
 @section('content')
-<div class="container">
+<div class="container" style="background-color: #eff2f8">
     <div class="row">
         <div class="col-md-12">
             <div class="card-body">
@@ -12,11 +12,10 @@
                         <div class="image-container">
                             @if ($vet->photos->isEmpty())
 
-                            <img src="{{url('/images/person.png')}}" class="img-circle img-responsive" with='150px'
-                                height='150px'>
+                            <img src="{{asset('/images/person.png')}}" class="avatar avatar-m"/>
                             @else
-                            <img src="{{$vet->photos->first()->path}}" alt="" class="img-circle img-responsive"
-                                with='150px' height='150px'>
+                            <img src="{{$vet->photos->first()->path}}" alt="" class="avatar avatar-m"/>
+                             
                             @endif
 
                         </div>
@@ -48,28 +47,22 @@
                                     @endauth
                                     <div class="row">
 
-                                        @if(Auth::guest())
-                                        <p><a href="{{ route('login') }}">Zaloguj sie aby umówić się na
-                                                wizyte</a>
-                                        </p>
-                                        @else
-                                        <a href="{{ route('reservationscalendar',['vet_id'=>$vet->id,'user_id'=>Auth::user()->id]) }}"
-                                            class="btn button-vet pull-right m-3" role="button">Umów się na
-                                            wizytę</a>
-                                        @endif
                                     </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
+                <div class="row rounded" style="background-color:white" >
+                    <div class="col-12" >
                         <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                             <li class="nav-item active">
+                                <a class="nav-link" id="adresy-tab" data-toggle="tab" href="#adresy" role="tab">Adresy</a>
+                            </li>
+                            <li class="nav-item ">
                                 <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab"> O
                                     mnie</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="map-tab" data-toggle="tab" href="#experience"
+                                <a class="nav-link" id="experience-tab" data-toggle="tab" href="#experience"
                                     role="tab">Usługi</a>
                             </li>
                             <li class="nav-item">
@@ -79,9 +72,7 @@
                             </li>
 
 
-                            <li class="nav-item">
-                                <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab">Adresy</a>
-                            </li>
+                           
                         </ul>
                         <div class="tab-content ml-1" id="myTabContent">
 
@@ -103,7 +94,7 @@
                                 @endforeach
 
                                 @auth
-                                <a class="btn button-vet mt-2" role="button" data-toggle="collapse"
+                                <a class="btn button-vet mt-2 mb-2" role="button" data-toggle="collapse"
                                     href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     Dodaj komentarz
                                 </a>
@@ -155,7 +146,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="map" role="tabpanel">
+                            <div class="tab-pane fade show active" id="adresy" role="tabpanel">
                                 <div class="col-md-4 col-6">
 
 
@@ -167,18 +158,9 @@
 
                                 <h6>Adres {{$i}}</h6>
 
-
-
                                 <p>Adres: {{$location->address}} {{$location->city->name}}</p>
                               
                                 <div id="div{{$i}}" class=" data">
-                                    <div class=" mb-2">
-
-                                        <a data-deleteid={{$vet->id}} data-toggle="modal" data-target="#showmap"
-                                            href="">Pokaż na
-                                            mapie</a>
-                                    </div>
-                              
                                     <div>
                                         <h6>Godziny przyjęć</h6>
                                         @foreach ($location->whenOpen as $time)
@@ -189,6 +171,22 @@
                                         @endforeach
 
                                     </div>
+                                    <div class=" mt-2 ">
+
+                                       <a data-deleteid={{$vet->id}} data-toggle="modal" data-target="#showmap"
+                                            href="">Pokaż na
+                                            mapie</a>
+                                            <div class="mt-2">     @if(Auth::guest())
+                                            <p><a href="{{ route('login') }}">Zaloguj sie aby umówić się na wizyte</a>
+                                            </p>
+                                            @else
+                                            <a href="{{ route('reservationscalendar',['vet_id'=>$vet->id,'location_id'=>$location->id]) }}"
+                                               class="btn btn-outline-primary">Umów się na
+                                                wizytę</a>
+                                            @endif</div> 
+                                    </div>
+                              
+                                
 
                                     @php
                                     $i++
@@ -199,7 +197,7 @@
 
                             </div>
 
-                            <div class="tab-pane fade show active" id="about" role="tabpanel">
+                            <div class="tab-pane fade " id="about" role="tabpanel">
 
 
                                 <h6>Opis</h6>

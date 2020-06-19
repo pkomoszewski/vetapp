@@ -17,7 +17,7 @@ use App\Phone;
 use App\Location;
 use App\Service;
 use App\Specialization;
-use DB;
+use Illuminate\Support\Carbon;
 class FrontendRepository {  
     
     use \Illuminate\Foundation\Validation\ValidatesRequests;
@@ -27,7 +27,7 @@ class FrontendRepository {
   
     public function getIndexSite()
     {
-     $comments = Comment::where('commentable_type' ,'App\Vet')->with('user.owners')->paginate(2);
+     $comments = Comment::where('commentable_type' ,'App\Vet')->with('user.owners')->paginate(3);
     
    
         return $comments; 
@@ -36,7 +36,7 @@ class FrontendRepository {
     
     public function getIndexSiteCommentArticle()
     {
-     $articlecomments = Comment::where('commentable_type' ,'App\Article')->with('user.owners')->paginate(2);
+     $articlecomments = Comment::where('commentable_type' ,'App\Article')->with('user.owners')->paginate(3);
     
    
         return $articlecomments; 
@@ -194,10 +194,49 @@ class FrontendRepository {
 
     public function getReservationsByVetId( $vet_id )
     {
-     
-        return  Reservation::with('owner')->where('vet_id',$vet_id)->paginate(4); 
+
+      if(request('sortby')=='Daty wizyty'){
+      
+        $VetReservation= Reservation::with('owner')->where('vet_id',$vet_id)->where('day', '>=', Carbon::today()->toDateString())->where('cancel',0)->orderBy('day','asc')->get();
+           return $VetReservation;   
+       }   
+       if(request('sortby')=='Domyślny'|| request('sortby')==null){
+       
+         $VetReservation= Reservation::with('owner')->where('vet_id',$vet_id)->where('day', '>=', Carbon::today()->toDateString())->where('cancel',0)->get();
+            return $VetReservation;   
+        }  
+        if(request('sortby')=='Potwierdzone'){
+         $VetReservation= Reservation::with('owner',)->where('vet_id',$vet_id)->where('status',1)->where('day', '>=', Carbon::today()->toDateString())->get();
+            return $VetReservation;   
+        }
+        if(request('sortby')=='Niepotwierdzone'){
+          $VetReservation= Reservation::with('owner',)->where('vet_id',$vet_id)->where('status',0)->where('day', '>=', Carbon::today()->toDateString())->get();
+            return $VetReservation;   
+        }
+
+
+
+       
     } 
 
+    public function getReservationsByHistoryVetId( $vet_id )
+    {
+
+        return  Reservation::with('owner')->where('vet_id',$vet_id)->where('day', '<', Carbon::today()->toDateString())->where('cancel',0)->get(); 
+    } 
+
+    public function getReservationsByCancelVetId( $vet_id )
+    {
+
+        return  Reservation::with('owner')->where('vet_id',$vet_id)->where('cancel',1)->get(); 
+    } 
+
+    public function getReservationsByVetIdandLocation( $vet_id,$location_id )
+    {
+      $resr= Reservation::with('location')->where('vet_id',$vet_id)->where('location_id',$location_id)->get(); 
+    
+        return $resr;
+    } 
 
     public function saveReservation($request, $vet_id,$owner_id)
     {
@@ -205,18 +244,25 @@ class FrontendRepository {
     
 
 $animal=(int)$request->animal;
-        $date = $request->data;
-        $newDate = date('d-m-Y', strtotime($date ));
-        return Reservation::create([
-                'day'=>$request->data,
-                'hour'=>$request->godzina,
-                'status'=>0,
-                'opis'=>$request->opis,
-                'owner_id'=> $owner_id,
-                'vet_id'=>$vet_id,
-                'animal_id'=>$animal
-                
-                            ]);
+$phone= new Phone;
+$phone->numer=$request->input('numer');
+
+
+
+       $location_id=(int)($request->location);
+       $Reservation = Reservation::create([
+        'day'=>$request->data,
+        'hour'=>$request->godzina,
+        'status'=>0,
+        'opis'=>$request->opis,
+        'owner_id'=> $owner_id,
+        'vet_id'=>$vet_id,
+        'animal_id'=>$animal,
+        'location_id'=>$location_id
+        
+                    ]);
+                    $Reservation->phone()->save($phone);
+       return $Reservation;
     }
 
 
@@ -250,12 +296,12 @@ $animal=(int)$request->animal;
       
        
    
-       $confirmReservationId=Reservation::find($reservation_id);
+       $cancelreservation=Reservation::find($reservation_id);
+
+           if($cancelreservation->cancel==0){
+           $cancelreservation->update([
    
-           if($confirmReservationId->status==1){
-           $confirmReservationId->update([
-   
-             'status' => 0,
+             'cancel' => 1,
              
    
            ]
@@ -264,6 +310,7 @@ $animal=(int)$request->animal;
      
            return true;
            }
+           dd("siemka");
            return false;
           
           }
@@ -295,6 +342,14 @@ return $addNew->save();
           $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->get();
              return $ownerReservation;   
          }  
+         if(request('sortby')=='Potwierdzone'){
+          $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->where('status',1)->get();
+             return $ownerReservation;   
+         }
+         if(request('sortby')=='Niepotwierdzone'){
+          $ownerReservation= Reservation::with('owner','vet')->where('owner_id',$owner_id)->where('status',0)->get();
+             return $ownerReservation;   
+         }
 
        } 
 

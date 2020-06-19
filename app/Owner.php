@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Owner extends Model
 {
     use Presenters\OwnerPresenter; 
-    protected $fillable = ['imie'];
+    protected $fillable = ['imie','owner_id'];
     public function animals()
     {
     
@@ -20,4 +20,8 @@ class Owner extends Model
         return $this->belongsTo('App\Animal');
     }
 
+    public function photo()
+    {
+        return $this->morphOne('App\Photo', 'photoable');
+    }
 }

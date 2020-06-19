@@ -18,7 +18,7 @@
             </div>
             <div class="form-group mt-4">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-dark">zapisz</button>
+                    <button type="submit" class="btn button-vet">Zapisz</button>
                 </div>
             </div>
 

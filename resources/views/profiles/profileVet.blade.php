@@ -11,12 +11,12 @@
                         <div class="d-flex justify-content-start">
                             <div class="image-container">
                                 @if($vet->photos->isEmpty())
-                                <img src="{{url('/images/person.png')}}" id="imgProfile"
-                                    style="width: 250px; height: 180px" class="img-thumbnail" />
+                                <img src="{{url('/images/person.png')}}"
+                                class="avatar avatar-m" />
 
                                 @else
-                                <img src="{{$vet->photos->first()->path}}" id="imgProfile"
-                                    style="width: 250px; height: 180px" class="img-thumbnail" />
+                                <img src="{{$vet->photos->first()->path}}" 
+                                class="avatar avatar-m" />
                                 @endif
                                 <div class="middle">
                                     <a class="btn button-vet mt-2"

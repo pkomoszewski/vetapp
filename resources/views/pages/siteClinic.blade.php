@@ -16,11 +16,10 @@
                         <div class="image-container">
                             @if ($clinic->photos->isEmpty())
 
-                            <img src="{{url('/images/clinic.png')}}" class="img-circle img-responsive" with='150px'
-                                height='150px'>
+                            <img src="{{url('/images/clinic.png')}}" class="avatar avatar-l">
                             @else
-                            <img src="{{$clinic->photos->first()->path}}" alt="" class="img-circle img-responsive"
-                                with='150px' height='150px'>
+                            <img src="{{$clinic->photos->first()->path}}" class="avatar avatar-l"
+                              >
                             @endif
 
                         </div>
@@ -205,13 +204,15 @@
                             <div class="tab-pane fade" id="services" role="tabpanel">
 
                                 <h6>Cennik</h6>
-                                @isset($clinic->service)
+                                @if (!$clinic->service==null)
                                 @foreach ($clinic->service->services as $service)
-                                
-                                    <p>- {{$service['kind']}}: od {{$service['price']}} zł </p>
-                                
-                                @endforeach
+                                @isset($service['kind'])
+                                <p>- {{$service['kind']}}: od {{$service['price']}} zł </p>
                                 @endisset
+                                @endforeach
+                                @else
+                                   <p>Brak informacji. </p> 
+                                @endif
                                 <hr>
 
                             </div>

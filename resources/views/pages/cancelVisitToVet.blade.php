@@ -5,25 +5,24 @@
         @if ($reservations->isEmpty())
         <div class="m-2">
             <center>
-                <h4 class="p-2">Nie ma aktualnie umówionych wizyt</h4>
+                <h4 class="p-2">Brak</h4>
         </center></div>
 
         @else
 
-        <h6 class="p-2">Planowane wizyty pacjentów</h6>
+        <h6 class="p-2">Anulowane wizyt</h6>
     </div>
     <div class="d-flex justify-content-end m-3 ">
         
         <div >
     
-            <form  action=" {{ route('calendarVisits',['user_id'=>Auth::user()->id ])  }}" class="form-inline" method="GET">
+            <form  action=" {{ route('Search') }}" class="form-inline" method="GET">
             
                 <input name="choose" type="hidden" value={{request('choose')}} />
             <select class=" form-control ml-2" name="sortby" value="">
                 <option > Domyślny</option>
-                <option <?= (request('sortby') == "Daty wizyty") ? "SELECTED" : "" ?>>Daty wizyty</option>
-                <option <?= (request('sortby') == "Potwierdzone") ? "SELECTED" : "" ?>>Potwierdzone</option>
-                <option <?= (request('sortby') == "Niepotwierdzone") ? "SELECTED" : "" ?>>Niepotwierdzone</option>
+                <option <?= (request('confirm') == "Ilości Opinii") ? "SELECTED" : "" ?>> Po dacie</option>
+                <option <?= (request('sortby') == "Cena") ? "SELECTED" : "" ?>>Niepotwierdzone</option>
             </select>
 
             <button type=" submit" class="btn button-vet ml-3">Filtr</button>
@@ -34,18 +33,6 @@
     </div>
     
     <div class="row">
-        <div class="col-4 order-2 ">
-            <div class="mt-5" style=" width:100%;  background-color: white" >
-                <div class="p-3 d-block">
-                  <a href="{{ route('historyVisits',['user_id'=>Auth::user()->id ]) }}"class="mb-2"><h6>Historia wizyt</h6></a>
-                  <a href="{{ route('cancelvisitsite',['user_id'=>Auth::user()->id ]) }}" class="mb-2"><h6>Anulowane wizyty</h6></a>
-    
-    
-             </div>
-     
-            </div>
-          </div>
-
         <div class="col">
 
             <div class="panel panel-default ">
@@ -55,7 +42,7 @@
               
                     @foreach($reservations as $reservation)
     
-                    <div class="col-12">
+                    <div class="col-8">
     
     
                         <div class="card mb-4">
@@ -81,34 +68,10 @@
                                 <p class="card-text text-center">{{$reservation->opis}} </p>
                                 </h6>
     
-                                @if (!$reservation->animal==null && $reservation->status)
-                                <hr>
-                                <a href="{{ route('showformAddHistoryTreatmeantAnimal',['id'=>$reservation->animal->id]) }}"
-                                    class="btn button-vet
-                                     btn-xs top-buffer">Dodaj historie leczenia</a>
-                                @endif
+                              
                               
                             </div>
-                            @auth
-                            <div class="card-footer text-center">
-    
-                                @if($reservation->status)
-                                <p>Potwierdzone</p>
-                                @else
-                                <a href="{{ route('confirmReservationVet',['vet_id'=>$reservation->vet_id,'reservation_id'=>$reservation->id]) }}"
-                                    class="btn button-vet
-                                     btn-xs top-buffer">Potwierdź</a>
-                                @endif
-    
-                                @if($reservation->status)
-                                @else
-                                <a href="{{ route('cancelReservationVet',['reservation_id'=>$reservation->id]) }}"
-                                    class="btn button-vet
-                                     btn-xs top-buffer">Anuluj</a>
-                                @endif
-    
-                            </div>
-                            @endauth
+                           
                         </div>
                     </div>
                     @endforeach

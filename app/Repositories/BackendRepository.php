@@ -192,7 +192,15 @@ public function saveVet($request)
     return $vet;
 }
 
+public function saveUser($request){
 
+    $user = User::find(Auth::user()->id);
+    $user->email = $request->input('email');
+    $user->owners->imie = $request->input('imie');
+    $user->save();
+
+    return $user;
+}
 
 public function addHistoryTreatmenatAnimal($request)
 {
@@ -226,6 +234,13 @@ public function createPhoto($object,$path)
     $object->photos()->save($photo);
 }
 
+public function createOwnerPhoto($onwer,$path)
+{
+    $photo = new Photo;
+    $photo->path = $path;
+
+    $onwer->photo()->save($photo);
+}
 
 public function createArticlePhoto($article,$path)
 {
@@ -268,6 +283,12 @@ public function updateUserPhoto(Vet $vet,Photo $photo)
     return $vet->photos()->save($photo);
 }
 
+public function updateOwnerPhoto($owner,Photo $photo)
+{
+    return $owner->photo()->save($photo);
+}
+
+
 public function addArticle($request)
 {
 
@@ -283,6 +304,31 @@ public function addArticle($request)
     return  true;
 }
 
+public function editArticle($id,$request)
+{
+
+    $article= Article::find($id);
+    if(!$article==null){
+    $article->update([ 'nazwa'=>$request->input('title'),
+    'content'=>$request->input('content'), ]);
+    $article->save();
+    if ($request->hasFile('articlePicture'))
+    {
+        
+     
+        $picture= $request->file('articlePicture') ;
+     
+        
+            $path = $picture->store('article', 'public');
+
+            $this->createPhoto($article, $path);
+        
+
+    }
+    return  $article;
+    } return false;
+    
+}
 public function addNewClinic($request)
 {
 

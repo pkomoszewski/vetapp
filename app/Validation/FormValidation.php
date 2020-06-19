@@ -36,6 +36,7 @@ class FormValidation{
         'opis'=>"required|string",
         'data'=>"required|string",
         'godzina'=>"required|string",
+        'location'=>"required|integer",
 
 
         ]);

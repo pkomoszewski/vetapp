@@ -1,9 +1,9 @@
 @extends('layouts.Frontend.main')
 
 @section('content')
-<div class="container">
+<div class="container  w-100 rounded" style="background-color: #eff2f8">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-8">
 
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -14,7 +14,7 @@
                             <div class="card mb-4">
 
                                 <div class="card-body">
-                                    <h2 class="card-title">{{$article->title}}</h2>
+                                    <h2 class="card-title">{{$article->nazwa}}</h2>
                                     <p class="card-text">
                                         {{\Illuminate\Support\Str::words($article->content, 50,'....')}}
                                     </p>
@@ -39,4 +39,4 @@
     </div>  
 </div>
 
-                    @endsection
+@endsection

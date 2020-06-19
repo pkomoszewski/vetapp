@@ -11,14 +11,19 @@
                     <div class="card-title mb-4">
                         <div class="d-flex justify-content-start">
                             <div class="image-container">
-                                <img src="{{url('/images/person.png')}}" id="imgProfile"
-                                    style="width: 150px; height: 150px" class="img-thumbnail" />
+                          @if ($user->owners->photo==null)
+                          <img src="{{asset('/images/person.png')}}" 
+                        class="avatar avatar-m" />
+                          @else
+                          <img src="{{$user->owners->photo->path}}" 
+                         class="avatar avatar-m" />
+                          @endif
+                                                    
+                           
                                 <div class="middle">
                                     <a class="btn button-vet mt-2"
-                                        href="{{ route('profile',['user'=>Auth::user()->id]) }}"> Edycja profilu </a>
-
-
-
+                                        href="{{ route('editProfile',['user'=>Auth::user()->id]) }}"> Edycja
+                                        profilu </a>
                                 </div>
                             </div>
                             <div class="userData ml-3">
@@ -51,18 +56,16 @@
                                     <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment"
                                         role="tab">Moje komentarze</a>
                                 </li>
+                              
 
                                 <li class="nav-item">
                                     <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings"
                                         role="tab">Ustawienia</a>
                                 </li>
-
                             </ul>
                             <div class="tab-content ml-1" id="myTabContent">
                                 <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
                                     aria-labelledby="basicInfo-tab">
-
-
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
                                             <label style="font-weight:bold;">Imię</label>
@@ -72,7 +75,6 @@
                                         </div>
                                     </div>
                                     <hr />
-
                                     <div class="row">
                                         <div class="col-sm-3 col-md-2 col-5">
                                             <label style="font-weight:bold;">Email</label>
@@ -82,36 +84,23 @@
                                         </div>
                                     </div>
                                     <hr />
-
-
-
-
                                 </div>
                                 <div class="tab-pane fade" id="Animal" role="tabpanel" aria-labelledby="Animal-tab">
                                     @if ($user->owners->animals->isEmpty())
                                     <div>Nie mam aktualnie dodanych zwierząt</div>
                                     @else
                                     @foreach($user->owners->animals as $animal)
-
-
                                     <li class="list-group-item mb-2">
                                         <a href="">{{$animal->imie}}</a>
 
                                         <p>Gatunek: {{$animal->gatunek}}</p>
                                         <a href='/{{$animal->id}}/delete'>Usuń</a>
                                     </li>
-
-
-
                                     @endforeach
                                     @endif
-
-
                                     <a href="{{ route('addAnimal') }}" class="btn button-vet btn-xs mt-2"
                                         role="button">Dodaj</a>
                                 </div>
-
-
                                 <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                                     @if ($user->comments->isEmpty())
                                     <div>Nie mam aktualnie żadnych komentarzy</div>
@@ -124,18 +113,12 @@
                                         {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
                                         $comment->rating) !!}
                                         <p>{{$comment->content}}</p>
-
-
                                         <hr />
                                         <a href="{{ $comment->commentable->link}}">{{ $comment->commentable->type }}</a>
                                     </li>
-
                                     @endforeach
                                     @endif
-
-
                                 </div>
-
                                 <div class="tab-pane fade " id="settings" role="tabpanel"
                                     aria-labelledby="settings-tab">
 
@@ -164,13 +147,7 @@
                                                 data-toggle="modal" data-target="#bocked">Zablokowanie</button>
                                         </div>
                                     </div>
-                       
-
-
-
-
-
-
+                    
                                 </div>
 
                             </div>

@@ -72,7 +72,7 @@
                 href="{{ route('calendarVisitToUser',['owner_id'=>Auth::user()->owners->id ]) }}">Moje
                 wizyty</a>
               @elseif(Auth::user()->hasRole('Weterynarz'))
-              <a class="dropdown-item" href="{{ route('calendarvisits',['user_id'=>Auth::user()->id ]) }}">Kalendarz
+              <a class="dropdown-item" href="{{ route('calendarVisits',['user_id'=>Auth::user()->id ]) }}">Kalendarz
                 wizyt</a>
               @endif
             </div>

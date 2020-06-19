@@ -13,7 +13,7 @@
           @if ($article->photos->isEmpty())
           @else
           <img class="rounded float-left max-width: 20%; and height: auto;" width="50%"
-            src="{{$article->photos->first()->path}}" alt="">
+            src="{{$article->photos->first()->path}}" >
           @endif
 
         </div>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-dark">Zapisz komentarz</button>
+                    <button type="submit" class="btn button-vet">Zapisz komentarz</button>
                   </div>
                 </div>
               </fieldset>

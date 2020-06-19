@@ -18,7 +18,7 @@ class CreateAnimalTable extends Migration
             $table->string('imie');
             $table->string('gatunek');
             $table->unsignedBigInteger('owner_id')->unsigned();
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade');
             $table->timestamps();
         });
     }

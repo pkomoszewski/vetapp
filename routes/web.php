@@ -43,13 +43,15 @@ Route::get('/unlike/{like_id}/{type}', 'FrontendController@unlike')->name('unlik
 ////////u uzytkownika
 Route::get(trans('reservations').'/{owner_id}', 'FrontendController@calendarVisitToUser')->name('calendarVisitToUser');
 ////////u weterynarza
-Route::get('/calendarvisits/{user_id}', 'FrontendController@siteCalendarvisit')->name('calendarvisits');
+Route::get('/calendarvisits'.'/{user_id}', 'FrontendController@siteCalendarvisit')->name('calendarVisits');
+Route::get('/historyvisits'.'/{user_id}', 'FrontendController@siteHistoryVisit')->name('historyVisits');
+Route::get('/cancelvisitsite'.'/{user_id}', 'FrontendController@siteCancelVisit')->name('cancelvisitsite');
 Route::get('/confirmvisits'.'/{reservation_id}', 'FrontendController@confirmReservationVet')->name('confirmReservationVet');
 Route::get('/cancelvisits'.'/{reservation_id}', 'FrontendController@cancelReservationVet')->name('cancelReservationVet');
 
 ///////////////////
-Route::get('/reservationscalnedar/{vet_id}/{user_id}/', 'FrontendController@siteReservationCalendar')->name('reservationscalendar');
-Route::get(trans('ViewformReservation').'/{date}'.'/{ts}'.'/{vet_id}','FrontendController@ViewformReservation')->name('ViewformReservation');
+Route::get('/reservationscalnedar/{vet_id}/{location_id}/', 'FrontendController@siteReservationCalendar')->name('reservationscalendar');
+Route::get(trans('ViewformReservation').'/{date}'.'/{ts}'.'/{vet_id}'.'/{location_id}','FrontendController@ViewformReservation')->name('ViewformReservation');
 Route::post(trans('confirmReservation').'/{vet_id}','FrontendController@confirmReservation')->name('confirmReservation');
 
 // dla weterynarza

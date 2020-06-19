@@ -47,20 +47,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
    
-
-    public function concerts()
-    {
-        return $this->belongsToMany(Concert::class)->withTimestamps();
-    }
-
-    
     public function roles()
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
 
-    
+    public function likes()
+    {
+        return $this->hasMany('App\Like');
+    }
 
     public function comments()
     {
@@ -91,8 +87,4 @@ class User extends Authenticatable
         return $this->hasOne('App\user');
      }
     
-
-     public function unotifications(){
-         return $this->hasMany('App\Notification');
-     }
 }

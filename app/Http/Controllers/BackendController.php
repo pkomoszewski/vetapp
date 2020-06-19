@@ -27,7 +27,7 @@ class BackendController extends Controller
     public function NewAnimal(Request $request){
   
         $add = $this->fV->vadlidationFormAddAnimal($request);
-        return redirect()->back(); /// musze cos zrobic z tym
+        return redirect()->route('profile.index',['user'=>Auth::user()->id ]); /// musze cos zrobic z tym
     }
 
 
@@ -55,7 +55,7 @@ class BackendController extends Controller
     public function NewHistoryTreatmeantAnimal(Request $request,$id){
   
         $add = $this->fV->vadlidationFormAddHistoryTreatment($request,$id);
-        return view('backend.admin.addArticle');
+        return redirect()->back();
     }
 
     ////////////////
@@ -236,7 +236,7 @@ public function showEditArticle($id){
 
 public function saveEditArticle(Request $request,$id){
             
-    $edit = $this->bR->editArticle($request,$id);
+    $edit = $this->bR->editArticle($id,$request,);
     return redirect()->Route('allArticle')->with('success', 'Artykuł został pomyślnie edytowany');
 
 }
@@ -266,7 +266,7 @@ public function showSiteStatic(){
 }
 public function profileEdit(Request $request )
 {
-  
+
     if ($request->isMethod('post')) 
     {
    
@@ -321,9 +321,40 @@ public function profileEdit(Request $request )
                 return redirect()->route('viewSucessSave');
 
 
-        }else{
+        }elseif(Auth::user()->hasRole(['Użytkownik'])){
+
+            $this->validate($request,[
+                'name'=>"required|string",
+                'email'=>"required|string"
+                
+              
+                ]);
+                $user= $this->bR->saveUser($request);
+                if ($request->hasFile('userPicture'))
+                {
+                    $this->validate($request,[
+                    'userPicture'=>"image|max:100",
+                    ]);
+
+                    $path = $request->file('userPicture')->store('user', 'public');
+                    
+                   
+                    if ($user->owners->photo!=null)
+                    {
+                        $photo = $this->bR->getPhoto($user->owners->photo->id);
+                        Storage::disk('public')->delete($photo->storagepath);
+                        $photo->path = $path;
+                        $this->bR->updateOwnerPhoto($user->owners,$photo);
+                    } 
+                    else
+                    {
+                        $this->bR->createOwnerPhoto($user->owners,$path);
+                    }           
+                }
+
+                $vet= $this->bR->saveUser($request);
     
-            return view('profiles.editOwner',['user'=>Auth::user()]);
+          return redirect()->route('viewSucessSave');;
         }
  
     }else{

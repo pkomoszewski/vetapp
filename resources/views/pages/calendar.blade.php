@@ -61,25 +61,32 @@ return $m;
 
 
 
-<div class="container d-flex justify-content-center ">
+<div class="container d-flex justify-content-center " style="background-color: #eff2f8">
     <div class="row">
 
-        <div class="col-md-12">
-
+        <div class="col-md-12 mt-2">
+<div class="row">
+    <div >
+      
+</div>
+<div class="flex-grow-1" >
             <center>
+                <div class="mb-2">
                 <h2><?php echo polish_month($month) ." ". $year ?></h2>
 
-
-                <a class="btn button-vet"
-                    href="<?php echo $_SERVER['PHP_SELF'].'?week='.($week-1).'&year='.$year; ?>">Poprzedni tydzień</a>
-                <a class="btn button-vet"
-                    href="<?php echo $_SERVER['PHP_SELF'].'?week='.($week+1).'&year='.$year; ?>">Następny tydzień</a>
-
+                <p><strong>Adres:</strong> {{$location->address}}, {{$location->city->name}}  </p>
+               <p><strong>Weterynarz:</strong> {{$vet->name}} </p>
+               <div class="row-12 d-flex justify-content-between">  <a class="btn btn-outline-primary"
+                href="<?php echo $_SERVER['PHP_SELF'].'?week='.($week-1).'&year='.$year; ?>">Poprzedni tydzień</a>
+            <a class="btn btn-outline-primary"
+                href="<?php echo $_SERVER['PHP_SELF'].'?week='.($week+1).'&year='.$year; ?>">Następny tydzień</a></div>
+              
+            </div>
             </center>
 
-
+        </div>
             <br><br>
-
+        </div>
             <div class="tabel d-flex">
                 <?php
                 
@@ -89,8 +96,9 @@ return $m;
 
                             
                 function testTime($ts,$date,$reservations){
-    
+                  
                 foreach($reservations as $reservation){
+                  
                 if($reservation->day==$date && $reservation->hour==$ts ){
                 return true;
                 }
@@ -120,20 +128,29 @@ if($dt->format('d M Y')==date('d M Y')){
     ?>
 
                 <div class="mb-2">
-                    <p class="bg-dark m-2"> <?php echo $konwersja[$dzientygodnia]. " ". $dt->format('d.m') ."</p>"?>
+                    <p class="text-primary m-2"> <?php echo $konwersja[$dzientygodnia]. " ". $dt->format('d.m') ."</p>"?>
 
                         <?php
-                
-                  
+        
+                  if(empty($timeslots)){
+                      
+                    for ($y=0; $y<7; $y++) {
+                        
+                        
+                      echo  "<div class='mb-4 mt-4' style='text-align:center'>-</div>"; 
+                        
+                      
+                }
+                  }
                      
                     foreach($timeslots as $ts){
                   
                         $day = clone $temp;
 
                          if(testTime($ts,$dt->format('Y-m-d'),$reservations) || $day->format('Y-m-d H:i:s') < date("Y-m-d H:i:s") || date("H:i") > $ts && $dt->format('Y-m-d') == date("Y-m-d")){
-                                     ?> <div></div>
+                                     ?> <div class="mb-4 mt-4" style='text-align:center'>-</div>
                         <?php     }else{ ?><div class="mb-4  mt-4"><a
-                                href="{{ route('ViewformReservation',['date'=>$dt->format('Y-m-d'),'ts'=>$ts,'vet_id'=>$vet_id ]) }}"><button
+                                href="{{ route('ViewformReservation',['date'=>$dt->format('Y-m-d'),'ts'=>$ts,'vet_id'=>$vet_id , 'location_id'=>$location->id ])}}"><button
                                     class="btn btn-light btn-xs"><?php  echo $ts ?></button></a></div>
                         <?php } ?>
                         <?php  } ?>
@@ -152,15 +169,24 @@ if($dt->format('d M Y')==date('d M Y')){
 
                     <?php
                 
-                    
+                if(empty($timeslots)){
+                      
+                      for ($y=0; $y<7; $y++) {
+                          
+                          
+                        echo  "<div class='mb-4 mt-4 ' style='text-align:center'>-</div>"; 
+                          
+                        
+                  }
+                    }
                      
                     foreach($timeslots as $ts){
                         $day = clone $temp;
   
                          if(testTime($ts,$dt->format('Y-m-d'),$reservations) || $dt->format('Y-m-d H:i:s') < date("Y-m-d H:i:s")){
-                                ?> <div></div>
+                                ?> <div class="mb-4 mt-4" style='text-align:center'>-</div>
                     <?php     }else{ ?><div class="mb-4 mt-4"><a
-                            href="{{ route('ViewformReservation',['date'=>$dt->format('Y-m-d'),'ts'=>$ts,'vet_id'=>$vet_id ]) }}"><button
+                            href="{{ route('ViewformReservation',['date'=>$dt->format('Y-m-d'),'ts'=>$ts,'vet_id'=>$vet_id,'location_id'=>$location->id  ]) }}"><button
                                 class="btn btn-light btn-xs"><?php  echo $ts ?></button></a></div>
                     <?php  } ?>
                     <?php  } ?>
