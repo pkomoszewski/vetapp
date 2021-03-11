@@ -31,7 +31,7 @@
                                         href="javascript:void(0);">
                                         <p> {{$user->owners->Imie}}</p>
                                     </a></h2>
-                                <h6 class="d-block">Liczba komentarzy: {{$user->comments->count()}}</h6>
+                                <h6 class="d-block">Liczba komentarzy: {{$user->owners->comments->count()}}</h6>
                                 <h6 class="d-block">Liczba zwierzęta: {{$user->owners->animals->count()}}</h6>
                             </div>
                             <div class="ml-auto">
@@ -102,11 +102,11 @@
                                         role="button">Dodaj</a>
                                 </div>
                                 <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
-                                    @if ($user->comments->isEmpty())
+                                    @if ($user->owners->comments->isEmpty())
                                     <div>Nie mam aktualnie żadnych komentarzy</div>
                                     @else
                                     <p> Moje komentarze </p>
-                                    @foreach($user->comments as $comment)
+                                    @foreach($user->owners->comments as $comment)
                                     <li class="list-group-item  mb-2">
                                         {!! str_repeat('<i class="fa fa-star" aria-hidden="true"></i>',
                                         $comment->rating) !!}
@@ -122,14 +122,26 @@
                                 <div class="tab-pane fade " id="settings" role="tabpanel"
                                     aria-labelledby="settings-tab">
 
+                                    <div class="row mt-2">
 
+                                        <div class="col-sm-3 col-md-2 col-5 mr-5">
+                                            <label style="font-weight:bold;">Ustawienia 2FA </label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+
+                                            <a href="{{ route('settings2fa') }}" class="btn button-vet btn-xs mt-2"
+                                            role="button">2FA</a>
+
+                                        </div>
+                                    </div>
+                                    <hr/>
                                     <div class="row">
-                                        <div class="col-sm-3 col-md-2 col-5">
+                                        <div class="col-sm-3 col-md-2 col-5 mr-5">
                                             <label style="font-weight:bold;">Usunięcie konta</label>
                                         </div>
                                         <div class="col-md-8 col-6">
 
-                                            <button class="btn btn-danger" data-deleteid="{{Auth::id()}}"
+                                            <button class="btn button-vet" data-deleteid="{{Auth::id()}}"
                                                 data-toggle="modal" data-target="#delete">Usuń</button>
                                         </div>
                                     
@@ -138,12 +150,12 @@
                                     <hr/>
                                     <div class="row mt-2">
 
-                                        <div class="col-sm-3 col-md-2 col-5">
+                                        <div class="col-sm-3 col-md-2 col-5 mr-5">
                                             <label style="font-weight:bold;">Zablokowanie konta</label>
                                         </div>
                                         <div class="col-md-8 col-6">
 
-                                            <button class="btn btn-warning" data-deleteid="{{Auth::id()}}"
+                                            <button class="btn button-vet" data-deleteid="{{Auth::id()}}"
                                                 data-toggle="modal" data-target="#bocked">Zablokowanie</button>
                                         </div>
                                     </div>

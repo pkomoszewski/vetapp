@@ -14,4 +14,10 @@ class Animal extends Model
         return $this->hasOne('App\Owner');
 
     }
+
+    public function Treatmenthistories(){
+        return $this->hasMany('App\TreatmentHistory');
+
+    }
+
 }

@@ -48,7 +48,7 @@ class FrontendRepository {
     public function getListArticles()
     {
       
-        return Article::paginate(10);;
+        return Article::paginate(10);
     } 
     
    
@@ -136,7 +136,7 @@ class FrontendRepository {
     {
 
         // moze byc do poprawy
-      $Vet= Vet::with('comments.user','photos','locations')->find($vet_id);
+      $Vet= Vet::with('comments.owner','photos','locations')->find($vet_id);
 
          return $Vet;   
                     
@@ -145,7 +145,7 @@ class FrontendRepository {
     public function getSiteClinic($clinic_id)
     {
 
-      $Clinic= Clinic::with('comments.user','photos')->find($clinic_id);
+      $Clinic= Clinic::with('comments.owner','photos')->find($clinic_id);
 
          return $Clinic;   
                     
@@ -165,7 +165,7 @@ class FrontendRepository {
     {
 
        
-      $user= User::with(['comments.commentable','owners'])->where('id',$user_id)->first()??false;
+      $user= User::with(['owners'])->where('id',$user_id)->first()??false;
          return $user;   
             
             
@@ -254,7 +254,7 @@ $phone->numer=$request->input('numer');
         'day'=>$request->data,
         'hour'=>$request->godzina,
         'status'=>0,
-        'opis'=>$request->opis,
+        'description'=>$request->opis,
         'owner_id'=> $owner_id,
         'vet_id'=>$vet_id,
         'animal_id'=>$animal,
@@ -359,7 +359,7 @@ return $addNew->save();
        {
    
            $vet->cena_konsulatcji	= $request->input('cena');
-           $vet->opis= $request->input('opis');
+           $vet->description= $request->input('opis');
         
            if(!$request->input('interval')==""){
 

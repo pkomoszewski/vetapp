@@ -32,7 +32,7 @@
                                     {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
                                     $vet->averageRating()) !!}
                                     <p> Opini {{$vet->comments->count()}}</p>
-                                    <p>{{ $vet->users->count() }} osób lubli</p>
+                                    <p>{{ $vet->owners ?? 1}} osób lubli</p>
 
                                     @auth
                                     @if($vet->isLiked())
@@ -80,7 +80,7 @@
                                 @foreach( $vet->comments as $comment )
 
                                 <li class="list-group-item  mb-2">
-                                    <p>{{$comment->user->email}}</p>
+                                    <p>{{$comment->owner->user->email}}</p>
                                     {!! str_repeat('<i class="fa fa-star"></i>',
                                     $comment->rating) !!}
                                     {!! str_repeat('<i class="fa fa-star-o"></i>', 5 -

@@ -25,7 +25,7 @@ class Vet extends Model
     
     public function isLiked()
     {
-        return $this->users()->where('user_id',Auth::user()->id)->exists();
+        return $this->users()->where('owner_id',Auth::user()->id) ?? false;
     }
 
 

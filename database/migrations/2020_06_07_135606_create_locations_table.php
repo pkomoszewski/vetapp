@@ -18,7 +18,6 @@ class CreateLocationsTable extends Migration
             $table->string('locationable_type');
             $table->bigInteger('locationable_id');
             $table->string('address')->nullable();
-            $table->string('address_address')->nullable();
             $table->double('address_latitude')->nullable();
             $table->double('address_longitude')->nullable();
             $table->biginteger('city_id')->unsigned(); 

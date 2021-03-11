@@ -39,7 +39,7 @@
         </div>
       </div>
     <div class="col mt-3">
-    <h2 class="p-2">Umawianie wizyty</h2>
+    <h2 class="p-2">Rezerwacja wizyty</h2>
     <form method="POST" action="{{ route('confirmReservation',['vet_id'=>$vet->id]) }}" class="form-horizontal"
         enctype="multipart/form-data">
 
@@ -47,7 +47,7 @@
         <fieldset>
 
             <div class="form-group">
-                <label class="col-lg-3 control-label">Dla kogo umawiasz wizytę?</label>
+                <label class="col-lg-4 control-label">Dla kogo umawiasz wizytę?</label>
                 <div class="col-lg-10">
                     @if(!Auth::user()->owners->animals->isEmpty())
                     <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="animal">
@@ -60,20 +60,20 @@
 
                     </select>
                     @else
-                    Brak zwierzat do wyboru
+                   <em> Brak zwierzat do wyboru<em>
                     @endif
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="imie" class="col-lg-2 control-label">Imie:</label>
+                <label for="imie" class="col-lg-2 control-label">Imię:</label>
                 <div class="col-lg-10">
                     <input name="imie" type="text" required class="form-control" id="name"
                         value="{{Auth::user()->owners->imie}}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="nazwisko" class="col-lg-2 control-label">Nazwisko:</label>
+                <label for="nazwisko" class="col-lg-3 control-label">Nazwisko:</label>
                 <div class="col-lg-10">
                     <input name="nazwisko" type="text" required class="form-control" id="nazwisko"
                         value="{{Auth::user()->owners->nazwisko}}">
@@ -82,9 +82,9 @@
 
 
             <div class="form-group">
-                <label for="numer" class="col-lg-2 control-label">Numer telefonu:</label>
+                <label for="numer" class="col-lg-3 control-label">Numer telefonu:</label>
                 <div class="col-lg-10">
-                    <input name="numer" type="text" required class="form-control" id="numer" value="">
+                    <input name="numer" type="text" required class="form-control" id="numer" value="" >
                 </div>
             </div>
 

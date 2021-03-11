@@ -104,7 +104,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'imie' => ['required', 'string', 'max:50'],
             'nazwisko' => ['required', 'string', 'max:50'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'regex:/[A-Z]/','regex:/[a-z]/', 'regex:/[0-9]/','regex:/[@$!%*#?&]/','confirmed'],
             'regulamin' =>'accepted',
 
         ]);

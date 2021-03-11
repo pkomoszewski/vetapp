@@ -11,7 +11,7 @@
         </center></div>
 
         @else
-        <h6 class="p-2">Moje wizyty</h6>
+        <h6 class="h4 p-2">Moje wizyty</h6>
     </div>
     <div class="d-flex justify-content-end m-3 ">
         <div >
@@ -49,8 +49,8 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title text-muted  text-center">Wizyta</h5>
     
-                                <h6 class="card-text text-center">{{$reservation->day}} </h6>
-                                <h6 class="card-text text-center">{{$reservation->hour}} </h6>
+                                <h6 class="card-text text-center">Data: {{$reservation->day}} </h6>
+                                <h6 class="card-text text-center">Godzina: {{$reservation->hour}} </h6>
                                 <h6 class="card-text text-center">Weterynarz: {{$reservation->vet->name}} </h6>
                                 <a href="{{$reservation->vet->link}}">Podgląd</a>
                                 <h6 class="card-text text-center">Telefon: {{$reservation->vet->phone->numer}} </h6>
@@ -58,19 +58,19 @@
                                 <p><a href="{{$reservation->location->Linkmap}}"><strong> mapa</strong></a></p>
     
                                 @if ($reservation->animal==null)
-                                <td>Brak wybranego zwierzaka </td>
+                                <div class="pb-2">Brak wybranego pupila </div>
                                 @else
                                umówiony z  <h6 class="card-text text-center">{{$reservation->animal->imie}}</h6>
                                     @endif
     
                              <h6 class="card-text text-center">Opis:</h6>
-                                    <p class="card-text text-center">{{$reservation->opis}} </p>
+                                    <p class="card-text text-center">{{$reservation->description}} </p>
                                 </h6>
     
                                 <hr>
     
                                 @if ($reservation->animal==null || $reservation->status==false)
-                                <td>Brak możliwości podejrzenia histori leczenia </td>
+                                <td>Brak możliwości podglądu historii leczenia </td>
                                 @else
                                 <a href="{{ route('showHistoryTreatmeantAnimal',['id'=>$reservation->animal->id]) }}">
                                     <button class="btn button-vet btn-xs">Historia Leczenia

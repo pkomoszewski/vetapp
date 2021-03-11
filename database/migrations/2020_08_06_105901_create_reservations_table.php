@@ -17,15 +17,16 @@ class CreateReservationsTable extends Migration
             $table->bigIncrements('id');
             $table->date('day');
             $table->string('hour'); 
-            $table->string('opis');
+            $table->string('description');
             $table->boolean('status'); 
-            $table->boolean('cancel'); 
             $table->unsignedBigInteger('animal_id')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->unsignedBigInteger('vet_id');
+            $table->unsignedBigInteger('location_id');
+            $table->string('booking_person');
             $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade'); 
-            $table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade'); 
-            
+            $table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade');
+            $table->foreign('location_id')->references('id')->on('Locations')->onDelete('cascade');  
             $table->timestamps();
         });
     }

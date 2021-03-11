@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHistoryTreatments extends Migration
+class CreateLoginSecuritiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateHistoryTreatments extends Migration
      */
     public function up()
     {
-        Schema::create('history_treatments', function (Blueprint $table) {
+        Schema::create('login_securities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('opis');
-            $table->string('weterynarz');
-            $table->integer('rachunek');
-            $table->unsignedBigInteger('animal_id');
+            $table->biginteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('google2fa_enable')->default(false); 
+            $table->string('google2fa_secret')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateHistoryTreatments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('history_treatments');
+        Schema::dropIfExists('login_securities');
     }
 }

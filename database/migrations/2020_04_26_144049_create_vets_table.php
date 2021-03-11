@@ -17,15 +17,12 @@ class CreateVetsTable extends Migration
             $table->bigIncrements('id');
             $table->string('imie');
             $table->string('nazwisko');
-            $table->string('opis')->default("");
+            $table->string('deacription')->default("");
             $table->integer('cena_konsulatcji')->nullable();
-            $table->integer('time_visit');
-            $table->boolean('weryfikacja');
-            $table->bigInteger('user_id')->unsigned(); 
+            $table->integer('time_visit')->default("20");;
+            $table->boolean('verification');
+            $table->biginteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        
-
-
             $table->timestamps();
         });
     }

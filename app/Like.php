@@ -10,8 +10,8 @@ class Like extends Model
     {
         return $this->morphTo();
     }
-    public function user()
+    public function owners()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Owners');
     }
 }

@@ -128,7 +128,7 @@
                                             <label style="font-weight:bold;">Miasto</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            {{$vet->locations->first()->city->name}}
+                                         
                                         </div>
                                     </div>
 
@@ -156,35 +156,7 @@
                                     @endif
                                  
                                 </div>
-                                <div class="tab-pane fade" id="klinka" role="tabpanel">
-                                    @if ($vet->clinics->isEmpty())
-                                        <p>Możesz dodać klinikę</p>
-                                    @else
-                                        
-                                   
-                                    <h6>Twoje kliniki</h6>
-                                    <br />
-                                    @if (\Session::has('success'))
-                                    <div class="alert alert-success">
-                                        <p>{{ \Session::get('success') }}</p>
-                                    </div><br />
-                                    @endif
-                                    @foreach ($vet->clinics as $clinic)
-                                    <p>Nazwa: {{$clinic->nazwa}}</p>
                                 
-                                <p>  <a href="{{$clinic->link}}">Podgląd</a>  
-                                  <a data-deleteid={{$clinic->id}} data-toggle="modal" data-target="#delete"
-                                    href="">Usuń</a>
-                                    <a  href="{{ route("saveClinic",['id'=>$clinic->id])}}">Edytuj</a></p>
-                            
-                            
-                                    @endforeach
-                                    @endif
-                                    <a class="btn button-vet mt-2" href="{{ route("saveClinic")}}"> Dodaj klinkę</a>
-                                   
-                                    
-                                   
-                                </div>
                                 <div class="tab-pane fade" id="setting" role="tabpanel">
 
                                     <a class="mt-2" href="{{route('saveAdress')}}">Dodanie nowego adresu</a>

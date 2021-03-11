@@ -90,7 +90,7 @@ $i=0;
                                         {!! str_repeat('<i class="fa fa-star-o" aria-hidden="true"></i>', 5 -
                                         $vet->averageRating()) !!}
                                          Opini {{$vet->comments->count()}}</p>
-                                        <p>{{ $vet->users->count() }} osób lubli</p>
+                                <p>{{ $vet->owners ?? 0 }}  osób lubli</p>
                                        
                                     </div>
                                  

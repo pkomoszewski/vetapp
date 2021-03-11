@@ -12,9 +12,9 @@ class Comment extends Model
     }
     
 
-    public function user()
+    public function owner()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Owner');
     }
     
   
